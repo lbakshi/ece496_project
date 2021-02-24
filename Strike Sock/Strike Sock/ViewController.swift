@@ -80,9 +80,77 @@ class ViewController: UIViewController, CBPeripheralDelegate,
         }
     }
     
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+        if let e = error {
+            statusUpdate("ERROR in updating peripheral value \(e)")
+            return
+        }
+        guard let data = descriptorDescription(for: descriptor) else { return }
+        
+        switch descriptor.characteristic.uuid {
+            case HardwarePeripheral.frontCharUUID:
+                frontText.text = data
+            case HardwarePeripheral.midCharUUID:
+                midText.text = data
+            case HardwarePeripheral.backCharUUID:
+                backText.text = data
+        default:
+            statusUpdate("ERROR in processing peripheral data")
+        }
+        
+        return
+    }
+    
     func statusUpdate(_ text:String) {
         statusText.text = text
         print(text)
+    }
+    
+    func descriptorDescription(for descriptor: CBDescriptor) -> String? {
+
+        var description: String?
+        var value: String?
+
+        switch descriptor.uuid.uuidString {
+        case CBUUIDCharacteristicFormatString:
+            if let data = descriptor.value as? Data {
+                description = "Characteristic format: "
+                value = data.description
+            }
+        case CBUUIDCharacteristicUserDescriptionString:
+            if let val = descriptor.value as? String {
+                description = "User description: "
+                value = val
+            }
+        case CBUUIDCharacteristicExtendedPropertiesString:
+            if let val = descriptor.value as? NSNumber {
+                description = "Extended Properties: "
+                value = val.description
+            }
+        case CBUUIDClientCharacteristicConfigurationString:
+            if let val = descriptor.value as? NSNumber {
+                description = "Client characteristic configuration: "
+                value = val.description
+            }
+        case CBUUIDServerCharacteristicConfigurationString:
+            if let val = descriptor.value as? NSNumber {
+                description = "Server characteristic configuration: "
+                value = val.description
+            }
+        case CBUUIDCharacteristicAggregateFormatString:
+            if let val = descriptor.value as? String {
+                description = "Characteristic aggregate format: "
+                value = val
+            }
+        default:
+            break
+        }
+
+        if let desc=description, let val = value  {
+            return "\(desc)\(val)"
+        } else {
+            return nil
+        }
     }
 }
 
