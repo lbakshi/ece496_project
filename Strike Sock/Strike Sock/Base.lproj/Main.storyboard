@@ -103,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="1802.8985507246377" y="110.49107142857143"/>
         </scene>
-        <!--Strike Table View Controller-->
+        <!--History-->
         <scene sceneID="XoX-nY-kzv">
             <objects>
                 <tableViewController id="FHr-dx-Ah9" customClass="StrikeTableViewController" customModule="Strike_Sock" customModuleProvider="target" sceneMemberID="viewController">
@@ -142,7 +142,7 @@
                             <outlet property="delegate" destination="FHr-dx-Ah9" id="JWn-nS-wCn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="8C1-jq-CNX">
+                    <navigationItem key="navigationItem" title="History" id="8C1-jq-CNX">
                         <barButtonItem key="rightBarButtonItem" title="Start New Run" id="56E-43-U6Q">
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="show" id="XsB-Ur-Ka6"/>
