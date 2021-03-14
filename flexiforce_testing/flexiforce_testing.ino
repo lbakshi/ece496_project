@@ -52,10 +52,48 @@ void setup() {
 }
 
 void setUpWeight(void){
+  // Configure the service
+  weight_service.begin();
+
+  // Configure the weight measurement characteristic - Indicate 
+  weight_measurement_characteristic.setProperties(CHR_PROPS_INDICATE);
+  weight_measurement_characteristic.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  // there are probably some other things to configure but I am not sure ****
+  weight_measurement_characteristic.begin();
+
+  // Configure the weight scale feature - Read
+  weight_scale_feature.setProperties(CHR_PROPS_READ);
+  weight_scale_feature.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  // there are probably some other things to configure but I am not sure ****
+  weight_scale_feature.begin();
   
 }
 
 void startAdv(void){
+  // Advertising packet
+  Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE); //not sure what this means
+  Bluefruit.Advertising.addTxPower();
+
+  // Include Weight Service UUID
+  Bluefruit.Advertising.addService(weight_service);
+
+  // Include name
+  Bluefruit.Advertising.addName(); // should there be a name here?
+
+  /* Start Advertising
+   * - Enable auto advertising if disconnected
+   * - Interval:  fast mode = 20 ms, slow mode = 152.5 ms
+   * - Timeout for fast mode is 30 seconds
+   * - Start(timeout) with timeout = 0 will advertise forever (until connected)
+   * 
+   * For recommended advertising interval
+   * https://developer.apple.com/library/content/qa/qa1931/_index.html   
+   */
+  Bluefruit.Advertising.restartOnDisconnect(true);
+  Bluefruit.Advertising.setInterval(32, 244);    // in unit of 0.625 ms
+  Bluefruit.Advertising.setFastTimeout(30);      // number of seconds in fast mode
+  Bluefruit.Advertising.start(0);                // 0 = Don't stop advertising after n seconds
+  // can change values around if we want to advertise differently
   
 }
 
