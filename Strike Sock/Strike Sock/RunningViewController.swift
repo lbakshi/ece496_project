@@ -89,7 +89,9 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
             for characteristic in characteristics {
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
                     statusUpdate("Front sensor characteristic found")
-                } else if characteristic.uuid == HardwarePeripheral.midCharUUID {
+                } else if characteristic.uuid == HardwarePeripheral.frontCharScaleUUID {
+                    statusUpdate("Front sensor scale characteristic found")
+                }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
                 } else if characteristic.uuid == HardwarePeripheral.backCharUUID {
                     statusUpdate("Back sensor characteristic found")
