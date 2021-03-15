@@ -9,6 +9,7 @@ int fs3 = A2;
 int toe = 0;
 int ball = 0;
 int heel = 0;
+int toe_change = 0;
 float vout;
 unsigned long time = 0; 
 BLEService weight_service = BLEService(0x181D);
@@ -59,13 +60,17 @@ void setUpWeight(void){
   weight_measurement_characteristic.setProperties(CHR_PROPS_INDICATE);
   weight_measurement_characteristic.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   // there are probably some other things to configure but I am not sure ****
+  weight_measurement_characteristic.setFixedLen(1);
+  weight_measurement_characteristic.indicate8(toe_change);
   weight_measurement_characteristic.begin();
 
   // Configure the weight scale feature - Read
   weight_scale_feature.setProperties(CHR_PROPS_READ);
   weight_scale_feature.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   // there are probably some other things to configure but I am not sure ****
+  weight_scale_feature.setFixedLen(2);
   weight_scale_feature.begin();
+  weight_scale_feature.write16(toe);
   
 }
 
@@ -99,6 +104,14 @@ void startAdv(void){
 
 void connect_callback(uint16_t conn_handle)
 {
+  // Get the reference to current connection
+  BLEConnection* connection = Bluefruit.Connection(conn_handle);
+ 
+  char central_name[32] = { 0 };
+  connection->getPeerName(central_name, sizeof(central_name));
+ 
+  Serial.print("Connected to ");
+  Serial.println(central_name);
   
 }
  
@@ -109,6 +122,11 @@ void connect_callback(uint16_t conn_handle)
  */
 void disconnect_callback(uint16_t conn_handle, uint8_t reason)
 {
+  (void) conn_handle;
+  (void) reason;
+ 
+  Serial.print("Disconnected, reason = 0x"); Serial.println(reason, HEX);
+  Serial.println("Advertising!");
   
 }
 
@@ -124,19 +142,29 @@ void loop() {
   //vout1 = (fs1Data * 5.0) / 1023.0;
   //vout = vout *cf;
   if(toe > 10){
+     toe_change = 1; // this is for the indicator 
      Serial.print("Flexi Force sensor 1: ");
      Serial.print(toe);
      Serial.println("");
+  }
+  else{
+    toe_change = 0;
   }
   if(ball > 10){
      Serial.print("Flexi Force sensor 2: ");
      Serial.print(ball);
      Serial.println("");
   }
+  else{
+    
+  }
   if(heel > 10){
      Serial.print("Flexi Force sensor 3: ");
      Serial.print(heel);
      Serial.println("");
+  }
+  else{
+    
   }
  
   delay(100);
