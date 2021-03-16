@@ -1,0 +1,4 @@
+target 'Strike Sock' do
+    use_frameworks!
+  pod 'CorePlot', '~> 2.3'
+end
