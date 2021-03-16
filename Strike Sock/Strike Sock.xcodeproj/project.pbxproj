@@ -21,8 +21,14 @@
 		6A219FAD25DC9B3000E97B43 /* Strike_SockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A219FAC25DC9B3000E97B43 /* Strike_SockUITests.swift */; };
 		6A3E814725FABE6E00C69221 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3E814625FABE6E00C69221 /* util.swift */; };
 		6A54EB0C25E5B79300587205 /* HardwarePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A54EB0B25E5B79300587205 /* HardwarePeripheral.swift */; };
+<<<<<<< HEAD
 		6A776AF225FEEB8700F65ECC /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 6A776AF125FEEB8700F65ECC /* Podfile */; };
 		D13E42CE5C51D35186B816FF /* Pods_Strike_Sock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */; };
+=======
+		B14C99AD25FFC66C00594592 /* Strike_Sock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A219F9025DC9B3000E97B43 /* Strike_Sock.xcdatamodeld */; };
+		B14C99B325FFC7A300594592 /* Strike_Sock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B14C99B125FFC7A300594592 /* Strike_Sock.xcdatamodeld */; };
+		B14C99B925FFF39B00594592 /* ShoePrototype.png in Resources */ = {isa = PBXBuildFile; fileRef = B14C99B825FFF39B00594592 /* ShoePrototype.png */; };
+>>>>>>> revertedAnnaBranch
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +49,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		42CACC857C433130FEBC4D50 /* Pods-Strike Sock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strike Sock.debug.xcconfig"; path = "Target Support Files/Pods-Strike Sock/Pods-Strike Sock.debug.xcconfig"; sourceTree = "<group>"; };
 		6A205FCD25F9C557003DE16E /* session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = session.swift; sourceTree = "<group>"; };
 		6A205FD825F9E8B0003DE16E /* sessionCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sessionCollection.swift; sourceTree = "<group>"; };
 		6A205FE825F9EFD3003DE16E /* StrikeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrikeTableViewController.swift; sourceTree = "<group>"; };
@@ -64,9 +69,14 @@
 		6A219FAE25DC9B3000E97B43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A3E814625FABE6E00C69221 /* util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
 		6A54EB0B25E5B79300587205 /* HardwarePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePeripheral.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		6A776AF125FEEB8700F65ECC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A51814AF4188DB21B1B5F3CD /* Pods-Strike Sock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strike Sock.release.xcconfig"; path = "Target Support Files/Pods-Strike Sock/Pods-Strike Sock.release.xcconfig"; sourceTree = "<group>"; };
 		F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Strike_Sock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		B14C99B225FFC7A300594592 /* Strike_Sock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Strike_Sock.xcdatamodel; sourceTree = "<group>"; };
+		B14C99B825FFF39B00594592 /* ShoePrototype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShoePrototype.png; path = ../../../../../Desktop/ShoePrototype.png; sourceTree = "<group>"; };
+>>>>>>> revertedAnnaBranch
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D13E42CE5C51D35186B816FF /* Pods_Strike_Sock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,24 +104,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		55B815ACE6797BC0E988B552 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		6A219F7B25DC9B3000E97B43 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				6A776AF125FEEB8700F65ECC /* Podfile */,
+=======
+				B14C99B725FFF35000594592 /* Media */,
+>>>>>>> revertedAnnaBranch
 				6A219F8625DC9B3000E97B43 /* Strike Sock */,
 				6A219FA025DC9B3000E97B43 /* Strike SockTests */,
 				6A219FAB25DC9B3000E97B43 /* Strike SockUITests */,
 				6A219F8525DC9B3000E97B43 /* Products */,
-				EBE67294F229A1B748C4E6CC /* Pods */,
-				55B815ACE6797BC0E988B552 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,6 +167,7 @@
 			path = "Strike SockUITests";
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		EBE67294F229A1B748C4E6CC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +175,14 @@
 				A51814AF4188DB21B1B5F3CD /* Pods-Strike Sock.release.xcconfig */,
 			);
 			path = Pods;
+=======
+		B14C99B725FFF35000594592 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				B14C99B825FFF39B00594592 /* ShoePrototype.png */,
+			);
+			path = Media;
+>>>>>>> revertedAnnaBranch
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,11 +192,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A219FB125DC9B3000E97B43 /* Build configuration list for PBXNativeTarget "Strike Sock" */;
 			buildPhases = (
-				EC561EE1C462F1B5EDAC8672 /* [CP] Check Pods Manifest.lock */,
 				6A219F8025DC9B3000E97B43 /* Sources */,
 				6A219F8125DC9B3000E97B43 /* Frameworks */,
 				6A219F8225DC9B3000E97B43 /* Resources */,
-				CCE3BCB2A901746F0F4F1259 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -280,7 +290,6 @@
 			files = (
 				6A219F9725DC9B3000E97B43 /* LaunchScreen.storyboard in Resources */,
 				6A219F9425DC9B3000E97B43 /* Assets.xcassets in Resources */,
-				6A776AF225FEEB8700F65ECC /* Podfile in Resources */,
 				6A219F8F25DC9B3000E97B43 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,48 +309,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		CCE3BCB2A901746F0F4F1259 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Strike Sock/Pods-Strike Sock-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Strike Sock/Pods-Strike Sock-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Strike Sock/Pods-Strike Sock-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC561EE1C462F1B5EDAC8672 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Strike Sock-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A219F8025DC9B3000E97B43 /* Sources */ = {
@@ -529,7 +496,6 @@
 		};
 		6A219FB225DC9B3000E97B43 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42CACC857C433130FEBC4D50 /* Pods-Strike Sock.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -549,7 +515,6 @@
 		};
 		6A219FB325DC9B3000E97B43 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A51814AF4188DB21B1B5F3CD /* Pods-Strike Sock.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
