@@ -61,7 +61,7 @@ void setUpWeight(void){
   weight_measurement_characteristic.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   // there are probably some other things to configure but I am not sure ****
   weight_measurement_characteristic.setFixedLen(1);
-  weight_measurement_characteristic.indicate8(toe_change);
+  weight_measurement_characteristic.indicate32(toe_change);
   weight_measurement_characteristic.begin();
 
   // Configure the weight scale feature - Read
@@ -70,7 +70,7 @@ void setUpWeight(void){
   // there are probably some other things to configure but I am not sure ****
   weight_scale_feature.setFixedLen(2);
   weight_scale_feature.begin();
-  weight_scale_feature.write16(toe);
+  weight_scale_feature.write32(toe);
   
 }
 
@@ -131,10 +131,6 @@ void disconnect_callback(uint16_t conn_handle, uint8_t reason)
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  //Serial.print("Time: ");
-  //time = millis();
-  //Serial.println(time); //prints time since program started
   
   toe = analogRead(fs1);
   ball = analogRead(fs2);
