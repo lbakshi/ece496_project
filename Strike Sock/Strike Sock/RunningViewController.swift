@@ -101,6 +101,7 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+        statusUpdate("Some value did update on the BLE device")
         if let e = error {
             statusUpdate("ERROR in updating peripheral value \(e)")
             return
@@ -109,7 +110,11 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         
         switch descriptor.characteristic.uuid {
             case HardwarePeripheral.frontCharUUID:
+                statusUpdate("Updating the measure/read characteristic to \(data)")
                 frontText.text = data
+            case HardwarePeripheral.frontCharScaleUUID:
+                statusUpdate("Updating the scale/indicate characteristic to \(data)")
+                midText.text = data
             case HardwarePeripheral.midCharUUID:
                 midText.text = data
             case HardwarePeripheral.backCharUUID:
