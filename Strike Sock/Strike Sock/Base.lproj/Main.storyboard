@@ -170,6 +170,9 @@
                                 <rect key="frame" x="158.5" y="656" width="97" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="About Us"/>
+                                <connections>
+                                    <segue destination="dHe-Yx-5qx" kind="show" id="Anx-Lj-9Xw"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qh7-Vy-1CE">
                                 <rect key="frame" x="186" y="464.5" width="42" height="21"/>
@@ -186,6 +189,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUB-uo-2lv">
                                 <rect key="frame" x="150.5" y="384" width="113" height="30"/>
                                 <state key="normal" title="Go To My Profile"/>
+                                <connections>
+                                    <segue destination="9Tz-T3-gro" kind="show" id="xK1-eQ-NZu"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StrikeSock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0f-gj-fgp">
                                 <rect key="frame" x="108.5" y="295" width="197" height="52"/>
@@ -282,8 +288,138 @@
             </objects>
             <point key="canvasLocation" x="71.014492753623188" y="109.82142857142857"/>
         </scene>
+        <!--About Us Controller-->
+        <scene sceneID="SVz-Gi-0s1">
+            <objects>
+                <viewController id="dHe-Yx-5qx" userLabel="About Us Controller" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i7e-re-6nN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About StrikeSock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqt-Xe-aY9">
+                                <rect key="frame" x="73.5" y="98" width="267" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d2a-hU-Adt">
+                                <rect key="frame" x="20" y="180" width="374" height="586"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EC9-CU-rnr" userLabel="Scrolling View">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="1500"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Who We Are" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2JH-u0-yFd">
+                                                <rect key="frame" x="121.5" y="24" width="131" height="28"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DVi-aK-Ya9">
+                                                <rect key="frame" x="8" y="60" width="358" height="182"/>
+                                                <string key="text">StrikeSock is a team of dedicated engineers focused on providing runners with a new, accessible gait analysis technology. Our product is comfortable, easy to use, and designed with you in mind to help you avoid injury.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSJ-uh-jS4">
+                                                <rect key="frame" x="8" y="275" width="358" height="154"/>
+                                                <string key="text">Whether you're a casual runner looking to learn more about your running pattern without breaking the bank or are looking towards your next big race, StrikeSock can help you achieve your goals.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Design Process" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PmK-sv-7XE">
+                                                <rect key="frame" x="104" y="461" width="166" height="28"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" image="ShoePrototype.png" translatesAutoresizingMaskIntoConstraints="NO" id="MFk-4o-rM2">
+                                                <rect key="frame" x="8" y="497" width="358" height="358"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="DVi-aK-Ya9" firstAttribute="centerX" secondItem="EC9-CU-rnr" secondAttribute="centerX" id="7uZ-Y9-vHk"/>
+                                            <constraint firstItem="KSJ-uh-jS4" firstAttribute="top" secondItem="DVi-aK-Ya9" secondAttribute="bottom" constant="33" id="CNM-uC-rTv"/>
+                                            <constraint firstItem="KSJ-uh-jS4" firstAttribute="centerX" secondItem="EC9-CU-rnr" secondAttribute="centerX" id="DUT-g2-XB7"/>
+                                            <constraint firstItem="DVi-aK-Ya9" firstAttribute="leading" secondItem="EC9-CU-rnr" secondAttribute="leading" constant="8" id="GMd-0X-Nlr"/>
+                                            <constraint firstItem="DVi-aK-Ya9" firstAttribute="top" secondItem="EC9-CU-rnr" secondAttribute="top" constant="60" id="KOF-ti-cPO"/>
+                                            <constraint firstItem="MFk-4o-rM2" firstAttribute="leading" secondItem="EC9-CU-rnr" secondAttribute="leading" constant="8" id="YAj-B8-NOB"/>
+                                            <constraint firstItem="MFk-4o-rM2" firstAttribute="top" secondItem="PmK-sv-7XE" secondAttribute="bottom" constant="8" id="ZCH-tB-eMw"/>
+                                            <constraint firstAttribute="trailing" secondItem="DVi-aK-Ya9" secondAttribute="trailing" constant="8" id="b2B-Lu-R2f"/>
+                                            <constraint firstItem="PmK-sv-7XE" firstAttribute="firstBaseline" secondItem="KSJ-uh-jS4" secondAttribute="baseline" constant="59" id="bBU-kp-Sa1"/>
+                                            <constraint firstAttribute="height" constant="1000" id="cVX-jn-K11"/>
+                                            <constraint firstItem="2JH-u0-yFd" firstAttribute="top" secondItem="EC9-CU-rnr" secondAttribute="top" constant="24" id="fGF-lU-Pr7"/>
+                                            <constraint firstItem="KSJ-uh-jS4" firstAttribute="width" secondItem="DVi-aK-Ya9" secondAttribute="width" id="fme-p0-jpo"/>
+                                            <constraint firstAttribute="trailing" secondItem="MFk-4o-rM2" secondAttribute="trailing" constant="8" id="gqi-Vs-u2x"/>
+                                            <constraint firstItem="MFk-4o-rM2" firstAttribute="centerX" secondItem="EC9-CU-rnr" secondAttribute="centerX" id="jza-aS-92U"/>
+                                            <constraint firstItem="2JH-u0-yFd" firstAttribute="centerX" secondItem="EC9-CU-rnr" secondAttribute="centerX" id="ndI-3H-8Ym"/>
+                                            <constraint firstItem="MFk-4o-rM2" firstAttribute="width" secondItem="KSJ-uh-jS4" secondAttribute="width" id="t8v-th-R9j"/>
+                                            <constraint firstItem="PmK-sv-7XE" firstAttribute="centerX" secondItem="EC9-CU-rnr" secondAttribute="centerX" id="uUb-l2-DvZ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="EC9-CU-rnr" secondAttribute="bottom" constant="-406" id="7Vy-3G-xHC"/>
+                                    <constraint firstItem="EC9-CU-rnr" firstAttribute="centerX" secondItem="d2a-hU-Adt" secondAttribute="centerX" id="Jp3-zE-7C6"/>
+                                    <constraint firstItem="EC9-CU-rnr" firstAttribute="top" secondItem="0Ic-dY-UN3" secondAttribute="top" id="SLa-dW-fAf"/>
+                                    <constraint firstAttribute="trailing" secondItem="EC9-CU-rnr" secondAttribute="trailing" id="sU4-Oa-ioX"/>
+                                    <constraint firstItem="EC9-CU-rnr" firstAttribute="leading" secondItem="d2a-hU-Adt" secondAttribute="leading" id="uFF-7D-7yZ"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="0Ic-dY-UN3"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="3EF-po-nRw"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2Kq-aJ-Fzf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wqt-Xe-aY9" firstAttribute="centerX" secondItem="2Kq-aJ-Fzf" secondAttribute="centerX" id="3Ru-rF-9O9"/>
+                            <constraint firstItem="d2a-hU-Adt" firstAttribute="leading" secondItem="2Kq-aJ-Fzf" secondAttribute="leading" constant="20" id="Fnx-7Y-tSN"/>
+                            <constraint firstItem="2Kq-aJ-Fzf" firstAttribute="trailing" secondItem="d2a-hU-Adt" secondAttribute="trailing" constant="20" id="mtL-zZ-BZX"/>
+                            <constraint firstItem="d2a-hU-Adt" firstAttribute="centerX" secondItem="2Kq-aJ-Fzf" secondAttribute="centerX" id="oY5-Wi-DbY"/>
+                            <constraint firstItem="2Kq-aJ-Fzf" firstAttribute="bottom" secondItem="d2a-hU-Adt" secondAttribute="bottom" constant="96" id="piE-lO-EZ9"/>
+                            <constraint firstItem="d2a-hU-Adt" firstAttribute="top" secondItem="wqt-Xe-aY9" secondAttribute="bottom" constant="39" id="sR2-jt-2SG"/>
+                            <constraint firstItem="wqt-Xe-aY9" firstAttribute="top" secondItem="2Kq-aJ-Fzf" secondAttribute="top" constant="10" id="sji-Ez-Lgk"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="sBj-5N-78o"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z1A-Bm-FKx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="453.62318840579712" y="823.66071428571422"/>
+        </scene>
+        <!--Profile Controller-->
+        <scene sceneID="qhn-jH-156">
+            <objects>
+                <viewController id="9Tz-T3-gro" userLabel="Profile Controller" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K4D-EB-gkg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faS-nc-B2q">
+                                <rect key="frame" x="120" y="98" width="174" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="SPx-yp-wEO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="faS-nc-B2q" firstAttribute="top" secondItem="SPx-yp-wEO" secondAttribute="top" constant="10" id="8JS-Xz-58U"/>
+                            <constraint firstItem="faS-nc-B2q" firstAttribute="centerX" secondItem="SPx-yp-wEO" secondAttribute="centerX" id="egr-74-ehZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="TDk-3O-ftg"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fHb-R0-wYt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1336" y="824"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="ShoePrototype.png" width="981" height="749"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
