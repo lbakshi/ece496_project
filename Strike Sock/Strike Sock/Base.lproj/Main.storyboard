@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Running View Controller-->
+        <!--This Run-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="RunningViewController" customModule="Strike_Sock" customModuleProvider="target" sceneMemberID="viewController">
@@ -129,6 +129,7 @@
                             <constraint firstItem="9o2-kr-t9N" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="zbf-bc-GxN"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="This Run" id="1fe-sZ-unS"/>
                     <connections>
                         <outlet property="backText" destination="rWh-0m-bdA" id="f0q-M9-yol"/>
                         <outlet property="frontText" destination="eQh-Nu-JqD" id="bH9-DO-DsA"/>
@@ -139,7 +140,84 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1802.8985507246377" y="110.49107142857143"/>
+            <point key="canvasLocation" x="2593" y="110"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="kw4-Yg-6OO">
+            <objects>
+                <viewController id="PNF-wz-ltZ" userLabel="Home View Controller" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tgz-6Q-5GI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="peq-nX-7Da">
+                                <rect key="frame" x="128" y="592" width="158" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="View Past Runs"/>
+                                <connections>
+                                    <segue destination="FHr-dx-Ah9" kind="show" id="sUJ-Uu-s2k"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KO7-TM-sE1">
+                                <rect key="frame" x="132.5" y="526" width="149" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Start New Run"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="mv7-XV-hR5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A0I-ci-2iC">
+                                <rect key="frame" x="158.5" y="656" width="97" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="About Us"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qh7-Vy-1CE">
+                                <rect key="frame" x="186" y="464.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome, &lt;user&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l3E-Ib-xXM">
+                                <rect key="frame" x="140" y="355" width="134" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUB-uo-2lv">
+                                <rect key="frame" x="150.5" y="384" width="113" height="30"/>
+                                <state key="normal" title="Go To My Profile"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StrikeSock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0f-gj-fgp">
+                                <rect key="frame" x="108.5" y="295" width="197" height="52"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Gu9-sy-j7p"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aUB-uo-2lv" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="5SP-1f-hBe"/>
+                            <constraint firstItem="KO7-TM-sE1" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="ApK-gO-wFo"/>
+                            <constraint firstItem="A0I-ci-2iC" firstAttribute="top" secondItem="peq-nX-7Da" secondAttribute="bottom" constant="23" id="JRk-JO-5Gk"/>
+                            <constraint firstItem="aUB-uo-2lv" firstAttribute="top" secondItem="l3E-Ib-xXM" secondAttribute="bottom" constant="8" symbolic="YES" id="Jsb-ng-gHM"/>
+                            <constraint firstItem="A0I-ci-2iC" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="R8Z-Pk-qgR"/>
+                            <constraint firstItem="t0f-gj-fgp" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="RO2-ld-j7k"/>
+                            <constraint firstItem="l3E-Ib-xXM" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="SkL-Bv-fSl"/>
+                            <constraint firstItem="l3E-Ib-xXM" firstAttribute="top" secondItem="t0f-gj-fgp" secondAttribute="bottom" constant="8" symbolic="YES" id="U8W-hN-2xq"/>
+                            <constraint firstItem="peq-nX-7Da" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="aXf-mQ-O4p"/>
+                            <constraint firstItem="Qh7-Vy-1CE" firstAttribute="top" secondItem="aUB-uo-2lv" secondAttribute="bottom" constant="50.5" id="aiZ-Kb-ZvC"/>
+                            <constraint firstItem="KO7-TM-sE1" firstAttribute="top" secondItem="Qh7-Vy-1CE" secondAttribute="bottom" constant="40.5" id="tJC-2o-bep"/>
+                            <constraint firstItem="Qh7-Vy-1CE" firstAttribute="centerY" secondItem="Gu9-sy-j7p" secondAttribute="centerY" id="tyz-kA-vs6"/>
+                            <constraint firstItem="peq-nX-7Da" firstAttribute="top" secondItem="KO7-TM-sE1" secondAttribute="bottom" constant="25" id="vG4-WF-baK"/>
+                            <constraint firstItem="Qh7-Vy-1CE" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="z9j-gK-fbJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="1p8-Ua-lKE"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wIY-Ku-i5e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="879.71014492753625" y="109.82142857142857"/>
         </scene>
         <!--History-->
         <scene sceneID="XoX-nY-kzv">
@@ -180,17 +258,11 @@
                             <outlet property="delegate" destination="FHr-dx-Ah9" id="JWn-nS-wCn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="History" id="8C1-jq-CNX">
-                        <barButtonItem key="rightBarButtonItem" title="Start New Run" id="56E-43-U6Q">
-                            <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="XsB-Ur-Ka6"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="History" id="8C1-jq-CNX"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbU-Sw-Qif" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="981.15942028985512" y="109.82142857142857"/>
+            <point key="canvasLocation" x="1748" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3Zf-Pv-CFf">
@@ -203,7 +275,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="FHr-dx-Ah9" kind="relationship" relationship="rootViewController" id="Nhe-Ol-6td"/>
+                        <segue destination="PNF-wz-ltZ" kind="relationship" relationship="rootViewController" id="dJn-6N-GtU"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rP2-Bg-Gv8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
