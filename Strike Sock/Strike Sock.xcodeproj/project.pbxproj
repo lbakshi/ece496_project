@@ -22,6 +22,7 @@
 		6A3E814725FABE6E00C69221 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3E814625FABE6E00C69221 /* util.swift */; };
 		6A54EB0C25E5B79300587205 /* HardwarePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A54EB0B25E5B79300587205 /* HardwarePeripheral.swift */; };
 		6A776AF225FEEB8700F65ECC /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 6A776AF125FEEB8700F65ECC /* Podfile */; };
+		B11663AD2602F1C5009746B9 /* ShoePrototype.png in Resources */ = {isa = PBXBuildFile; fileRef = B11663AC2602F1C5009746B9 /* ShoePrototype.png */; };
 		D13E42CE5C51D35186B816FF /* Pods_Strike_Sock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		6A54EB0B25E5B79300587205 /* HardwarePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwarePeripheral.swift; sourceTree = "<group>"; };
 		6A776AF125FEEB8700F65ECC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A51814AF4188DB21B1B5F3CD /* Pods-Strike Sock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strike Sock.release.xcconfig"; path = "Target Support Files/Pods-Strike Sock/Pods-Strike Sock.release.xcconfig"; sourceTree = "<group>"; };
+		B11663AC2602F1C5009746B9 /* ShoePrototype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShoePrototype.png; sourceTree = "<group>"; };
 		F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Strike_Sock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 		6A219F7B25DC9B3000E97B43 = {
 			isa = PBXGroup;
 			children = (
+				B11663AB2602F191009746B9 /* Medias */,
 				6A776AF125FEEB8700F65ECC /* Podfile */,
 				6A219F8625DC9B3000E97B43 /* Strike Sock */,
 				6A219FA025DC9B3000E97B43 /* Strike SockTests */,
@@ -162,6 +165,14 @@
 				6A219FAE25DC9B3000E97B43 /* Info.plist */,
 			);
 			path = "Strike SockUITests";
+			sourceTree = "<group>";
+		};
+		B11663AB2602F191009746B9 /* Medias */ = {
+			isa = PBXGroup;
+			children = (
+				B11663AC2602F1C5009746B9 /* ShoePrototype.png */,
+			);
+			path = Medias;
 			sourceTree = "<group>";
 		};
 		EBE67294F229A1B748C4E6CC /* Pods */ = {
@@ -281,6 +292,7 @@
 				6A219F9725DC9B3000E97B43 /* LaunchScreen.storyboard in Resources */,
 				6A219F9425DC9B3000E97B43 /* Assets.xcassets in Resources */,
 				6A776AF225FEEB8700F65ECC /* Podfile in Resources */,
+				B11663AD2602F1C5009746B9 /* ShoePrototype.png in Resources */,
 				6A219F8F25DC9B3000E97B43 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
