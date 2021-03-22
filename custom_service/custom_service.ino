@@ -1,7 +1,4 @@
 #include <bluefruit.h>
-//Service UUID is 0x181D
-//Weight measurement characteristic UUID is 0x2A9D 
-//Weight Scale Feature characteristic UUID is 0x2A9E
 
 // Online generated UUIDs in case we want to implement our own service and characteristics 
 //dea53006-ea01-4939-a384-1573aae78dca
@@ -9,72 +6,42 @@
 //ab77fad9-d27b-4c46-8b44-771be5c01072
 //1c005070-4bbd-428e-86bd-0287d7775a1e
 //6f242ade-5fa3-4185-9c2d-2ff865c2e850
-float cf = 19.5;
+
 int fs1 = A0;
 int fs2 = A1;
 int fs3 = A2;
 int toe = 0;
 int ball = 0;
 int heel = 0;
-unsigned long time = 0; 
-BLEService weight_service = BLEService(0x181D);
-BLECharacteristic weight_measurement_characteristic = BLECharacteristic(0x2A9D);
-BLECharacteristic weight_scale_feature = BLECharacteristic(0x2A9E);
-BLEDis bledis; // Device information service helper class instance
-BLEBas blebas; // battery service helper class instance
+unsigned long time = 0;
 
-
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  pinMode(fs1, INPUT);
-  pinMode(fs2, INPUT);
-  pinMode(fs3, INPUT);
-  
-  // Initialize the Bluefruit module
-  Bluefruit.begin();
-  
-  // Set the advertised device name 
-  Bluefruit.setName("StrikeSock Bluefruit");
-  
-  // Set the connect/disconnect callback handlers 
-  Bluefruit.Periph.setConnectCallback(connect_callback);
-  Bluefruit.Periph.setDisconnectCallback(disconnect_callback);
-  
-  // Configure and start the device information service 
-  bledis.setManufacturer("Adafruit Industries");
-  bledis.setModel("Bluefruit Feather52");
-  bledis.begin();
-  
-  // Start the BLE battery service and set it to 100%
-  blebas.begin();
-  blebas.write(100);
-
-  // Set up the advertisign packets
-  startAdv();
-
-  // Set up the weight scale service 
-  setUpWeight();
-  
-}
+BLEService my_service = BLEService('dea53006-ea01-4939-a384-1573aae78dca');
+BLECharacteristic toe_sensor = BLECharacteristic('e7725f91-84af-4527-b045-6f7d3cc1b67d');
+BLECharacteristic midfoot_sensor = BLECharacteristic('ab77fad9-d27b-4c46-8b44-771be5c01072');
+BLECharacteristic heel_sensor = BLECharacteristic('1c005070-4bbd-428e-86bd-0287d7775a1e');
+BLEDis bledis;
+BLEBas blebas;
 
 void setUpWeight(void){
-  // Configure the service
-  weight_service.begin();
+  my_service.begin();
 
-  // Configure the weight measurement characteristic - Indicate BUT i want to change it to notify
-  weight_measurement_characteristic.setProperties(CHR_PROPS_INDICATE);
-  weight_measurement_characteristic.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  weight_measurement_characteristic.setMaxLen(2);
-  weight_measurement_characteristic.begin();
-  weight_measurement_characteristic.indicate32(toe); // should notify central on the change of this variable
+  toe_sensor.setProperties(CHR_PROPS_NOTIFY);
+  toe_sensor.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  toe_sensor.setFixedLen(2);
+  toe_sensor.begin();
+  toe_sensor.notify32(toe);
 
-  // Configure the weight scale feature - Read
-  weight_scale_feature.setProperties(CHR_PROPS_READ);
-  weight_scale_feature.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  weight_scale_feature.setFixedLen(2);
-  weight_scale_feature.begin();  
-  weight_scale_feature.write32(toe); // should hold the new value of this variable
+  midfoot_sensor.setProperties(CHR_PROPS_NOTIFY);
+  midfoot_sensor.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  midfoot_sensor.setFixedLen(2);
+  midfoot_sensor.begin();
+  midfoot_sensor.notify32(toe);
+
+  heel_sensor.setProperties(CHR_PROPS_NOTIFY);
+  heel_sensor.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  heel_sensor.setFixedLen(2);
+  heel_sensor.begin();
+  heel_sensor.notify32(toe);
 
 }
 
@@ -84,7 +51,7 @@ void startAdv(void){
   Bluefruit.Advertising.addTxPower();
 
   // Include Weight Service UUID
-  Bluefruit.Advertising.addService(weight_service);
+  Bluefruit.Advertising.addService(my_service);
 
   // Include name
   Bluefruit.Advertising.addName(); // should there be a name here?
@@ -105,6 +72,7 @@ void startAdv(void){
   // can change values around if we want to advertise differently
   
 }
+
 
 void connect_callback(uint16_t conn_handle)
 {
@@ -134,7 +102,43 @@ void disconnect_callback(uint16_t conn_handle, uint8_t reason)
   
 }
 
+void setup() {
+  // put your setup code here, to run once:
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(fs1, INPUT);
+  pinMode(fs2, INPUT);
+  pinMode(fs3, INPUT);
+
+  // Initialize the Bluefruit module
+  Bluefruit.begin();
+  
+  // Set the advertised device name 
+  Bluefruit.setName("StrikeSock Bluefruit");
+
+  // Set the connect/disconnect callback handlers 
+  Bluefruit.Periph.setConnectCallback(connect_callback);
+  Bluefruit.Periph.setDisconnectCallback(disconnect_callback);
+
+  // Configure and start the device information service 
+  bledis.setManufacturer("Adafruit Industries");
+  bledis.setModel("Bluefruit Feather52");
+  bledis.begin();
+  
+  // Start the BLE battery service and set it to 100%
+  blebas.begin();
+  blebas.write(100);
+
+   // Set up the advertisign packets
+  startAdv();
+
+  // Set up the weight scale service 
+  setUpWeight();
+
+}
+
 void loop() {
+  // put your main code here, to run repeatedly:
   toe = analogRead(fs1);
   ball = analogRead(fs2);
   heel = analogRead(fs3);
@@ -149,16 +153,10 @@ void loop() {
      Serial.print(ball);
      Serial.println("");
   }
-  else{
-    
-  }
   if(heel > 10){
      Serial.print("Flexi Force sensor 3: ");
      Serial.print(heel);
      Serial.println("");
-  }
-  else{
-    
   }
  
   delay(100);
