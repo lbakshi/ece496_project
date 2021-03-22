@@ -15,7 +15,7 @@ unsigned long time = 0;
 BLEService weight_service = BLEService(0x181D);
 BLECharacteristic weight_measurement_characteristic = BLECharacteristic(0x2A9D);
 BLECharacteristic weight_scale_feature = BLECharacteristic(0x2A9E);
-BLEDis bledis; // Device information service helper class instance???
+BLEDis bledis; // Device information service helper class instance
 BLEBas blebas; // battery service helper class instance
 
 
@@ -56,22 +56,20 @@ void setUpWeight(void){
   // Configure the service
   weight_service.begin();
 
-  // Configure the weight measurement characteristic - Indicate 
-  weight_measurement_characteristic.setProperties(CHR_PROPS_INDICATE);
+  // Configure the weight measurement characteristic - Indicate BUT i want to change it to notify
+  weight_measurement_characteristic.setProperties(CHR_PROPS_NOTIFY);
   weight_measurement_characteristic.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  // there are probably some other things to configure but I am not sure ****
-  weight_measurement_characteristic.setFixedLen(1);
-  weight_measurement_characteristic.indicate32(toe_change);
+  weight_measurement_characteristic.setMaxLen(2);
   weight_measurement_characteristic.begin();
+  weight_measurement_characteristic.notify32(toe); // should notify central on the change of this variable
 
   // Configure the weight scale feature - Read
   weight_scale_feature.setProperties(CHR_PROPS_READ);
   weight_scale_feature.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  // there are probably some other things to configure but I am not sure ****
   weight_scale_feature.setFixedLen(2);
-  weight_scale_feature.begin();
-  weight_scale_feature.write32(toe);
-  
+  weight_scale_feature.begin();  
+  weight_scale_feature.write32(toe); // should hold the new value of this variable
+
 }
 
 void startAdv(void){
@@ -131,20 +129,14 @@ void disconnect_callback(uint16_t conn_handle, uint8_t reason)
 }
 
 void loop() {
-  
   toe = analogRead(fs1);
   ball = analogRead(fs2);
   heel = analogRead(fs3);
-  //vout1 = (fs1Data * 5.0) / 1023.0;
-  //vout = vout *cf;
+
   if(toe > 10){
-     toe_change = 1; // this is for the indicator 
      Serial.print("Flexi Force sensor 1: ");
      Serial.print(toe);
      Serial.println("");
-  }
-  else{
-    toe_change = 0;
   }
   if(ball > 10){
      Serial.print("Flexi Force sensor 2: ");
