@@ -94,8 +94,6 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
             for characteristic in characteristics {
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
                     statusUpdate("Front sensor characteristic found")
-                } else if characteristic.uuid == HardwarePeripheral.frontCharScaleUUID {
-                    statusUpdate("Front sensor scale characteristic found")
                 }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
                 } else if characteristic.uuid == HardwarePeripheral.backCharUUID {
@@ -121,9 +119,6 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
                 if (runningSession.isUpdating) {
                     runningSession.frontArr.append(newDataPoint)
                 }
-            case HardwarePeripheral.frontCharScaleUUID:
-                statusUpdate("Updating the scale/indicate characteristic to \(data)")
-                midText.text = data
             case HardwarePeripheral.midCharUUID:
                 midText.text = data
                 if (runningSession.isUpdating) {
