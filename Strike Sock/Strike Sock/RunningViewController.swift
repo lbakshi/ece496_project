@@ -34,17 +34,21 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     @IBAction func pressedStartPauseButton(_ sender: Any) {
+        print("hit start button")
         switch StartPauseButton.titleLabel!.text {
         case "Start":
-            StartPauseButton.titleLabel!.text = "Pause"
+            print("start case")
+            StartPauseButton.setTitle("Pause", for: .normal)
             finishButton.isHidden = false
             runningSession.start()
         case "Pause":
-            StartPauseButton.titleLabel!.text = "Continue"
-            runningSession.isUpdating = false
-        default:
-            StartPauseButton.titleLabel!.text = "Pause"
+            print("pause case")
+            StartPauseButton.setTitle("Continue", for: .normal)
             runningSession.isUpdating = true
+        default:
+            print("default case")
+            StartPauseButton.setTitle("Pause", for: .normal)
+            runningSession.isUpdating = false
         }
     }
     
