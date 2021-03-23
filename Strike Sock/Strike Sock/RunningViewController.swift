@@ -89,15 +89,25 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         }
     }
     
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+            statusUpdate("Notification State Updated for \(characteristic.description) - \(characteristic.isNotifying)")
+        }
+    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
                     statusUpdate("Front sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    statusUpdate("Set Alert Notify True")
                 }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    statusUpdate("Set Alert Notify True")
                 } else if characteristic.uuid == HardwarePeripheral.backCharUUID {
                     statusUpdate("Back sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    statusUpdate("Set Alert Notify True")
                 }
             }
         }
