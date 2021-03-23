@@ -34,17 +34,21 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     @IBAction func pressedStartPauseButton(_ sender: Any) {
+        print("hit start button")
         switch StartPauseButton.titleLabel!.text {
         case "Start":
-            StartPauseButton.titleLabel!.text = "Pause"
+            print("start case")
+            StartPauseButton.setTitle("Pause", for: .normal)
             finishButton.isHidden = false
             runningSession.start()
         case "Pause":
-            StartPauseButton.titleLabel!.text = "Continue"
-            runningSession.isUpdating = false
-        default:
-            StartPauseButton.titleLabel!.text = "Pause"
+            print("pause case")
+            StartPauseButton.setTitle("Continue", for: .normal)
             runningSession.isUpdating = true
+        default:
+            print("default case")
+            StartPauseButton.setTitle("Pause", for: .normal)
+            runningSession.isUpdating = false
         }
     }
     
@@ -89,15 +93,25 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         }
     }
     
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+            statusUpdate("Notification State Updated for \(characteristic.description) - \(characteristic.isNotifying)")
+        }
+    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
                     statusUpdate("Front sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    statusUpdate("Set Alert Notify True")
                 }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    statusUpdate("Set Alert Notify True")
                 } else if characteristic.uuid == HardwarePeripheral.backCharUUID {
                     statusUpdate("Back sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    statusUpdate("Set Alert Notify True")
                 }
             }
         }
