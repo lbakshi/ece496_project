@@ -5,7 +5,6 @@
 //e7725f91-84af-4527-b045-6f7d3cc1b67d
 //ab77fad9-d27b-4c46-8b44-771be5c01072
 //1c005070-4bbd-428e-86bd-0287d7775a1e
-//6f242ade-5fa3-4185-9c2d-2ff865c2e850
 
 int fs1 = A0;
 int fs2 = A1;
