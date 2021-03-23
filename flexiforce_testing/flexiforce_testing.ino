@@ -67,7 +67,7 @@ void setUpWeight(void){
   weight_measurement_characteristic.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   weight_measurement_characteristic.setMaxLen(2);
   weight_measurement_characteristic.begin();
-  weight_measurement_characteristic.indicate32(toe); // should notify central on the change of this variable
+  //weight_measurement_characteristic.indicate32(toe); // should notify central on the change of this variable
 
   // Configure the weight scale feature - Read
   weight_scale_feature.setProperties(CHR_PROPS_READ);
@@ -140,6 +140,8 @@ void loop() {
   heel = analogRead(fs3);
 
   if(toe > 10){
+    delay(1000);
+     weight_measurement_characteristic.indicate32(toe);
      Serial.print("Flexi Force sensor 1: ");
      Serial.print(toe);
      Serial.println("");
