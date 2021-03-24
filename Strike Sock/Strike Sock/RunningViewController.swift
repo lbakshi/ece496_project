@@ -77,6 +77,7 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         
         self.peripheral = peripheral
         self.peripheral.delegate = self
+        statusUpdate("Connecting to the sock")
         self.centralManager.connect(self.peripheral, options: nil)
     }
     
@@ -159,6 +160,25 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         
         return
     }
+
+  func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+    switch peripheral.state {
+    case .poweredOn:
+        print("Peripheral Is Powered On.")
+    case .unsupported:
+        print("Peripheral Is Unsupported.")
+    case .unauthorized:
+    print("Peripheral Is Unauthorized.")
+    case .unknown:
+        print("Peripheral Unknown")
+    case .resetting:
+        print("Peripheral Resetting")
+    case .poweredOff:
+      print("Peripheral Is Powered Off.")
+    @unknown default:
+      print("Error")
+    }
+  }
     
     func statusUpdate(_ text:String) {
         statusText.text = text
