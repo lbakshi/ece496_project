@@ -31,14 +31,35 @@ class StrikeTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return sessionColl.sessionArr.count
     }
-
+    
+    override func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionProtoCell", for: indexPath) as! SessionProtoCell
+        let tempSession:Session = sessionColl.sessionArr[indexPath.row]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM d, h:mm a"
+        guard let time = tempSession.startTime else {
+            return cell
+        }
+        let timeAsText = formatter.string(from: time)
+        cell.cellLabel.text = timeAsText
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            sessionColl.sessionArr.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            let _ = SessionCollection.saveData(sessionColl)
+            self.tableView.reloadData()
+        }
+    }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

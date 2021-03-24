@@ -49,11 +49,21 @@ class Session : Codable {
             backArr.append(dataPoint(time: Date(), val: val))
         }
     }
-    
+    /*
+     ends the session and saves it to the user's data
+     */
     func end() {
-        self.endTime = Date()
+        if let _ = self.endTime {
+        } else {
+            self.endTime = Date()
+        }
         isUpdating = false
         complete = true
+        
+        let arr = SessionCollection.loadData() ?? SessionCollection()
+        arr.addSession(self)
+        print("saving session state")
+        let _ = SessionCollection.saveData(arr)
     }
     
 

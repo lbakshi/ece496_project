@@ -33,20 +33,26 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if !runningSession.complete {
+            runningSession.end()
+        } else {
+            return
+        }
+    }
+    
     @IBAction func pressedStartPauseButton(_ sender: Any) {
-        print("hit start button")
         switch StartPauseButton.titleLabel!.text {
         case "Start":
-            print("start case")
             StartPauseButton.setTitle("Pause", for: .normal)
             finishButton.isHidden = false
             runningSession.start()
         case "Pause":
-            print("pause case")
             StartPauseButton.setTitle("Continue", for: .normal)
             runningSession.isUpdating = true
         default:
-            print("default case")
             StartPauseButton.setTitle("Pause", for: .normal)
             runningSession.isUpdating = false
         }
@@ -79,6 +85,10 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
             statusUpdate("Connected to the sock")
             peripheral.discoverServices([HardwarePeripheral.serviceUUID])
         }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        centralManager.scanForPeripherals(withServices: [HardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
