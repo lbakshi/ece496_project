@@ -130,7 +130,8 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
                     statusUpdate("Front sensor characteristic found")
                     peripheral.setNotifyValue(true, for: characteristic)
-                    statusUpdate("Set Alert Notify True")
+                    statusUpdate("Set Alert Notify True, attempting to read value once")
+                    peripheral.readValue(for: characteristic)
                 }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
                     //peripheral.setNotifyValue(true, for: characteristic)
