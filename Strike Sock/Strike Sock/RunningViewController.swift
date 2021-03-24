@@ -77,6 +77,7 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         
         self.peripheral = peripheral
         self.peripheral.delegate = self
+        statusUpdate("Connecting to the sock")
         self.centralManager.connect(self.peripheral, options: nil)
     }
     
@@ -88,26 +89,42 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        if let e = error {
+            statusUpdate("ERROR in disconnecting peripheral \(e)")
+            return
+        }
         centralManager.scanForPeripherals(withServices: [HardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if let e = error {
+            statusUpdate("ERROR in discovering services \(e)")
+            return
+        }
         if let services = peripheral.services {
             for service in services {
                 if service.uuid == HardwarePeripheral.serviceUUID {
                     statusUpdate("Service Found")
                     
-                    peripheral.discoverCharacteristics([HardwarePeripheral.frontCharUUID, HardwarePeripheral.midCharUUID, HardwarePeripheral.backCharUUID], for: service)
+                    peripheral.discoverCharacteristics([HardwarePeripheral.frontCharUUID, HardwarePeripheral.midCharUUID/*, HardwarePeripheral.backCharUUID*/], for: service)
                 }
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+            if let e = error {
+                statusUpdate("ERROR in updaing notification state \(e)")
+                return
+            }
             statusUpdate("Notification State Updated for \(characteristic.description) - \(characteristic.isNotifying)")
         }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let e = error {
+            statusUpdate("ERROR in discovering characteristics \(e)")
+            return
+        }
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
@@ -159,6 +176,25 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
         
         return
     }
+
+  func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+    switch peripheral.state {
+    case .poweredOn:
+        print("Peripheral Is Powered On.")
+    case .unsupported:
+        print("Peripheral Is Unsupported.")
+    case .unauthorized:
+    print("Peripheral Is Unauthorized.")
+    case .unknown:
+        print("Peripheral Unknown")
+    case .resetting:
+        print("Peripheral Resetting")
+    case .poweredOff:
+      print("Peripheral Is Powered Off.")
+    @unknown default:
+      print("Error")
+    }
+  }
     
     func statusUpdate(_ text:String) {
         statusText.text = text
