@@ -146,7 +146,7 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
-        statusUpdate("Some value did update on the BLE device")
+        statusUpdate("Some descriptor did update on the BLE device")
         if let e = error {
             statusUpdate("ERROR in updating peripheral value \(e)")
             return
@@ -168,6 +168,41 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
                 }
             case HardwarePeripheral.backCharUUID:
                 backText.text = data
+                if (runningSession.isUpdating) {
+                    runningSession.backArr.append(newDataPoint)
+                }
+        default:
+            statusUpdate("ERROR in processing peripheral data")
+        }
+        
+        return
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        statusUpdate("Some value did update on the BLE device")
+        if let e = error {
+            statusUpdate("ERROR in updating peripheral value \(e)")
+            return
+        }
+        guard let value = characteristic.value else {return}
+        let dataStr = String(decoding: value, as: UTF8.self)
+        statusUpdate("Got data \(dataStr)")
+        
+        let newDataPoint = dataPoint(time: Date(), val: Double(dataStr) ?? 0.0)
+        switch characteristic.uuid {
+            case HardwarePeripheral.frontCharUUID:
+                statusUpdate("Updating the measure/read characteristic to \(dataStr)")
+                frontText.text = dataStr
+                if (runningSession.isUpdating) {
+                    runningSession.frontArr.append(newDataPoint)
+                }
+            case HardwarePeripheral.midCharUUID:
+                midText.text = dataStr
+                if (runningSession.isUpdating) {
+                    runningSession.midArr.append(newDataPoint)
+                }
+            case HardwarePeripheral.backCharUUID:
+                backText.text = dataStr
                 if (runningSession.isUpdating) {
                     runningSession.backArr.append(newDataPoint)
                 }
