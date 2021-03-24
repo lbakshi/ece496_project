@@ -133,8 +133,8 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
                     statusUpdate("Set Alert Notify True")
                 }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
-                    peripheral.setNotifyValue(true, for: characteristic)
-                    statusUpdate("Set Alert Notify True")
+                    //peripheral.setNotifyValue(true, for: characteristic)
+                    //statusUpdate("Set Alert Notify True")
                 } else if characteristic.uuid == HardwarePeripheral.backCharUUID {
                     statusUpdate("Back sensor characteristic found")
                     peripheral.setNotifyValue(true, for: characteristic)
