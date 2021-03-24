@@ -8,6 +8,7 @@ int toe = 0;
 int ball = 0;
 int heel = 0;
 unsigned long time = 0;
+uint8_t  bps = 0;
 
 /* HRM Service Definitions
  * Heart Rate Monitor Service:  0x180D
@@ -27,10 +28,10 @@ void setUpWeight(void){
   hrmc.setProperties(CHR_PROPS_NOTIFY);
   hrmc.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   hrmc.setFixedLen(2);
-  //hrmc.setCccdWriteCallback(cccd_callback);  // Optionally capture CCCD updates
+  hrmc.setCccdWriteCallback(cccd_callback);  // Optionally capture CCCD updates
   hrmc.begin();
   uint8_t hrmdata[2] = { 0b00000110, 0x40 }; // Set the characteristic to use 8-bit values, with the sensor connected and detected
-  hrmc.write32(toe); 
+  hrmc.write(hrmdata, 2); 
 
   bslc.setProperties(CHR_PROPS_READ);
   bslc.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
@@ -96,6 +97,25 @@ void disconnect_callback(uint16_t conn_handle, uint8_t reason)
   Serial.println("Advertising!");
   
 }
+
+void cccd_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t cccd_value)
+{
+    // Display the raw request packet
+    Serial.print("CCCD Updated: ");
+    //Serial.printBuffer(request->data, request->len);
+    Serial.print(cccd_value);
+    Serial.println("");
+ 
+    // Check the characteristic this CCCD update is associated with in case
+    // this handler is used for multiple CCCD records.
+    if (chr->uuid == hrmc.uuid) {
+        if (chr->notifyEnabled(conn_hdl)) {
+            Serial.println("Heart Rate Measurement 'Notify' enabled");
+        } else {
+            Serial.println("Heart Rate Measurement 'Notify' disabled");
+        }
+    }
+}
  
 
 void setup() {
@@ -133,38 +153,61 @@ void setup() {
 
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  toe = analogRead(fs1);
-  ball = analogRead(fs2);
-  heel = analogRead(fs3);
-  //int me = 10/0;
+//void loop() {
+//  // put your main code here, to run repeatedly:
+//  toe = analogRead(fs1);
+//  ball = analogRead(fs2);
+//  heel = analogRead(fs3);
+//  //int me = 10/0;
+//  //Serial.print("Inside loop");
+//
+//  if(toe > 10){
+//     delay(5000);
+////     if(hrmc.notify32(toe)){
+////      Serial.println("Toe sensor value updated");
+////     }
+////     else{
+////      Serial.println("ERROR");
+////     }
+//     Serial.print("Flexi Force sensor 1: ");
+//     Serial.print(toe);
+//     Serial.println("");
+//  }
+//  if(ball > 10){
+//     Serial.print("Flexi Force sensor 2: ");
+//     Serial.print(ball);
+//     Serial.println("");
+//     //delay(1000);
+//  }
+//  if(heel > 10){
+//     Serial.print("Flexi Force sensor 3: ");
+//     Serial.print(heel);
+//     Serial.println("");
+//     //delay(1000);
+//  }
+// 
+//  delay(100);
+//
+//}
 
-  if(toe > 10){
-     delay(5000);
-     if(hrmc.notify32(toe)){
-      Serial.println("Toe sensor value updated");
-     }
-     else{
-      Serial.println("ERROR");
-     }
-     Serial.print("Flexi Force sensor 1: ");
-     Serial.print(toe);
-     Serial.println("");
-  }
-  if(ball > 10){
-     Serial.print("Flexi Force sensor 2: ");
-     Serial.print(ball);
-     Serial.println("");
-     delay(1000);
-  }
-  if(heel > 10){
-     Serial.print("Flexi Force sensor 3: ");
-     Serial.print(heel);
-     Serial.println("");
-     delay(1000);
+void loop()
+{
+  digitalToggle(LED_RED);
+  //Serial.print("Inside loop");
+  
+  if ( Bluefruit.connected() ) {
+    uint8_t hrmdata[2] = { 0b00000110, bps++ };           // Sensor connected, increment BPS value
+    
+    // Note: We use .notify instead of .write!
+    // If it is connected but CCCD is not enabled
+    // The characteristic's value is still updated although notification is not sent
+    if ( hrmc.notify(hrmdata, sizeof(hrmdata)) ){
+      Serial.print("Heart Rate Measurement updated to: "); Serial.println(bps); 
+    }else{
+      Serial.println("ERROR: Notify not set in the CCCD or not connected!");
+    }
   }
  
-  delay(100);
-
+  // Only send update once per second
+  delay(1000);
 }
