@@ -1,13 +1,13 @@
 #include <bluefruit.h>
 #include <BLEUUID.h>
 
-int fs1 = A0;
-int fs2 = A1;
-int fs3 = A2;
-int toe = 0;
-int ball = 0;
-int heel = 0;
-unsigned long time = 0;
+uint8_t fs1 = A0;
+uint8_t fs2 = A1;
+uint8_t fs3 = A2;
+uint8_t toe = 0;
+uint8_t ball = 0;
+uint8_t heel = 0;
+//unsigned long time = 0;
 uint8_t  bps = 0;
 
 /* HRM Service Definitions
@@ -16,7 +16,7 @@ uint8_t  bps = 0;
  * Body Sensor Location Char:   0x2A38
 */
 BLEService        hrms = BLEService(UUID16_SVC_HEART_RATE);
-BLECharacteristic hrmc = BLECharacteristic(UUID16_CHR_HEART_RATE_MEASUREMENT); // notify
+BLECharacteristic hrmc = BLECharacteristic(UUID16_CHR_HEART_RATE_MEASUREMENT); // notify - will represent the toe sensor 
 BLECharacteristic bslc = BLECharacteristic(UUID16_CHR_BODY_SENSOR_LOCATION); // read
 
 BLEDis bledis;    // DIS (Device Information Service) helper class instance
@@ -153,22 +153,24 @@ void setup() {
 
 }
 
-//void loop() {
-//  // put your main code here, to run repeatedly:
-//  toe = analogRead(fs1);
-//  ball = analogRead(fs2);
-//  heel = analogRead(fs3);
-//  //int me = 10/0;
-//  //Serial.print("Inside loop");
-//
+void loop() {
+  // put your main code here, to run repeatedly:
+  toe = analogRead(fs1);
+  ball = analogRead(fs2);
+  heel = analogRead(fs3);
+  if(Bluefruit.connected()){
+    uint8_t hrmdata[2] = { 0b00000110, toe};
+    if(hrmc.notify(hrmdata, sizeof(hrmdata))){
+      Serial.print("Toe sensor value being updated to: ");
+      Serial.println(toe);
+    }
+    else{
+      Serial.println("ERROR: Notify not set in the CCCD or not connected!");
+    } 
+  }
+  delay(1000); 
+
 //  if(toe > 10){
-//     delay(5000);
-////     if(hrmc.notify32(toe)){
-////      Serial.println("Toe sensor value updated");
-////     }
-////     else{
-////      Serial.println("ERROR");
-////     }
 //     Serial.print("Flexi Force sensor 1: ");
 //     Serial.print(toe);
 //     Serial.println("");
@@ -185,29 +187,7 @@ void setup() {
 //     Serial.println("");
 //     //delay(1000);
 //  }
-// 
-//  delay(100);
-//
-//}
-
-void loop()
-{
-  digitalToggle(LED_RED);
-  //Serial.print("Inside loop");
-  
-  if ( Bluefruit.connected() ) {
-    uint8_t hrmdata[2] = { 0b00000110, bps++ };           // Sensor connected, increment BPS value
-    
-    // Note: We use .notify instead of .write!
-    // If it is connected but CCCD is not enabled
-    // The characteristic's value is still updated although notification is not sent
-    if (hrmc.notify(hrmdata, sizeof(hrmdata))){
-      Serial.print("Heart Rate Measurement updated to: "); Serial.println(bps); 
-    }else{
-      Serial.println("ERROR: Notify not set in the CCCD or not connected!");
-    }
-  }
  
-  // Only send update once per second
-  delay(1000);
+  //delay(100); 
+
 }
