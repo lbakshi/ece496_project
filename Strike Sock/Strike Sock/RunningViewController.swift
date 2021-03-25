@@ -150,9 +150,13 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
             return
         }
         guard let value = characteristic.value else {return}
+        let data = value.map { String(format: "%02x", $0) }.joined()
+        statusUpdate("Data in hex? \(data)")
         let dataStr = String(decoding: value, as: UTF8.self)
-        statusUpdate("Got data \(dataStr)")
-        
+        statusUpdate("Data in UTF 8 \(dataStr)")
+        let array = [UInt8](value)
+        let dataStrBin = array.map { String($0, radix: 2) }.joined()
+        statusUpdate("Data in binary: \(dataStrBin)")
         let newDataPoint = dataPoint(time: Date(), val: Double(dataStr) ?? 0.0)
         switch characteristic.uuid {
             case HardwarePeripheral.frontCharUUID:
