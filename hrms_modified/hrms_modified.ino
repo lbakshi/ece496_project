@@ -7,8 +7,8 @@ int fs3 = A2;
 uint8_t toe = 0;
 uint8_t ball = 0;
 uint8_t heel = 0;
-//unsigned long time = 0;
-uint8_t  bps = 0;
+unsigned long time = 0;
+//uint8_t  bps = 0;
 
 /* HRM Service Definitions
  * Heart Rate Monitor Service:  0x180D
@@ -155,14 +155,12 @@ void setup() {
 }
 
 void loop() {
+  digitalToggle(LED_RED);
   Serial.println("At beginning of loop");
-  //put your main code here, to run repeatedly:
-  //toe = analogRead(fs1);
-  toe = toe++;
-  //ball = analogRead(fs2);
-  //heel = analogRead(fs3);
+
   if(Bluefruit.connected()){
-    uint8_t hrmdata[2] = { 0b00000110, toe};
+    uint8_t hrmdata[2] = { 0b00000110, toe++};
+    
     if(hrmc.notify(hrmdata, sizeof(hrmdata))){
       Serial.print("Toe sensor value being updated to: ");
       Serial.println(toe);
@@ -172,25 +170,5 @@ void loop() {
     } 
   }
   delay(1000); 
-
-//  if(toe > 10){
-//     Serial.print("Flexi Force sensor 1: ");
-//     Serial.print(toe);
-//     Serial.println("");
-//  }
-//  if(ball > 10){
-//     Serial.print("Flexi Force sensor 2: ");
-//     Serial.print(ball);
-//     Serial.println("");
-//     //delay(1000);
-//  }
-//  if(heel > 10){
-//     Serial.print("Flexi Force sensor 3: ");
-//     Serial.print(heel);
-//     Serial.println("");
-//     //delay(1000);
-//  }
- 
-  //delay(100); 
 
 }
