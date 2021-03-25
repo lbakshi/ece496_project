@@ -130,8 +130,6 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
                 if characteristic.uuid == HardwarePeripheral.frontCharUUID {
                     statusUpdate("Front sensor characteristic found")
                     peripheral.setNotifyValue(true, for: characteristic)
-                    statusUpdate("Set Alert Notify True, attempting to read value once")
-                    peripheral.readValue(for: characteristic)
                 }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
                     statusUpdate("Mid sensor characteristic found")
                     //peripheral.setNotifyValue(true, for: characteristic)
@@ -143,39 +141,6 @@ class RunningViewController: UIViewController, CBPeripheralDelegate,
                 }
             }
         }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
-        statusUpdate("Some descriptor did update on the BLE device")
-        if let e = error {
-            statusUpdate("ERROR in updating peripheral value \(e)")
-            return
-        }
-        guard let data = descriptorDescription(for: descriptor) else { return }
-        
-        let newDataPoint = dataPoint(time: Date(), val: Double(data) ?? 0.0)
-        switch descriptor.characteristic.uuid {
-            case HardwarePeripheral.frontCharUUID:
-                statusUpdate("Updating the measure/read characteristic to \(data)")
-                frontText.text = data
-                if (runningSession.isUpdating) {
-                    runningSession.frontArr.append(newDataPoint)
-                }
-            case HardwarePeripheral.midCharUUID:
-                midText.text = data
-                if (runningSession.isUpdating) {
-                    runningSession.midArr.append(newDataPoint)
-                }
-            case HardwarePeripheral.backCharUUID:
-                backText.text = data
-                if (runningSession.isUpdating) {
-                    runningSession.backArr.append(newDataPoint)
-                }
-        default:
-            statusUpdate("ERROR in processing peripheral data")
-        }
-        
-        return
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
