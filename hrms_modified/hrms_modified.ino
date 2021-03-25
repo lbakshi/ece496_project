@@ -1,9 +1,9 @@
 #include <bluefruit.h>
 #include <BLEUUID.h>
 
-uint8_t fs1 = A0;
-uint8_t fs2 = A1;
-uint8_t fs3 = A2;
+int fs1 = A0;
+int fs2 = A1;
+int fs3 = A2;
 uint8_t toe = 0;
 uint8_t ball = 0;
 uint8_t heel = 0;
@@ -120,6 +120,7 @@ void cccd_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t cccd_valu
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.println("Starting setup");
   Serial.begin(9600);
   pinMode(fs1, INPUT);
   pinMode(fs2, INPUT);
@@ -154,10 +155,12 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  toe = analogRead(fs1);
-  ball = analogRead(fs2);
-  heel = analogRead(fs3);
+  Serial.println("At beginning of loop");
+  //put your main code here, to run repeatedly:
+  //toe = analogRead(fs1);
+  toe = toe++;
+  //ball = analogRead(fs2);
+  //heel = analogRead(fs3);
   if(Bluefruit.connected()){
     uint8_t hrmdata[2] = { 0b00000110, toe};
     if(hrmc.notify(hrmdata, sizeof(hrmdata))){

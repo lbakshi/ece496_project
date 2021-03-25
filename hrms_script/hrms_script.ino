@@ -23,6 +23,7 @@ BLEDis bledis;    // DIS (Device Information Service) helper class instance
 BLEBas blebas;    // BAS (Battery Service) helper class instance
 
 void setUpWeight(void){
+  Serial.println("Setting up characteristics");
   hrms.begin();
 
   hrmc.setProperties(CHR_PROPS_NOTIFY);
