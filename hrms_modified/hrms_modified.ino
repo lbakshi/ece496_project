@@ -1,5 +1,4 @@
 #include <bluefruit.h>
-#include <BLEUUID.h>
 
 int fs1 = A0;
 int fs2 = A1;
@@ -8,7 +7,7 @@ uint8_t toe = 0;
 uint8_t ball = 0;
 uint8_t heel = 0;
 unsigned long time = 0;
-//uint8_t  bps = 0;
+uint8_t  bps = 0;
 
 /* HRM Service Definitions
  * Heart Rate Monitor Service:  0x180D
@@ -155,11 +154,12 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("Inside loop");
   digitalToggle(LED_RED);
-  Serial.println("At beginning of loop");
-
+//  Serial.println("At beginning of loop");
+//
   if(Bluefruit.connected()){
-    uint8_t hrmdata[2] = { 0b00000110, toe++};
+    uint8_t hrmdata[2] = { 0b00000110, toe++ };
     
     if(hrmc.notify(hrmdata, sizeof(hrmdata))){
       Serial.print("Toe sensor value being updated to: ");

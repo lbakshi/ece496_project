@@ -43,6 +43,7 @@ void setup()
   Bluefruit.begin();
   Bluefruit.setTxPower(4);    // Check bluefruit.h for supported values
   Bluefruit.setName("Bluefruit52");
+  //Bluefruit.setName(getMcuUniqueID()); // useful testing with multiple central connections
   Bluefruit.Periph.setConnectCallback(connect_callback);
   Bluefruit.Periph.setDisconnectCallback(disconnect_callback);
 
@@ -63,6 +64,9 @@ void setup()
 
   // Set up and start advertising
   startAdv();
+
+  Serial.println("Please use Adafruit's Bluefruit LE app to connect in UART mode");
+  Serial.println("Once connected, enter character(s) that you wish to send");
 }
 
 void startAdv(void)
@@ -96,7 +100,6 @@ void startAdv(void)
 void loop()
 {
   // Forward data from HW Serial to BLEUART
-  Serial.println("inside loop");
   while (Serial.available())
   {
     // Delay to wait for enough input, since we have a limited transmission buffer
@@ -105,6 +108,14 @@ void loop()
     uint8_t buf[64];
     int count = Serial.readBytes(buf, sizeof(buf));
     bleuart.write( buf, count );
+  }
+
+  // Forward from BLEUART to HW Serial
+  while ( bleuart.available() )
+  {
+    uint8_t ch;
+    ch = (uint8_t) bleuart.read();
+    Serial.write(ch);
   }
 }
 
