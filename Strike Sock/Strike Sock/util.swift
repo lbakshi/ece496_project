@@ -9,7 +9,7 @@ import Foundation
 
 func stringFromDate(_ date: Date) -> String {
     let formatter = DateFormatter()
-    formatter.dateFormat = "dd MMM yyyy HH:mm" //yyyy
+    formatter.dateFormat = "E, MMM d, h:mm a"
     return formatter.string(from: date)
 }
 

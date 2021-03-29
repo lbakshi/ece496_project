@@ -7,6 +7,8 @@
 
 import UIKit
 
+var selectedSession : Session?
+
 class StrikeTableViewController: UITableViewController {
 
     var sessionColl : SessionCollection = SessionCollection()
@@ -42,13 +44,8 @@ class StrikeTableViewController: UITableViewController {
     override func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SessionProtoCell", for: indexPath) as! SessionProtoCell
         let tempSession:Session = sessionColl.sessionArr[indexPath.row]
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM d, h:mm a"
-        guard let time = tempSession.startTime else {
-            return cell
-        }
-        let timeAsText = formatter.string(from: time)
-        cell.cellLabel.text = timeAsText
+        guard let time = tempSession.startTime else { return cell }
+        cell.cellLabel.text = stringFromDate(time)
         return cell
     }
     
@@ -105,15 +102,24 @@ class StrikeTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedSession = sessionColl.sessionArr[indexPath.row]
+        print("selected session is \(stringFromDate(selectedSession!.startTime!))")
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? CompleteRunViewController {
+            print("setting destination view controller")
+            //destVC.session = selectedSession
+        } else {
+            print("error in setting destination session")
+        }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
 
 }
 
