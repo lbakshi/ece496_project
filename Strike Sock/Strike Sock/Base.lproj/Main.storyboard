@@ -138,7 +138,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2593" y="110"/>
+            <point key="canvasLocation" x="1748" y="-569"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="kw4-Yg-6OO">
@@ -264,6 +264,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="cellLabel" destination="DOj-jO-JfA" id="b67-a9-ljD"/>
+                                    <segue destination="eGW-PV-Oj0" kind="show" id="gur-Ox-hMT"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -277,6 +278,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbU-Sw-Qif" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1748" y="110"/>
+        </scene>
+        <!--Complete Run View Controller-->
+        <scene sceneID="prp-NR-Uke">
+            <objects>
+                <viewController id="eGW-PV-Oj0" customClass="CompleteRunViewController" customModule="Strike_Sock" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N3g-ow-juN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IL4-q0-aku" customClass="CPTGraphHostingView">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ohE-kW-bIj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ohE-kW-bIj" firstAttribute="bottom" secondItem="IL4-q0-aku" secondAttribute="bottom" id="2zd-B4-yEM"/>
+                            <constraint firstItem="ohE-kW-bIj" firstAttribute="trailing" secondItem="IL4-q0-aku" secondAttribute="trailing" id="DP9-AV-W28"/>
+                            <constraint firstItem="IL4-q0-aku" firstAttribute="top" secondItem="ohE-kW-bIj" secondAttribute="top" id="Fap-0C-m6P"/>
+                            <constraint firstItem="IL4-q0-aku" firstAttribute="leading" secondItem="ohE-kW-bIj" secondAttribute="leading" id="f8U-zA-G0b"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="wzT-X7-xhE"/>
+                    <connections>
+                        <outlet property="hostView" destination="IL4-q0-aku" id="o4q-cQ-dVZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VDn-vP-aaO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2638" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3Zf-Pv-CFf">
