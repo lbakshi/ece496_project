@@ -8,13 +8,16 @@ uint8_t ball = 0;
 uint8_t heel = 0;
 unsigned long time = 0;
 
-BLEService hrms = BLEService(0x180D);
-BLECharacteristic hrmc = BLECharacteristic(0x2A37); //notify 
-BLECharacteristic bslc = BLECharacteristic(0x2A38); //read 
-
-//BLEDis bledis;
-//BLEBas blebas;
-
+//Fitness Machine Service is 0x1826
+//Fitness machine feature (M) is 0x2ACC - read
+//Treadmill data (O) is 0x2ACD - notify
+//Cross Trainer data (O) is 0x2ACE - notify
+//Step Climber data (O) is 0x2ACF - notify
+BLEService fms = BLEService(0x1826);
+BLECharacteristic fmf = BLECharacteristic(0x2ACC);
+BLECharacteristic toe_sen = BLECharacteristic(0x2ACD);
+BLECharacteristic midfoot_sen = BLECharacteristic(0x2ACE);
+BLECharacteristic heel_sen = BLECharacteristic(0x2ACF);
 
 void setup() {
   // put your setup code here, to run once:
@@ -25,41 +28,52 @@ void setup() {
   pinMode(fs3, INPUT);
 
   Bluefruit.begin();
-
   Bluefruit.setName("StrikeSock Bluefruit");
-
   Bluefruit.Periph.setConnectCallback(connect_callback);
   Bluefruit.Periph.setDisconnectCallback(disconnect_callback);
 
   startAdv();
 
   setUpProps();
+
 }
-
 void setUpProps(void){
-  hrms.begin();
-  
-  hrmc.setProperties(CHR_PROPS_NOTIFY);
-  hrmc.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  hrmc.setFixedLen(2);
-  //hrmc.setCccdWriteCallback(cccd_callback);
-  hrmc.begin();
-  uint8_t toe_sensor_data[2] = { 0b00000110, 0x40 };
-  hrmc.write(toe_sensor_data, 2);
-  
+  fms.begin();
 
-  bslc.setProperties(CHR_PROPS_READ);
-  bslc.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  bslc.setFixedLen(1);
-  bslc.begin();
-  bslc.write8(6);
+  fmf.setProperties(CHR_PROPS_READ);
+  fmf.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  fmf.setFixedLen(1);
+  fmf.begin();
+  //fmf.write8(0);
+
+  toe_sen.setProperties(CHR_PROPS_NOTIFY);
+  toe_sen.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  toe_sen.setFixedLen(2);
+  toe_sen.begin();
+  //uint8_t toe_sensor_data[2] = { 0b00000110, 0x40 };
+  //toe_sen.write(toe_sensor_data, 2);
+
+  midfoot_sen.setProperties(CHR_PROPS_NOTIFY);
+  midfoot_sen.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  midfoot_sen.setFixedLen(2);
+  midfoot_sen.begin();
+  //uint8_t midfoot_sensor_data[2] = { 0b00000110, 0x40 };
+  //midfoot_sen.write(midfoot_sensor_data, 2);
+
+  heel_sen.setProperties(CHR_PROPS_NOTIFY);
+  heel_sen.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
+  heel_sen.setFixedLen(2);
+  heel_sen.begin();
+  //uint8_t heel_sensor_data[2] = { 0b00000110, 0x40 };
+  //heel_sen.write(heel_sensor_data, 2);
+  
 }
 
 void startAdv(void){
   Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
   Bluefruit.Advertising.addTxPower();
 
-  Bluefruit.Advertising.addService(hrms);
+  Bluefruit.Advertising.addService(fms);
 
   Bluefruit.Advertising.addName();
 
@@ -106,6 +120,10 @@ void loop() {
   toe = analogRead(fs1);
   ball = analogRead(fs2);
   heel = analogRead(fs3);
+
+  Serial.print("Flexi Force sensor 1: ");
+  Serial.print(toe);
+  Serial.println("");
   Serial.print("Flexi Force sensor 2: ");
   Serial.print(ball);
   Serial.println("");
@@ -113,20 +131,6 @@ void loop() {
   Serial.print(heel);
   Serial.println("");
 
-  if( Bluefruit.connected() ){
-    uint8_t toe_sensor_data[2] = { 0b00000110, toe }; 
-    Serial.print("Flexi Force sensor 1: ");
-    Serial.print(toe);
-    Serial.println("");  
-    if( hrmc.notify(toe_sensor_data, sizeof(toe_sensor_data)) ){
-      Serial.println(sizeof(toe_sensor_data));
-      Serial.print("TOE SENSOR VALUE UPDATED TO: ");
-      Serial.println(toe);
-    }
-    else{
-      Serial.println("ERROR");
-    }
-  }
-  delay(1500);
+  delay(500);
 
 }
