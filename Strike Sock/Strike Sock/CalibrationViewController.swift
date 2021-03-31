@@ -33,13 +33,27 @@ class CalibrationViewController: UIViewController,
         frontStatus.text = "No data"
         middleStatus.text = "No data"
         backStatus.text = "No data"
+        calibrationDescriptor.text = " "
+        cancelButton.isHidden = true
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
         
     }
     
+    func statusUpdate(_ text:String) {
+        calibrationStatus.text = text
+        print(text)
+    }
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        // TODO
+        // taken from RunningViewController, 3/31/21
+        statusUpdate("Central State update")
+        if central.state != .poweredOn {
+            statusUpdate("Central is not powered on")
+        } else {
+            statusUpdate("Central scanning for \(HardwarePeripheral.serviceUUID)");
+            centralManager.scanForPeripherals(withServices: [HardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+        }
     }
     
     /*
