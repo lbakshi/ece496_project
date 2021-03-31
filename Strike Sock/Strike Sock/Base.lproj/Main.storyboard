@@ -572,15 +572,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="5na-7R-zYe"/>
                     <connections>
-                        <outlet property="CancelButton" destination="QZZ-BW-rvj" id="3Fl-kx-Gew"/>
-                        <outlet property="StartButton" destination="YtO-03-Nbt" id="9do-5Y-m8C"/>
-                        <outlet property="backStatus" destination="Mhv-T3-ucc" id="ejq-rk-Zdw"/>
-                        <outlet property="calibrationDescriptor" destination="cke-xJ-JRZ" id="o1h-Y6-XNp"/>
-                        <outlet property="calibrationStatus" destination="hPf-a8-Xcl" id="0Mk-gY-bRT"/>
-                        <outlet property="cancelButton" destination="QZZ-BW-rvj" id="vrG-O3-qKY"/>
-                        <outlet property="frontStatus" destination="DHo-UR-QPx" id="4xw-gF-yub"/>
-                        <outlet property="middleStatus" destination="aIB-oH-mfY" id="oyH-ON-sXt"/>
-                        <outlet property="startButton" destination="YtO-03-Nbt" id="0oe-5v-fh2"/>
+                        <outlet property="backText" destination="Mhv-T3-ucc" id="us6-O9-gVF"/>
+                        <outlet property="calibrationText" destination="cke-xJ-JRZ" id="WM4-ri-ye5"/>
+                        <outlet property="frontText" destination="DHo-UR-QPx" id="SQk-Lk-Oj3"/>
+                        <outlet property="midText" destination="aIB-oH-mfY" id="FlP-lq-4bD"/>
+                        <outlet property="statusText" destination="hPf-a8-Xcl" id="B1u-9f-tlO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3dS-Ga-GsA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
