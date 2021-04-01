@@ -24,6 +24,8 @@
 		6A776AF225FEEB8700F65ECC /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 6A776AF125FEEB8700F65ECC /* Podfile */; };
 		6A827E712612617C008A1EAA /* CompleteRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A827E702612617C008A1EAA /* CompleteRunViewController.swift */; };
 		B11663AD2602F1C5009746B9 /* ShoePrototype.png in Resources */ = {isa = PBXBuildFile; fileRef = B11663AC2602F1C5009746B9 /* ShoePrototype.png */; };
+		B1CF217726128B620010CAA3 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF217626128B620010CAA3 /* CalibrationViewController.swift */; };
+		B1CF2184261515ED0010CAA3 /* BLEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF2183261515ED0010CAA3 /* BLEViewController.swift */; };
 		D13E42CE5C51D35186B816FF /* Pods_Strike_Sock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +72,8 @@
 		6A827E702612617C008A1EAA /* CompleteRunViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteRunViewController.swift; sourceTree = "<group>"; };
 		A51814AF4188DB21B1B5F3CD /* Pods-Strike Sock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strike Sock.release.xcconfig"; path = "Target Support Files/Pods-Strike Sock/Pods-Strike Sock.release.xcconfig"; sourceTree = "<group>"; };
 		B11663AC2602F1C5009746B9 /* ShoePrototype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShoePrototype.png; sourceTree = "<group>"; };
+		B1CF217626128B620010CAA3 /* CalibrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		B1CF2183261515ED0010CAA3 /* BLEViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEViewController.swift; sourceTree = SOURCE_ROOT; };
 		F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Strike_Sock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -134,10 +138,12 @@
 		6A219F8625DC9B3000E97B43 /* Strike Sock */ = {
 			isa = PBXGroup;
 			children = (
+				B1CF2183261515ED0010CAA3 /* BLEViewController.swift */,
 				6A219F8725DC9B3000E97B43 /* AppDelegate.swift */,
 				6A219F8925DC9B3000E97B43 /* SceneDelegate.swift */,
 				6A219F8B25DC9B3000E97B43 /* RunningViewController.swift */,
 				6A219F8D25DC9B3000E97B43 /* Main.storyboard */,
+				B1CF217626128B620010CAA3 /* CalibrationViewController.swift */,
 				6A219F9325DC9B3000E97B43 /* Assets.xcassets */,
 				6A219F9525DC9B3000E97B43 /* LaunchScreen.storyboard */,
 				6A219F9825DC9B3000E97B43 /* Info.plist */,
@@ -370,7 +376,9 @@
 				6A219F9225DC9B3000E97B43 /* Strike_Sock.xcdatamodeld in Sources */,
 				6A54EB0C25E5B79300587205 /* HardwarePeripheral.swift in Sources */,
 				6A219F8825DC9B3000E97B43 /* AppDelegate.swift in Sources */,
+				B1CF217726128B620010CAA3 /* CalibrationViewController.swift in Sources */,
 				6A205FCE25F9C557003DE16E /* session.swift in Sources */,
+				B1CF2184261515ED0010CAA3 /* BLEViewController.swift in Sources */,
 				6A219F8A25DC9B3000E97B43 /* SceneDelegate.swift in Sources */,
 				6A827E712612617C008A1EAA /* CompleteRunViewController.swift in Sources */,
 			);
@@ -550,13 +558,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 64LK34Q75U;
+				DEVELOPMENT_TEAM = V95J8DDXX6;
 				INFOPLIST_FILE = "Strike Sock/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.project.ece496t;
+				PRODUCT_BUNDLE_IDENTIFIER = com.project.ece496a;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -570,13 +578,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 64LK34Q75U;
+				DEVELOPMENT_TEAM = V95J8DDXX6;
 				INFOPLIST_FILE = "Strike Sock/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.project.ece496t;
+				PRODUCT_BUNDLE_IDENTIFIER = com.project.ece496a;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
