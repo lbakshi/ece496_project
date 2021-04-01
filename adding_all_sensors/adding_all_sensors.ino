@@ -44,28 +44,28 @@ void setUpProps(void){
   fmf.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   fmf.setFixedLen(1);
   fmf.begin();
-  //fmf.write8(0);
+  fmf.write8(0);
 
   toe_sen.setProperties(CHR_PROPS_NOTIFY);
   toe_sen.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   toe_sen.setFixedLen(2);
   toe_sen.begin();
-  //uint8_t toe_sensor_data[2] = { 0b00000110, 0x40 };
-  //toe_sen.write(toe_sensor_data, 2);
+  uint8_t toe_sensor_data[2] = { 0b00000110, 0x40 };
+  toe_sen.write(toe_sensor_data, 2);
 
   midfoot_sen.setProperties(CHR_PROPS_NOTIFY);
   midfoot_sen.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   midfoot_sen.setFixedLen(2);
   midfoot_sen.begin();
-  //uint8_t midfoot_sensor_data[2] = { 0b00000110, 0x40 };
-  //midfoot_sen.write(midfoot_sensor_data, 2);
+  uint8_t midfoot_sensor_data[2] = { 0b00000110, 0x40 };
+  midfoot_sen.write(midfoot_sensor_data, 2);
 
   heel_sen.setProperties(CHR_PROPS_NOTIFY);
   heel_sen.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
   heel_sen.setFixedLen(2);
   heel_sen.begin();
-  //uint8_t heel_sensor_data[2] = { 0b00000110, 0x40 };
-  //heel_sen.write(heel_sensor_data, 2);
+  uint8_t heel_sensor_data[2] = { 0b00000110, 0x40 };
+  heel_sen.write(heel_sensor_data, 2);
   
 }
 
@@ -121,9 +121,6 @@ void loop() {
   ball = analogRead(fs2);
   heel = analogRead(fs3);
 
-  Serial.print("Flexi Force sensor 1: ");
-  Serial.print(toe);
-  Serial.println("");
   Serial.print("Flexi Force sensor 2: ");
   Serial.print(ball);
   Serial.println("");
@@ -131,6 +128,20 @@ void loop() {
   Serial.print(heel);
   Serial.println("");
 
-  delay(500);
+  if( Bluefruit.connected() ){
+    uint8_t toe_sensor_data[2] = { 0b00000110, toe }; 
+    Serial.print("Flexi Force sensor 1: ");
+    Serial.print(toe);
+    Serial.println("");  
+    if( toe_sen.notify(toe_sensor_data, sizeof(toe_sensor_data)) ){
+      Serial.print("TOE SENSOR VALUE UPDATED TO: ");
+      Serial.println(toe);
+    }
+    else{
+      Serial.println("ERROR");
+    }
+  }
+
+  delay(1500);
 
 }
