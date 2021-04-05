@@ -51,28 +51,30 @@ class RunningViewController: BLEViewController {
             return
         }
         guard let value = characteristic.value else {return}
-        let data = value.map { String(format: "%02x", $0) }.joined()
-        statusUpdate("Data in hex? \(data)")
-        let dataStr = String(decoding: value, as: UTF8.self)
-        statusUpdate("Data in UTF 8 \(dataStr)")
         let array = [UInt8](value)
-        let dataStrBin = array.map { String($0, radix: 2) }.joined()
+        var dataStrBin = array.map { String($0, radix: 2) }.joined()
+        dataStrBin.remove(at:dataStrBin.startIndex)
+        dataStrBin.remove(at: dataStrBin.startIndex)
         statusUpdate("Data in binary: \(dataStrBin)")
-        let newDataPoint = dataPoint(time: Date(), val: Double(dataStr) ?? 0.0)
+        guard let data = Int(dataStrBin, radix: 2) else {
+            print("couldn't convert data to a decimal, returning")
+            return
+        }
+        statusUpdate("data as decimal is \(data)")
+        let newDataPoint = dataPoint(time: Date(), val: Double(data))
         switch characteristic.uuid {
             case HardwarePeripheral.frontCharUUID:
-                statusUpdate("Updating the measure/read characteristic to \(dataStr)")
-                frontText.text = dataStr
+                frontText.text = String(data)
                 if (runningSession.isUpdating) {
                     runningSession.frontArr.append(newDataPoint)
                 }
             case HardwarePeripheral.midCharUUID:
-                midText.text = dataStr
+                midText.text = String(data)
                 if (runningSession.isUpdating) {
                     runningSession.midArr.append(newDataPoint)
                 }
             case HardwarePeripheral.backCharUUID:
-                backText.text = dataStr
+                backText.text = String(data)
                 if (runningSession.isUpdating) {
                     runningSession.backArr.append(newDataPoint)
                 }
