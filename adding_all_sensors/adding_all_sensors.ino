@@ -113,9 +113,9 @@ void disconnect_callback(uint16_t conn_handle, uint8_t reason)
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.print("Time: ");
-  time = millis();
-  Serial.println(time); //prints time since program started
+//  Serial.print("Time: ");
+//  time = millis();
+//  Serial.println(time); //prints time since program started
   
   toe = analogRead(fs1); // heel sensor
   ball = analogRead(fs2);
@@ -160,6 +160,6 @@ void loop() {
     }
   }
 
-  delay(100);
+  delay(500);
 
 }
