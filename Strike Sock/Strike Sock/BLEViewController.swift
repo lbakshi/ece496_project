@@ -85,7 +85,7 @@ class BLEViewController: UIViewController,
                 if service.uuid == HardwarePeripheral.serviceUUID {
                     statusUpdate("Service Found")
                     
-                    peripheral.discoverCharacteristics([HardwarePeripheral.frontCharUUID, HardwarePeripheral.midCharUUID/*, HardwarePeripheral.backCharUUID*/], for: service)
+                    peripheral.discoverCharacteristics([HardwarePeripheral.frontCharUUID, HardwarePeripheral.midCharUUID, HardwarePeripheral.backCharUUID], for: service)
                 }
             }
         }
