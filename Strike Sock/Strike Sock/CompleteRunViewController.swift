@@ -12,6 +12,7 @@ import CorePlot
 class CompleteRunViewController: UIViewController, CPTPlotDataSource {
 
     private let oneDay : Double = 24 * 60 * 60
+    private let oneMin : Double = 60
 
     @IBOutlet var hostView : CPTGraphHostingView!
 
@@ -19,20 +20,24 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
 
     private var plotData = [Double]()
     
+    private let dataInterval = 0.5
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.plotData = newPlotData()
-        if let time = selectedSession?.startTime {
-            print("setting title")
-            self.title = stringFromDate(time)
-        } else {
-            print("failed to set time")
+        guard let startTime = selectedSession?.startTime else {
+            print("failed to get correct session object")
+            return
         }
+        guard let endTime = selectedSession?.endTime else {
+            print("failed to get an end time for this session")
+            return
+        }
+        self.title = stringFromDate(startTime)
         // If you make sure your dates are calculated at noon, you shouldn't have to
         // worry about daylight savings. If you use midnight, you will have to adjust
         // for daylight savings time.
-        let refDate = DateFormatter().date(from: "12:00 Oct 29, 2009")
+        let refDate = DateFormatter().date(from: "12:00")
 
         // Create graph
         let newGraph = CPTXYGraph(frame: .zero)
@@ -47,14 +52,17 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
         // Setup scatter plot space
         let plotSpace = newGraph.defaultPlotSpace as! CPTXYPlotSpace
 
-        plotSpace.xRange = CPTPlotRange(location: 0.0, length: (oneDay * 5.0) as NSNumber)
-        plotSpace.yRange = CPTPlotRange(location: 1.0, length: 3.0)
+        let interval = endTime.timeIntervalSince(startTime) * 2 //*2 for the data interval
+        
+        //interval in seconds
+        plotSpace.xRange = CPTPlotRange(location: 0.0, length: (NSInteger(interval)) as NSNumber)
+        plotSpace.yRange = CPTPlotRange(location: 0.0, length: 150.0)
 
         // Axes
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {
-            x.majorIntervalLength   = oneDay as NSNumber
-            x.orthogonalPosition    = 2.0
+            x.majorIntervalLength   = oneMin*2 as NSNumber
+            x.orthogonalPosition    = 0.0
             x.minorTicksPerInterval = 0
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
@@ -64,9 +72,9 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
         }
 
         if let y = axisSet.yAxis {
-            y.majorIntervalLength   = 0.5
-            y.minorTicksPerInterval = 5
-            y.orthogonalPosition    = oneDay as NSNumber
+            y.majorIntervalLength   = 10
+            y.minorTicksPerInterval = 1
+            y.orthogonalPosition    = 0
 
             y.labelingPolicy = .none
         }
@@ -74,6 +82,8 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
         // Create a plot that uses the data source method
         let dataSourceLinePlot = CPTScatterPlot(frame: .zero)
         dataSourceLinePlot.identifier = "Date Plot" as NSString
+        
+        self.plotData = newPlotData()
 
         if let lineStyle = dataSourceLinePlot.dataLineStyle?.mutableCopy() as? CPTMutableLineStyle {
             lineStyle.lineWidth              = 3.0
@@ -89,12 +99,11 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
 
     func newPlotData() -> [Double]
     {
-        var newData = [Double]()
-
-        for _ in 0 ..< 5 {
-            newData.append(1.2 * Double(arc4random()) / Double(UInt32.max) + 1.2)
+        var newData: [Double] = []
+        
+        for datapoint in selectedSession!.frontArr {
+            newData.append(datapoint.val)
         }
-
         return newData
     }
 
