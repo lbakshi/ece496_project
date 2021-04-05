@@ -12,12 +12,12 @@ unsigned long time = 0;
 //Fitness machine feature (M) is 0x2ACC - read
 //Treadmill data (O) is 0x2ACD - notify
 //Cross Trainer data (O) is 0x2ACE - notify
-//Step Climber data (O) is 0x2ACF - notify
+//Step Climber data (O) is 0x2ACF - notify - maybe try 0x2AD2 (indoor bike), 0x2AD1 (rower data)
 BLEService fms = BLEService(0x1826);
 BLECharacteristic fmf = BLECharacteristic(0x2ACC);
 BLECharacteristic toe_sen = BLECharacteristic(0x2ACD);
 BLECharacteristic midfoot_sen = BLECharacteristic(0x2ACE);
-BLECharacteristic heel_sen = BLECharacteristic(0x2ACF);
+BLECharacteristic heel_sen = BLECharacteristic(0x2AD2);
 
 void setup() {
   // put your setup code here, to run once:
@@ -117,22 +117,24 @@ void loop() {
   time = millis();
   Serial.println(time); //prints time since program started
   
-  toe = analogRead(fs1);
+  toe = analogRead(fs1); // heel sensor
   ball = analogRead(fs2);
-  heel = analogRead(fs3);
-
-  Serial.print("Flexi Force sensor 2: ");
-  Serial.print(ball);
-  Serial.println("");
-  Serial.print("Flexi Force sensor 3: ");
-  Serial.print(heel);
-  Serial.println("");
+  heel = analogRead(fs3); // toe sensor
 
   if( Bluefruit.connected() ){
+    delay(500);
     uint8_t toe_sensor_data[2] = { 0b00000110, toe }; 
-    Serial.print("Flexi Force sensor 1: ");
-    Serial.print(toe);
-    Serial.println("");  
+    uint8_t midfoot_sensor_data[2] = { 0b00000110, ball };
+    uint8_t heel_sensor_data[2] =  { 0b00000110, heel };
+//    Serial.print("Flexi Force sensor 1: ");
+//    Serial.print(toe);
+//    Serial.println("");  
+//    Serial.print("Flexi Force sensor 2: ");
+//    Serial.print(ball);
+//    Serial.println("");
+//    Serial.print("Flexi Force sensor 3: ");
+//    Serial.print(heel);
+//    Serial.println("");
     if( toe_sen.notify(toe_sensor_data, sizeof(toe_sensor_data)) ){
       Serial.print("TOE SENSOR VALUE UPDATED TO: ");
       Serial.println(toe);
@@ -140,8 +142,24 @@ void loop() {
     else{
       Serial.println("ERROR");
     }
+
+    if( midfoot_sen.notify(midfoot_sensor_data, sizeof(midfoot_sensor_data)) ){
+      Serial.print("MIDFOOT SENSOR VALUE UPDATED TO: ");
+      Serial.println(ball);
+    }
+    else{
+      Serial.println("ERROR");
+    }
+
+    if( heel_sen.notify(heel_sensor_data, sizeof(heel_sensor_data)) ){
+      Serial.print("HEEL SENSOR VALUE UPDATED TO: ");
+      Serial.println(heel);
+    }
+    else{
+      Serial.println("ERROR");
+    }
   }
 
-  delay(1500);
+  delay(100);
 
 }
