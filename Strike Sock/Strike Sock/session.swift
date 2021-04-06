@@ -31,6 +31,19 @@ class Session : Codable {
         complete = false
     }
     
+    init(range:Double) {
+        frontArr = []
+        midArr = []
+        backArr = []
+        isUpdating = false
+        complete = true
+        self.startTime = Date()
+        self.endTime = Date(timeIntervalSinceNow: range)
+        for f in stride(from: 0, through: range, by: 0.5) {
+            frontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: f*150))
+        }
+    }
+    
     func start() {
         self.startTime = Date()
         isUpdating = true
@@ -78,3 +91,4 @@ class Session : Codable {
     
 
 }
+
