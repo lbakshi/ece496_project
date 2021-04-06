@@ -22,6 +22,9 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
     
     private let dataInterval = 0.5
     
+    private var plotRange = 0.0
+    private var count = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,16 +57,17 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
         // Setup scatter plot space
         let plotSpace = newGraph.defaultPlotSpace as! CPTXYPlotSpace
 
-        let interval = endTime.timeIntervalSince(startTime) * 2 //*2 for the data interval
+        plotRange = endTime.timeIntervalSince(startTime) * 2 //*2 for the data interval
+        print("plot range is \(plotRange)")
         
         //interval in seconds
-        plotSpace.xRange = CPTPlotRange(location: 0.0, length: (NSInteger(interval)) as NSNumber)
+        plotSpace.xRange = CPTPlotRange(location: 0.0, length: plotRange as NSNumber)
         plotSpace.yRange = CPTPlotRange(location: 0.0, length: 150.0)
 
         // Axes
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {
-            x.majorIntervalLength   = oneMin*2 as NSNumber
+            x.majorIntervalLength   = (plotRange < 60 ? 2 : oneMin*2) as NSNumber
             x.orthogonalPosition    = 0.0
             x.minorTicksPerInterval = 0
             let dateFormatter = DateFormatter()
@@ -117,9 +121,11 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
 
     func number(for plot: CPTPlot, field: UInt, record: UInt) -> Any?
     {
+        count += 1
+        print("Number call count: \(count)")
         switch CPTScatterPlotField(rawValue: Int(field))! {
         case .X:
-            return (oneDay * Double(record)) as NSNumber
+            return (plotRange * Double(record)) as NSNumber
             
         case .Y:
             return self.plotData[Int(record)] as NSNumber
