@@ -34,6 +34,8 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
             return
         }
         self.title = stringFromDate(startTime)
+        
+        selectedSession?.printSession()
         // If you make sure your dates are calculated at noon, you shouldn't have to
         // worry about daylight savings. If you use midnight, you will have to adjust
         // for daylight savings time.

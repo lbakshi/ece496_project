@@ -66,5 +66,15 @@ class Session : Codable {
         let _ = SessionCollection.saveData(arr)
     }
     
+    func printSession() {
+        print("Front arr has \(frontArr.count) entries")
+        print("Mid arr has \(midArr.count) entries")
+        print("back arr has \(backArr.count) entries")
+        print("front Arr entries are")
+        for entry in frontArr {
+            print("\(entry.val)", terminator: ", ")
+        }
+    }
+    
 
 }
