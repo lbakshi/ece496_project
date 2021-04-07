@@ -27,6 +27,8 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //selectedSession = Session(range: 10.0)
 
         guard let startTime = selectedSession?.startTime else {
             print("failed to get correct session object")
@@ -56,6 +58,10 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
 
         // Setup scatter plot space
         let plotSpace = newGraph.defaultPlotSpace as! CPTXYPlotSpace
+    
+        plotSpace.allowsUserInteraction = true
+        plotSpace.allowsMomentumX = true
+        plotSpace.allowsMomentumY = true
 
         plotRange = endTime.timeIntervalSince(startTime) * 2 //*2 for the data interval
         print("plot range is \(plotRange)")
@@ -63,15 +69,18 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
         //interval in seconds
         plotSpace.xRange = CPTPlotRange(location: 0.0, length: plotRange as NSNumber)
         plotSpace.yRange = CPTPlotRange(location: 0.0, length: 150.0)
+//        plotSpace.globalXRange = CPTPlotRange(location: -plotRange as NSNumber, length: plotRange as NSNumber)
+//        plotSpace.globalYRange = CPTPlotRange(location: -150 as NSNumber, length: 150 as NSNumber)
 
         // Axes
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {
             x.majorIntervalLength   = (plotRange < 60 ? 2 : oneMin*2) as NSNumber
-            x.orthogonalPosition    = 0.0
+            x.orthogonalPosition    = 1.0
             x.minorTicksPerInterval = 0
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .short
             let timeFormatter = CPTTimeFormatter(dateFormatter:dateFormatter)
             timeFormatter.referenceDate = refDate
             x.labelFormatter            = timeFormatter
@@ -79,8 +88,8 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
 
         if let y = axisSet.yAxis {
             y.majorIntervalLength   = 10
-            y.minorTicksPerInterval = 1
-            y.orthogonalPosition    = 0
+            y.minorTicksPerInterval = 5
+            y.orthogonalPosition    = 1.0
 
             y.labelingPolicy = .none
         }
