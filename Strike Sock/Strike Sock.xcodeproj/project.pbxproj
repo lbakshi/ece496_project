@@ -26,6 +26,7 @@
 		6AC68DD9261B758600AF58C4 /* BLEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC68DD8261B758600AF58C4 /* BLEViewController.swift */; };
 		B11663AD2602F1C5009746B9 /* ShoePrototype.png in Resources */ = {isa = PBXBuildFile; fileRef = B11663AC2602F1C5009746B9 /* ShoePrototype.png */; };
 		B1CF217726128B620010CAA3 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF217626128B620010CAA3 /* CalibrationViewController.swift */; };
+		B1CF21AF261A87860010CAA3 /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF21AE261A87860010CAA3 /* TitleViewController.swift */; };
 		D13E42CE5C51D35186B816FF /* Pods_Strike_Sock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		A51814AF4188DB21B1B5F3CD /* Pods-Strike Sock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strike Sock.release.xcconfig"; path = "Target Support Files/Pods-Strike Sock/Pods-Strike Sock.release.xcconfig"; sourceTree = "<group>"; };
 		B11663AC2602F1C5009746B9 /* ShoePrototype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShoePrototype.png; sourceTree = "<group>"; };
 		B1CF217626128B620010CAA3 /* CalibrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		B1CF21AE261A87860010CAA3 /* TitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
 		F4D863D8AE0CB0D09E33331D /* Pods_Strike_Sock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Strike_Sock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 				6A205FE825F9EFD3003DE16E /* StrikeTableViewController.swift */,
 				6A3E814625FABE6E00C69221 /* util.swift */,
 				6A827E702612617C008A1EAA /* CompleteRunViewController.swift */,
+				B1CF21AE261A87860010CAA3 /* TitleViewController.swift */,
 			);
 			path = "Strike Sock";
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				6AC68DD9261B758600AF58C4 /* BLEViewController.swift in Sources */,
 				6A219F8A25DC9B3000E97B43 /* SceneDelegate.swift in Sources */,
 				6A827E712612617C008A1EAA /* CompleteRunViewController.swift in Sources */,
+				B1CF21AF261A87860010CAA3 /* TitleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

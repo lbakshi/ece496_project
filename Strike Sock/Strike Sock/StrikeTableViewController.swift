@@ -16,7 +16,9 @@ class StrikeTableViewController: UITableViewController {
         super.viewDidLoad()
 
         loadInitialData()
+        ignorePoorlyFormedData()
         self.tableView.reloadData()
+        self.tableView.register(SessionProtoCell.self, forCellReuseIdentifier: "cellId")
     }
     /**
      load data from JSON if possible, otherwise use the default construction and save that to JSON
@@ -26,6 +28,22 @@ class StrikeTableViewController: UITableViewController {
             sessionColl = tempColl
         } else {
             let _ = SessionCollection.saveData(sessionColl)
+        }
+    }
+    
+    func ignorePoorlyFormedData() {
+        var index = 0
+        while index < sessionColl.sessionArr.count-1 {
+            let session = sessionColl.sessionArr[index]
+            if session.startTime == nil {
+                sessionColl.sessionArr.remove(at: index)
+                
+                let indexPath = IndexPath(row: index, section: 0)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                let _ = SessionCollection.saveData(sessionColl)
+            }
+            index += 1
         }
     }
 
@@ -42,10 +60,16 @@ class StrikeTableViewController: UITableViewController {
     }
     
     override func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionProtoCell", for: indexPath) as! SessionProtoCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "SessionProtoCell", for: indexPath) as! SessionProtoCell
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "SessionProtoCell", for: indexPath) as! SessionProtoCell
         let tempSession:Session = sessionColl.sessionArr[indexPath.row]
-        guard let time = tempSession.startTime else { return cell }
+        guard let time = tempSession.startTime else {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
+            return cell
+        }
         cell.cellLabel.text = stringFromDate(time)
+        cell.makeCellUI(viewController: self)
         return cell
     }
     
@@ -56,6 +80,13 @@ class StrikeTableViewController: UITableViewController {
             let _ = SessionCollection.saveData(sessionColl)
             self.tableView.reloadData()
         }
+    }
+    
+    /**
+            Increases height of row so that less rows are on the screen at once
+     */
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,4 +156,25 @@ class StrikeTableViewController: UITableViewController {
 
 class SessionProtoCell: UITableViewCell {
     @IBOutlet weak var cellLabel: UILabel!
+    @IBOutlet weak var cellView: UIView!
+    
+    func makeCellUI(viewController: StrikeTableViewController) {
+        cellLabel.textColor = UIColor.white
+        cellLabel.font = UIFont.boldSystemFont(ofSize: 16)
+
+        cellView.backgroundColor = UIColor.systemRed
+        cellView.layer.cornerRadius = 20
+        
+        viewController.tableView.addSubview(cellView)
+        // FIXME
+        
+        NSLayoutConstraint.activate([
+            cellView.topAnchor.constraint(equalTo: viewController.tableView.topAnchor, constant: 20),
+            cellView.rightAnchor.constraint(equalTo: viewController.tableView.rightAnchor, constant: -10),
+            cellView.leftAnchor.constraint(equalTo: viewController.tableView.leftAnchor, constant: 10),
+            cellView.bottomAnchor.constraint(equalTo: viewController.tableView.bottomAnchor)
+        ])//Broken
+
+    }
+
 }
