@@ -17,30 +17,39 @@ class Session : Codable {
     
     var startTime:Date?
     var endTime:Date?
-    var frontArr:[dataPoint]
-    var midArr:[dataPoint]
-    var backArr:[dataPoint]
+    var lfrontArr:[dataPoint]
+    var lmidArr:[dataPoint]
+    var lbackArr:[dataPoint]
+    var rfrontArr:[dataPoint]
+    var rmidArr:[dataPoint]
+    var rbackArr:[dataPoint]
     var isUpdating:Bool
     var complete:Bool
     
     init() {
-        frontArr = []
-        midArr = []
-        backArr = []
+        lfrontArr = []
+        lmidArr = []
+        lbackArr = []
+        rfrontArr = []
+        rmidArr = []
+        rbackArr = []
         isUpdating = false
         complete = false
     }
     
     init(range:Double) {
-        frontArr = []
-        midArr = []
-        backArr = []
+        lfrontArr = []
+        lmidArr = []
+        lbackArr = []
+        rfrontArr = []
+        rmidArr = []
+        rbackArr = []
         isUpdating = false
         complete = true
         self.startTime = Date()
         self.endTime = Date(timeIntervalSinceNow: range)
         for f in stride(from: 0, through: range, by: 0.5) {
-            frontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: f*150))
+            lfrontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: f*150))
         }
     }
     
@@ -49,19 +58,6 @@ class Session : Codable {
         isUpdating = true
     }
     
-    func update(front: Double?, mid: Double?, back: Double?) {
-        if let val = front {
-            frontArr.append(dataPoint(time: Date(), val: val))
-        }
-        
-        if let val = mid {
-            midArr.append(dataPoint(time: Date(), val: val))
-        }
-        
-        if let val = back {
-            backArr.append(dataPoint(time: Date(), val: val))
-        }
-    }
     /*
      ends the session and saves it to the user's data
      */
@@ -80,11 +76,11 @@ class Session : Codable {
     }
     
     func printSession() {
-        print("Front arr has \(frontArr.count) entries")
-        print("Mid arr has \(midArr.count) entries")
-        print("back arr has \(backArr.count) entries")
-        print("front Arr entries are")
-        for entry in frontArr {
+        print("left Front arr has \(lfrontArr.count) entries")
+        print("left Mid arr has \(lmidArr.count) entries")
+        print("left back arr has \(lbackArr.count) entries")
+        print("left front Arr entries are")
+        for entry in lfrontArr {
             print("\(entry.val)", terminator: ", ")
         }
     }
