@@ -63,22 +63,37 @@ class RunningViewController: BLEViewController {
         statusUpdate("data as decimal is \(data)")
         let newDataPoint = dataPoint(time: Date(), val: Double(data))
         switch characteristic.uuid {
-            case HardwarePeripheral.frontCharUUID:
-                frontText.text = String(data)
+            case LeftHardwarePeripheral.frontCharUUID:
+                lfrontText.text = String(data)
                 if (runningSession.isUpdating) {
-                    runningSession.frontArr.append(newDataPoint)
+                    runningSession.lfrontArr.append(newDataPoint)
                 }
-            case HardwarePeripheral.midCharUUID:
-                midText.text = String(data)
+            case LeftHardwarePeripheral.midCharUUID:
+                lmidText.text = String(data)
                 if (runningSession.isUpdating) {
-                    runningSession.midArr.append(newDataPoint)
+                    runningSession.lmidArr.append(newDataPoint)
                 }
-            case HardwarePeripheral.backCharUUID:
-                backText.text = String(data)
+            case LeftHardwarePeripheral.backCharUUID:
+                lbackText.text = String(data)
                 if (runningSession.isUpdating) {
-                    runningSession.backArr.append(newDataPoint)
+                    runningSession.lbackArr.append(newDataPoint)
                 }
-            case HardwarePeripheral.readUUID:
+            case RightHardwarePeripheral.frontCharUUID:
+                rfrontText.text = String(data)
+                if (runningSession.isUpdating) {
+                    runningSession.rfrontArr.append(newDataPoint)
+                }
+            case RightHardwarePeripheral.midCharUUID:
+                rmidText.text = String(data)
+                if (runningSession.isUpdating) {
+                    runningSession.rmidArr.append(newDataPoint)
+                }
+            case RightHardwarePeripheral.backCharUUID:
+                rbackText.text = String(data)
+                if (runningSession.isUpdating) {
+                    runningSession.rbackArr.append(newDataPoint)
+                }
+            case LeftHardwarePeripheral.readUUID:
                 statusUpdate("read characteristic changed")
         default:
             statusUpdate("ERROR in processing peripheral data")

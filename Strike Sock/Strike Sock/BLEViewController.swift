@@ -18,20 +18,27 @@ class BLEViewController: UIViewController,
                          CBCentralManagerDelegate {
     
     private var centralManager: CBCentralManager!
-    private var peripheral: CBPeripheral!
+    private var leftPeripheral: CBPeripheral!
+    private var rightPeripheral: CBPeripheral!
     
     @IBOutlet weak var statusText: UILabel!
-    @IBOutlet weak var frontText: UILabel!
-    @IBOutlet weak var midText: UILabel!
-    @IBOutlet weak var backText: UILabel!
+    @IBOutlet weak var lfrontText: UILabel!
+    @IBOutlet weak var lmidText: UILabel!
+    @IBOutlet weak var lbackText: UILabel!
+    @IBOutlet weak var rfrontText: UILabel!
+    @IBOutlet weak var rmidText: UILabel!
+    @IBOutlet weak var rbackText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         statusText.text = "Initializing"
-        frontText.text = "No data"
-        midText.text = "No data"
-        backText.text = "No data"
+        lfrontText.text = "No data"
+        lmidText.text = "No data"
+        lbackText.text = "No data"
+        rfrontText.text = "No data"
+        rmidText.text = "No data"
+        rbackText.text = "No data"
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
@@ -46,24 +53,36 @@ class BLEViewController: UIViewController,
         if central.state != .poweredOn {
             statusUpdate("Central is not powered on")
         } else {
-            statusUpdate("Central scanning for \(HardwarePeripheral.serviceUUID)");
-            centralManager.scanForPeripherals(withServices: [HardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            statusUpdate("Central scanning for \(LeftHardwarePeripheral.serviceUUID) & \(RightHardwarePeripheral.serviceUUID)");
+            centralManager.scanForPeripherals(withServices: [LeftHardwarePeripheral.serviceUUID, RightHardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.centralManager.stopScan()
+        let pUuid = peripheral.identifier.uuidString.lowercased()
+        print("Discovered a peripheral with uuid \(pUuid)")
         
-        self.peripheral = peripheral
-        self.peripheral.delegate = self
-        statusUpdate("Connecting to the sock")
-        self.centralManager.connect(self.peripheral, options: nil)
+        if (pUuid == LeftHardwarePeripheral.serviceUUID.uuidString.lowercased()) {
+            self.leftPeripheral = peripheral
+            self.leftPeripheral.delegate = self
+            statusUpdate("Connecting to the left peripheral")
+            self.centralManager.connect(self.leftPeripheral, options: nil)
+        } else if (pUuid == RightHardwarePeripheral.serviceUUID.uuidString.lowercased()) {
+            self.rightPeripheral = peripheral
+            self.rightPeripheral.delegate = self
+            statusUpdate("Connecting to the right peripheral")
+            self.centralManager.connect(self.rightPeripheral, options: nil)
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        if peripheral == self.peripheral {
-            statusUpdate("Connected to the sock")
-            peripheral.discoverServices([HardwarePeripheral.serviceUUID])
+        if peripheral == self.leftPeripheral {
+            statusUpdate("Connected to the left peripheral")
+            peripheral.discoverServices([LeftHardwarePeripheral.serviceUUID])
+        } else if (peripheral == self.rightPeripheral) {
+            statusUpdate("Connected to the right peripheral")
+            peripheral.discoverServices([RightHardwarePeripheral.serviceUUID])
         }
     }
     
@@ -72,7 +91,13 @@ class BLEViewController: UIViewController,
             statusUpdate("ERROR in disconnecting peripheral \(e)")
             return
         }
-        centralManager.scanForPeripherals(withServices: [HardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+        if peripheral == leftPeripheral {
+            centralManager.scanForPeripherals(withServices: [LeftHardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+        }
+        if peripheral == rightPeripheral {
+            centralManager.scanForPeripherals(withServices: [RightHardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+        }
+        
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -82,10 +107,15 @@ class BLEViewController: UIViewController,
         }
         if let services = peripheral.services {
             for service in services {
-                if service.uuid == HardwarePeripheral.serviceUUID {
-                    statusUpdate("Service Found")
+                if service.uuid == LeftHardwarePeripheral.serviceUUID {
+                    statusUpdate("Left Service Found")
                     
-                    peripheral.discoverCharacteristics([HardwarePeripheral.frontCharUUID, HardwarePeripheral.midCharUUID, HardwarePeripheral.backCharUUID], for: service)
+                    peripheral.discoverCharacteristics([LeftHardwarePeripheral.frontCharUUID, LeftHardwarePeripheral.midCharUUID, LeftHardwarePeripheral.backCharUUID], for: service)
+                }
+                if service.uuid == RightHardwarePeripheral.serviceUUID {
+                    statusUpdate("Right Service Found")
+                    
+                    peripheral.discoverCharacteristics([RightHardwarePeripheral.frontCharUUID, RightHardwarePeripheral.midCharUUID, RightHardwarePeripheral.backCharUUID], for: service)
                 }
             }
         }
@@ -106,17 +136,24 @@ class BLEViewController: UIViewController,
         }
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
-                if characteristic.uuid == HardwarePeripheral.frontCharUUID {
-                    statusUpdate("Front sensor characteristic found")
+                if characteristic.uuid == LeftHardwarePeripheral.frontCharUUID {
+                    statusUpdate("left Front sensor characteristic found")
                     peripheral.setNotifyValue(true, for: characteristic)
-                }else if characteristic.uuid == HardwarePeripheral.midCharUUID {
-                    statusUpdate("Mid sensor characteristic found")
+                }else if characteristic.uuid == LeftHardwarePeripheral.midCharUUID {
+                    statusUpdate("left Mid sensor characteristic found")
                     peripheral.setNotifyValue(true, for: characteristic)
-                    statusUpdate("Set Alert Notify True")
-                } else if characteristic.uuid == HardwarePeripheral.backCharUUID {
-                    statusUpdate("Back sensor characteristic found")
+                } else if characteristic.uuid == LeftHardwarePeripheral.backCharUUID {
+                    statusUpdate("left Back sensor characteristic found")
                     peripheral.setNotifyValue(true, for: characteristic)
-                    statusUpdate("Set Alert Notify True")
+                } else if characteristic.uuid == RightHardwarePeripheral.frontCharUUID {
+                    statusUpdate("right Front sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                }else if characteristic.uuid == RightHardwarePeripheral.midCharUUID {
+                    statusUpdate("right Mid sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
+                } else if characteristic.uuid == RightHardwarePeripheral.backCharUUID {
+                    statusUpdate("right Back sensor characteristic found")
+                    peripheral.setNotifyValue(true, for: characteristic)
                 }
             }
         }

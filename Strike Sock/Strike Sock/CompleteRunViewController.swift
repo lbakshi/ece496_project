@@ -116,7 +116,7 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
     {
         var newData: [Double] = []
         
-        for datapoint in selectedSession!.frontArr {
+        for datapoint in selectedSession!.lfrontArr {
             newData.append(datapoint.val)
         }
         return newData

@@ -9,11 +9,23 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
-class HardwarePeripheral : NSObject {
+class LeftHardwarePeripheral : NSObject {
     
-    public static let serviceUUID = CBUUID.init(string: "0x1826")//dea53006-ea01-4939-a384-1573aae78dca")
-    public static let frontCharUUID = CBUUID.init(string: "0x2ACD")//e7725f91-84af-4527-b045-6f7d3cc1b67d")
-    public static let midCharUUID = CBUUID.init(string: "0x2ACE")//ab77fad9-d27b-4c46-8b44-771be5c01072")
+    public static let serviceUUID = CBUUID.init(string: "0x1826")
+    public static let frontCharUUID = CBUUID.init(string: "0x2ACD")
+    public static let midCharUUID = CBUUID.init(string: "0x2ACE")
     public static let backCharUUID = CBUUID.init(string: "0x2AD2")
     public static let readUUID = CBUUID.init(string: "0x2ACC")
+}
+
+class RightHardwarePeripheral : NSObject {
+    public static let serviceUUID = CBUUID.init(string:"0x183E")
+    public static let frontCharUUID = CBUUID.init(string: "0x2B3C")
+    public static let midCharUUID = CBUUID.init(string: "0x2B3E")
+    public static let backCharUUID = CBUUID.init(string: "0x2B41")
+    public static let unuseda = CBUUID.init(string: "0x2B3B")
+    public static let unusedb = CBUUID.init(string: "0x2B3D")
+    public static let unusedc = CBUUID.init(string: "0x2B43")
+    public static let unusedd = CBUUID.init(string: "0x2B44")
+    public static let unusede = CBUUID.init(string: "0x2B45")
 }
