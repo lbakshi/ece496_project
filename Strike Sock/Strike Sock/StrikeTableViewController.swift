@@ -19,7 +19,12 @@ class StrikeTableViewController: UITableViewController {
         ignorePoorlyFormedData()
         self.tableView.reloadData()
         self.tableView.register(SessionProtoCell.self, forCellReuseIdentifier: "cellId")
+        
+        print("Number of cells is: \(self.tableView.visibleCells.count)")
+        print("\(self.tableView.visibleCells)")
+        // TODO: print number of cells in the tableView? self.tableView.visibleCells
     }
+    
     /**
      load data from JSON if possible, otherwise use the default construction and save that to JSON
      */
@@ -88,6 +93,14 @@ class StrikeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
+    // Make the background color show through
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -161,20 +174,14 @@ class SessionProtoCell: UITableViewCell {
     func makeCellUI(viewController: StrikeTableViewController) {
         cellLabel.textColor = UIColor.white
         cellLabel.font = UIFont.boldSystemFont(ofSize: 16)
-
+        
         cellView.backgroundColor = UIColor.systemRed
         cellView.layer.cornerRadius = 20
-        
-        viewController.tableView.addSubview(cellView)
-        // FIXME
-        
-        NSLayoutConstraint.activate([
-            cellView.topAnchor.constraint(equalTo: viewController.tableView.topAnchor, constant: 20),
-            cellView.rightAnchor.constraint(equalTo: viewController.tableView.rightAnchor, constant: -10),
-            cellView.leftAnchor.constraint(equalTo: viewController.tableView.leftAnchor, constant: 10),
-            cellView.bottomAnchor.constraint(equalTo: viewController.tableView.bottomAnchor)
-        ])//Broken
-
+        /* TODO: make leading/trailing space */
     }
-
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+    }
 }
