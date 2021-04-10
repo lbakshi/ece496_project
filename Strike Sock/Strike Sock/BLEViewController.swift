@@ -30,7 +30,7 @@ class BLEViewController: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("target uuids are \(LeftHardwarePeripheral.serviceUUID.uuidString.lowercased()) & \(RightHardwarePeripheral.serviceUUID.uuidString.lowercased())")
         statusText.text = "Initializing"
         lfrontText.text = "No data"
         lmidText.text = "No data"
@@ -58,20 +58,29 @@ class BLEViewController: UIViewController,
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        self.centralManager.stopScan()
-        let pUuid = peripheral.identifier.uuidString.lowercased()
-        print("Discovered a peripheral with uuid \(pUuid)")
+        var detectedServiceUuids = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] ?? []
+        if let detectedOverflowUuids = advertisementData[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID] {
+            detectedServiceUuids.append(contentsOf: detectedOverflowUuids)
+        }
+        for detectedServiceUuid in detectedServiceUuids {
+            print("Detected serviceUuid: \(detectedServiceUuid)")
+        }
         
-        if (pUuid == LeftHardwarePeripheral.serviceUUID.uuidString.lowercased()) {
+        if (detectedServiceUuids.contains(LeftHardwarePeripheral.serviceUUID)) {
             self.leftPeripheral = peripheral
             self.leftPeripheral.delegate = self
             statusUpdate("Connecting to the left peripheral")
             self.centralManager.connect(self.leftPeripheral, options: nil)
-        } else if (pUuid == RightHardwarePeripheral.serviceUUID.uuidString.lowercased()) {
+        } else if (detectedServiceUuids.contains(RightHardwarePeripheral.serviceUUID)) {
             self.rightPeripheral = peripheral
             self.rightPeripheral.delegate = self
             statusUpdate("Connecting to the right peripheral")
             self.centralManager.connect(self.rightPeripheral, options: nil)
+        }
+        
+        if(self.leftPeripheral != nil && self.rightPeripheral != nil) {
+            print("found both peripherals, stopping scan")
+            self.centralManager.stopScan()
         }
     }
     
