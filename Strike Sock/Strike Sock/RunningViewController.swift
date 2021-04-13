@@ -25,6 +25,22 @@ class RunningViewController: BLEViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        stylizeLabels()
+    }
+    
+    func stylizeLabels() {
+        /* Status text: centralized and segmented out */
+        statusText.backgroundColor = UIColor.systemRed
+        statusText.textColor = UIColor.white
+        statusText.font = UIFont.boldSystemFont(ofSize: 16)
+        statusText.layer.cornerRadius = 20
+        statusText.layer.masksToBounds = true
+        /* TODO: reset constraints for stack view*/
+        
+    }
+    
     @IBAction func pressedStartPauseButton(_ sender: Any) {
         switch StartPauseButton.titleLabel!.text {
         case "Start":
