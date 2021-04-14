@@ -18,3 +18,16 @@ func dateFromtString(_ str: String) -> Date {
     formatter.dateFormat = "dd MMM yyyy HH:mm"
     return formatter.date(from: str)!
 }
+
+func normalize(_ arr: [Double]) -> [Double] {
+    if (arr.count == 0) {
+        return []
+    }
+    var sum = 0.0
+    arr.forEach{ val in sum += Double(pow(val, 2)) }
+    var out: [Double] = []
+    for val in arr {
+        out.append(val/sum)
+    }
+    return out
+}
