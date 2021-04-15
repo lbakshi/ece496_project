@@ -111,6 +111,33 @@ struct perMinData {
         avLRBalance = []
         self.startTimeInterval = timeInt
     }
+    
+    mutating func closeSelf() {
+        
+        if (avLRBalance.count != 0 ) {
+            return
+        }
+        
+        secData.forEach( {value in
+            self.lfAv += value.lfAv
+            self.lmAv += value.lmAv
+            self.lbAv += value.lbAv
+            self.rfAv += value.rfAv
+            self.rmAv += value.rmAv
+            self.rbAv += value.rbAv
+        })
+        self.lfAv = self.lfAv/Double(secData.count)
+        self.lmAv = self.lmAv/Double(secData.count)
+        self.lbAv = self.lbAv/Double(secData.count)
+        self.rfAv = self.rfAv/Double(secData.count)
+        self.rmAv = self.rmAv/Double(secData.count)
+        self.rbAv = self.rbAv/Double(secData.count)
+        
+        lFMBVec = normalize([self.lfAv, self.lmAv, self.lbAv])
+        rFMBVec = normalize([self.rfAv, self.rmAv, self.rbAv])
+        avLRBalance = normalize([self.lfAv + self.lmAv + self.lbAv, self.rfAv + self.rmAv + self.rbAv])
+        print("Closed minute data, \(self.lfAv), \(self.lmAv), \(self.lbAv), \(self.rfAv), \(self.rmAv), \(self.rbAv)")
+    }
 }
 
 class Analytics {
@@ -135,7 +162,12 @@ class Analytics {
         var currMinIdx = -1
         
         for index in 0...getFlooredSecond(date: endTime) {
+            print("analyzing second \(index)")
             if (index % 60 == 0) {
+                print("hit the top of a minute")
+                if (currMinIdx>=0) {
+                    minuteData[currMinIdx].closeSelf()
+                }
                 minuteData.append( perMinData(timeInt: index) )
                 currMinIdx += 1
             }
@@ -147,9 +179,13 @@ class Analytics {
             (rfInd, secData) = iterateThroughSecond(currInd: rfInd, currSec: index, arr: session.rfrontArr, sens: .rf, node: secData)
             (rmInd, secData) = iterateThroughSecond(currInd: rmInd, currSec: index, arr: session.rmidArr, sens: .rm, node: secData)
             (rbInd, secData) = iterateThroughSecond(currInd: rbInd, currSec: index, arr: session.rbackArr, sens: .rb, node: secData)
-            
+            print("Per sec data is lf: \(secData.lfAv), lm: \(secData.lmAv), lb: \(secData.lbAv), rf: \(secData.rfAv), rm: \(secData.rmAv), rb: \(secData.rbAv), counts are \(secData.countlf), \(secData.countlm), \(secData.countlb), \(secData.countrf), \(secData.countrm), \(secData.countrb)")
+            print("Finished iterating through data, indices are lf: \(lfInd), lm: \(lmInd), lb: \(lbInd), rf: \(rfInd), rm: \(rmInd), rb: \(rbInd)")
             secsData.append(secData)
             minuteData[currMinIdx].secData.append(secData)
+        }
+        if (currMinIdx >= 0) {
+            minuteData[currMinIdx].closeSelf()
         }
     }
     

@@ -9,7 +9,8 @@ import UIKit
 import Foundation
 import CorePlot
 
-class CompleteRunViewController: UIViewController, CPTPlotDataSource {
+class CompleteRunViewController: UIViewController & CPTPlotDataSource {
+  
 
     private let oneDay : Double = 24 * 60 * 60
     private let oneMin : Double = 60
@@ -23,7 +24,8 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
     private let dataInterval = 0.5
     
     private var plotRange = 0.0
-    private var count = 0
+    
+    private var insights : Analytics?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,108 +43,113 @@ class CompleteRunViewController: UIViewController, CPTPlotDataSource {
         self.title = stringFromDate(startTime)
         
         selectedSession?.printSession()
-        // If you make sure your dates are calculated at noon, you shouldn't have to
-        // worry about daylight savings. If you use midnight, you will have to adjust
-        // for daylight savings time.
-        let refDate = DateFormatter().date(from: "12:00")
+        insights = Analytics(sess: selectedSession!)
 
-        // Create graph
-        let newGraph = CPTXYGraph(frame: .zero)
-
-        let theme = CPTTheme(named: .darkGradientTheme)
-        newGraph.apply(theme)
-
+        let newGraph = CPTXYGraph(frame: hostView.frame)
         if let host = self.hostView {
             host.hostedGraph = newGraph
         }
 
-        // Setup scatter plot space
+        let theme = CPTTheme(named: .darkGradientTheme)
+        newGraph.apply(theme)
+        
+        //newGraph.backgroundColor = CPTColor.white().cgColor
+        //newGraph.zPosition = 1_000
+
+        newGraph.paddingLeft = 0.0
+        newGraph.paddingRight = 0.0
+        newGraph.paddingTop = 0.0
+        newGraph.paddingBottom = 0.0
+
+        newGraph.plotAreaFrame?.masksToBorder = false;
+        newGraph.plotAreaFrame?.borderLineStyle = nil
+        newGraph.plotAreaFrame?.cornerRadius = 0.0
+        newGraph.plotAreaFrame?.paddingTop = 0.0
+        newGraph.plotAreaFrame?.paddingLeft = 0.0
+        newGraph.plotAreaFrame?.paddingBottom = 0.0
+        newGraph.plotAreaFrame?.paddingRight = 0.0
+        
         let plotSpace = newGraph.defaultPlotSpace as! CPTXYPlotSpace
-    
+        let plotRange = insights!.secsData.count
+        
         plotSpace.allowsUserInteraction = true
         plotSpace.allowsMomentumX = true
-        plotSpace.allowsMomentumY = true
-
-        plotRange = endTime.timeIntervalSince(startTime) * 2 //*2 for the data interval
-        print("plot range is \(plotRange)")
+        plotSpace.xRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: Decimal(plotRange))
+        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 100.0)
         
-        //interval in seconds
-        plotSpace.xRange = CPTPlotRange(location: 0.0, length: plotRange as NSNumber)
-        plotSpace.yRange = CPTPlotRange(location: 0.0, length: 150.0)
-//        plotSpace.globalXRange = CPTPlotRange(location: -plotRange as NSNumber, length: plotRange as NSNumber)
-//        plotSpace.globalYRange = CPTPlotRange(location: -150 as NSNumber, length: 150 as NSNumber)
-
-        // Axes
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {
-            x.majorIntervalLength   = (plotRange < 60 ? 2 : oneMin*2) as NSNumber
-            x.orthogonalPosition    = 1.0
+            x.majorIntervalLength   = (plotRange < 60 ? 2 : oneMin) as NSNumber
+            x.orthogonalPosition    = 0.0
             x.minorTicksPerInterval = 0
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .none
-            dateFormatter.timeStyle = .short
-            let timeFormatter = CPTTimeFormatter(dateFormatter:dateFormatter)
-            timeFormatter.referenceDate = refDate
-            x.labelFormatter            = timeFormatter
+            
         }
 
         if let y = axisSet.yAxis {
             y.majorIntervalLength   = 10
             y.minorTicksPerInterval = 5
-            y.orthogonalPosition    = 1.0
+            y.orthogonalPosition    = 0.0
 
             y.labelingPolicy = .none
         }
-
-        // Create a plot that uses the data source method
-        let dataSourceLinePlot = CPTScatterPlot(frame: .zero)
-        dataSourceLinePlot.identifier = "Date Plot" as NSString
         
-        self.plotData = newPlotData()
 
-        if let lineStyle = dataSourceLinePlot.dataLineStyle?.mutableCopy() as? CPTMutableLineStyle {
-            lineStyle.lineWidth              = 3.0
-            lineStyle.lineColor              = .green()
-            dataSourceLinePlot.dataLineStyle = lineStyle
-        }
+        newGraph.add(generatePlotLine("lf", CPTColor.magenta()),to: plotSpace)
+        newGraph.add(generatePlotLine("lm", CPTColor.blue()),to: plotSpace)
+        newGraph.add(generatePlotLine("lb", CPTColor.purple()),to: plotSpace)
+        newGraph.add(generatePlotLine("rf", CPTColor.red()),to: plotSpace)
+        newGraph.add(generatePlotLine("rm", CPTColor.orange()),to: plotSpace)
+        newGraph.add(generatePlotLine("rb", CPTColor.yellow()),to: plotSpace)
 
-        dataSourceLinePlot.dataSource = self
-        newGraph.add(dataSourceLinePlot)
-
+        
         self.graph = newGraph
-    }
-
-    func newPlotData() -> [Double]
-    {
-        var newData: [Double] = []
         
-        for datapoint in selectedSession!.lfrontArr {
-            newData.append(datapoint.val)
-        }
-        return newData
     }
-
-    // MARK: - Plot Data Source Methods
-    func numberOfRecords(for plot: CPTPlot) -> UInt
-    {
-        return UInt(self.plotData.count)
+    
+    func generatePlotLine(_ identifier: String, _ color: CPTColor) -> CPTScatterPlot{
+        let plot = CPTScatterPlot()
+        plot.identifier = identifier as NSString
+        plot.dataSource = self
+        plot.cachePrecision = .double
+        let lineStyle = CPTMutableLineStyle()
+        lineStyle.lineJoin = .round
+        lineStyle.lineCap = .round
+        lineStyle.lineWidth = 3.0
+        lineStyle.lineColor = color
+        plot.dataLineStyle = lineStyle
+        return plot
     }
-
+    
+    func numberOfRecords(for plot: CPTPlot) -> UInt {
+        return UInt((insights?.secsData.count)!)
+    }
+    
     func number(for plot: CPTPlot, field: UInt, record: UInt) -> Any?
     {
-        count += 1
-        print("Number call count: \(count)")
         switch CPTScatterPlotField(rawValue: Int(field))! {
         case .X:
-            return (plotRange * Double(record)) as NSNumber
+            return (Double(record)) as NSNumber
             
         case .Y:
-            return self.plotData[Int(record)] as NSNumber
-
+            switch plot.identifier{
+            case ("lf" as NSString):
+                return insights?.secsData[Int(record)].lfAv
+            case ("lm" as NSString):
+                return insights?.secsData[Int(record)].lmAv
+            case ("lb" as NSString):
+                return insights?.secsData[Int(record)].lbAv
+            case ("rf" as NSString):
+                return insights?.secsData[Int(record)].rfAv
+            case ("rm" as NSString):
+                return insights?.secsData[Int(record)].rmAv
+            case ("rb" as NSString):
+                return insights?.secsData[Int(record)].rbAv
+            default:
+                return nil
+            }
         @unknown default:
             return nil
         }
     }
-
-
+        
 }
