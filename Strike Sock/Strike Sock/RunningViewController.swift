@@ -32,10 +32,10 @@ class RunningViewController: BLEViewController {
     
     func stylizeLabels() {
         /* Status text: centralized and segmented out */
-        statusText.backgroundColor = UIColor.systemRed
+        statusText.backgroundColor = UIColor.systemOrange
         statusText.textColor = UIColor.white
         statusText.font = UIFont.boldSystemFont(ofSize: 16)
-        statusText.layer.cornerRadius = 20
+        statusText.layer.cornerRadius = 12
         statusText.layer.masksToBounds = true
         /* TODO: reset constraints for stack view*/
         

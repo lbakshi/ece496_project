@@ -131,7 +131,7 @@ class BLEViewController: UIViewController,
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
             if let e = error {
-                statusUpdate("ERROR in updaing notification state \(e)")
+                statusUpdate("ERROR in updating notification state \(e)")
                 return
             }
             statusUpdate("Notification State Updated for \(characteristic.description) - \(characteristic.isNotifying)")
@@ -166,7 +166,7 @@ class BLEViewController: UIViewController,
             }
         }
     }
-
+    
   func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
     switch peripheral.state {
     case .poweredOn:

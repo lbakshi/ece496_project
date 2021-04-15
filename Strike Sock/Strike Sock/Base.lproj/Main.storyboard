@@ -283,14 +283,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SessionProtoCell" id="VUR-my-el4" customClass="SessionProtoCell" customModule="Strike_Sock" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="43"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VUR-my-el4" id="uq7-Ve-k4N">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DOj-jO-JfA">
-                                            <rect key="frame" x="20" y="11" width="374" height="21.5"/>
+                                            <rect key="frame" x="20" y="11" width="374" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -616,10 +616,10 @@
                                     <constraint firstItem="ald-uR-Srr" firstAttribute="width" secondItem="l54-mM-g17" secondAttribute="width" multiplier="0.32" id="scT-cf-7yj" userLabel="Label Stack View.width = 0.33× width"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPf-a8-Xcl">
-                                <rect key="frame" x="182.5" y="160" width="49" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPf-a8-Xcl">
+                                <rect key="frame" x="65" y="160" width="285" height="46"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="XD4-YO-gUS"/>
+                                    <constraint firstAttribute="height" constant="46" id="XD4-YO-gUS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -628,6 +628,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZZ-BW-rvj">
                                 <rect key="frame" x="164" y="433" width="86" height="30"/>
                                 <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="pressedFinishRun:" destination="QrC-AO-qRp" eventType="touchUpInside" id="mpk-GB-UTE"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YtO-03-Nbt">
                                 <rect key="frame" x="176" y="380" width="63" height="30"/>
@@ -665,7 +668,7 @@
                             <constraint firstItem="QZZ-BW-rvj" firstAttribute="centerX" secondItem="B9P-uI-iQL" secondAttribute="centerX" id="dzn-r1-fXK"/>
                             <constraint firstItem="cke-xJ-JRZ" firstAttribute="top" secondItem="QZZ-BW-rvj" secondAttribute="bottom" constant="41" id="eaa-bm-yU8"/>
                             <constraint firstItem="yEy-fL-lBQ" firstAttribute="leading" secondItem="B9P-uI-iQL" secondAttribute="leading" constant="20" id="eyJ-XA-ybP"/>
-                            <constraint firstItem="l54-mM-g17" firstAttribute="top" secondItem="hPf-a8-Xcl" secondAttribute="bottom" constant="27" id="g0B-yf-UZd" userLabel="Stack View.top = Status Text.bottom + 8"/>
+                            <constraint firstItem="l54-mM-g17" firstAttribute="top" secondItem="hPf-a8-Xcl" secondAttribute="bottom" constant="8" id="g0B-yf-UZd" userLabel="Stack View.top = Status Text.bottom + 8"/>
                             <constraint firstItem="hPf-a8-Xcl" firstAttribute="top" secondItem="yEy-fL-lBQ" secondAttribute="bottom" constant="8" id="lq1-cQ-rRd"/>
                             <constraint firstItem="QZZ-BW-rvj" firstAttribute="leading" secondItem="B9P-uI-iQL" secondAttribute="leading" constant="164" id="mTH-cx-Rvg"/>
                             <constraint firstItem="yEy-fL-lBQ" firstAttribute="top" secondItem="B9P-uI-iQL" secondAttribute="top" constant="21" id="nbB-SY-CWf"/>
@@ -675,8 +678,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="5na-7R-zYe"/>
                     <connections>
+                        <outlet property="StartPauseButton" destination="YtO-03-Nbt" id="baA-YK-qfb"/>
                         <outlet property="calibrationText" destination="cke-xJ-JRZ" id="WM4-ri-ye5"/>
-                        <outlet property="finishButton" destination="QZZ-BW-rvj" id="rMR-9I-EVX"/>
+                        <outlet property="finishButton" destination="QZZ-BW-rvj" id="7Mr-hP-5r4"/>
                         <outlet property="lbackText" destination="pfF-KJ-6IW" id="IxP-yx-CJL"/>
                         <outlet property="leftStack" destination="i7O-Lw-tJN" id="2Kx-51-Mb7"/>
                         <outlet property="lfrontText" destination="gO6-tI-Y05" id="7xA-lr-okV"/>
@@ -686,7 +690,6 @@
                         <outlet property="rfrontText" destination="V27-Po-1L4" id="i3I-a9-v2m"/>
                         <outlet property="rightStack" destination="H7S-FC-K6k" id="MET-rM-EV8"/>
                         <outlet property="rmidText" destination="70A-cj-73i" id="4MZ-Qe-2Q0"/>
-                        <outlet property="startButtion" destination="YtO-03-Nbt" id="PdA-Wa-Cns"/>
                         <outlet property="statusText" destination="hPf-a8-Xcl" id="B1u-9f-tlO"/>
                     </connections>
                 </viewController>
