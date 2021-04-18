@@ -49,12 +49,12 @@ class Session : Codable {
         self.startTime = Date()
         self.endTime = Date(timeIntervalSinceNow: range)
         for f in stride(from: 0, through: range, by: 0.5) {
-            lfrontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: 10))
-            lmidArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: 20))
-            lbackArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: 30))
-            rfrontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: 40))
-            rmidArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: 50))
-            rbackArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: 60))
+            lfrontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: Double.random(in: 10...60)))
+            lmidArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: Double.random(in: 10...60)))
+            lbackArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: Double.random(in: 10...60)))
+            rfrontArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: Double.random(in: 10...60)))
+            rmidArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: Double.random(in: 10...60)))
+            rbackArr.append(dataPoint(time: Date(timeIntervalSinceNow: f), val: Double.random(in: 10...60)))
         }
     }
     

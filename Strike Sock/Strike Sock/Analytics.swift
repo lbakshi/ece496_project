@@ -16,6 +16,19 @@ enum Sensor {
     case rb
 }
 
+class StrikeType {
+    static let front = [0.6, 0.2, 0.2]
+    static let mid = [0.33, 0.33, 0.33]
+    static let back = [0.2, 0.2, 0.6]
+    static let strikeMappings : [Strike : [Double]] = [.front : front, .mid : mid, .back: back]
+}
+
+enum Strike : String{
+    case front = "Front"
+    case mid = "Mid"
+    case back = "Back"
+}
+
 struct perSecData {
     var lfAv, lmAv, lbAv, rfAv, rmAv, rbAv: Double
     var startTimeInterval: Int
@@ -23,6 +36,7 @@ struct perSecData {
     var rFMBVec : [Double]
     var avLRBalance : [Double]
     var countlf, countlm, countlb, countrf, countrm, countrb: Int
+    var strikeType : Strike
     
     init(timeInt:Int = 0) {
         lfAv = 0
@@ -41,6 +55,7 @@ struct perSecData {
         countrf = 0
         countrm = 0
         countrb = 0
+        strikeType = .front
     }
     
     mutating func addData(lf: Double = -1, lm: Double = -1, lb: Double = -1, rf: Double = -1, rm: Double = -1, rb: Double = -1) {
@@ -77,9 +92,11 @@ struct perSecData {
     }
     
     mutating func closeSelf() {
-        lFMBVec = normalize([self.lfAv, self.lmAv, self.lbAv])
-        rFMBVec = normalize([self.rfAv, self.rmAv, self.rbAv])
-        avLRBalance = normalize([self.lfAv + self.lmAv + self.lbAv, self.rfAv + self.rmAv + self.rbAv])
+        lFMBVec = ratio([self.lfAv, self.lmAv, self.lbAv])
+        rFMBVec = ratio([self.rfAv, self.rmAv, self.rbAv])
+        avLRBalance = ratio([self.lfAv + self.lmAv + self.lbAv, self.rfAv + self.rmAv + self.rbAv])
+        strikeType = decideStrikeType(left: lFMBVec, right: rFMBVec)
+        //print("closing second data, the strike type is \(strikeType.rawValue)")
     }
     
     func calculateNewAv(newVal:Double, oldAv:Double, newCount:Int) -> Double{
@@ -95,7 +112,12 @@ struct perMinData {
     var avLRBalance : [Double]
     var lFMBVec : [Double]
     var rFMBVec : [Double]
+    var consistency : Double
+    var strikeType : Strike
     var startTimeInterval : Int
+    var countFront : Int
+    var countMid : Int
+    var countBack : Int
     
     init(timeInt:Int = 0) {
         lfAv = 0
@@ -104,11 +126,16 @@ struct perMinData {
         rfAv = 0
         rmAv = 0
         rbAv = 0
+        consistency = 0.0
+        countFront = 0
+        countMid = 0
+        countBack = 0
         secData = []
         avLRBalance = []
         lFMBVec = []
         rFMBVec = []
         avLRBalance = []
+        strikeType = .front
         self.startTimeInterval = timeInt
     }
     
@@ -125,6 +152,14 @@ struct perMinData {
             self.rfAv += value.rfAv
             self.rmAv += value.rmAv
             self.rbAv += value.rbAv
+            switch value.strikeType {
+            case .front:
+                countFront += 1
+            case .mid:
+                countMid += 1
+            case .back:
+                countBack += 1
+            }
         })
         self.lfAv = self.lfAv/Double(secData.count)
         self.lmAv = self.lmAv/Double(secData.count)
@@ -133,10 +168,25 @@ struct perMinData {
         self.rmAv = self.rmAv/Double(secData.count)
         self.rbAv = self.rbAv/Double(secData.count)
         
-        lFMBVec = normalize([self.lfAv, self.lmAv, self.lbAv])
-        rFMBVec = normalize([self.rfAv, self.rmAv, self.rbAv])
-        avLRBalance = normalize([self.lfAv + self.lmAv + self.lbAv, self.rfAv + self.rmAv + self.rbAv])
-        print("Closed minute data, \(self.lfAv), \(self.lmAv), \(self.lbAv), \(self.rfAv), \(self.rmAv), \(self.rbAv)")
+        lFMBVec = ratio([self.lfAv, self.lmAv, self.lbAv])
+        rFMBVec = ratio([self.rfAv, self.rmAv, self.rbAv])
+        avLRBalance = ratio([self.lfAv + self.lmAv + self.lbAv, self.rfAv + self.rmAv + self.rbAv])
+        strikeType = decideStrikeType(left: lFMBVec, right: rFMBVec)
+        switch strikeType {
+        case .front:
+            consistency = Double(countFront)/Double(secData.count)
+        case .mid:
+            consistency = Double(countMid)/Double(secData.count)
+        case .back:
+            consistency = Double(countBack)/Double(secData.count)
+        }
+//        print("consistency data, counts: \(countFront), \(countMid), \(countBack), sec data count is \(secData.count)")
+//        print("Closed minute data, \(self.lfAv), \(self.lmAv), \(self.lbAv), \(self.rfAv), \(self.rmAv), \(self.rbAv)")
+//        print("left vector \(lFMBVec), right vector \(rFMBVec), consistency \(consistency), balance \(avLRBalance)")
+    }
+    
+    func getBalance()->String {
+        return "\(avLRBalance[0].format())/\(avLRBalance[1].format())"
     }
 }
 
@@ -162,9 +212,9 @@ class Analytics {
         var currMinIdx = -1
         
         for index in 0...getFlooredSecond(date: endTime) {
-            print("analyzing second \(index)")
+            //print("analyzing second \(index)")
             if (index % 60 == 0) {
-                print("hit the top of a minute")
+                //print("hit the top of a minute")
                 if (currMinIdx>=0) {
                     minuteData[currMinIdx].closeSelf()
                 }
@@ -179,9 +229,10 @@ class Analytics {
             (rfInd, secData) = iterateThroughSecond(currInd: rfInd, currSec: index, arr: session.rfrontArr, sens: .rf, node: secData)
             (rmInd, secData) = iterateThroughSecond(currInd: rmInd, currSec: index, arr: session.rmidArr, sens: .rm, node: secData)
             (rbInd, secData) = iterateThroughSecond(currInd: rbInd, currSec: index, arr: session.rbackArr, sens: .rb, node: secData)
-            print("Per sec data is lf: \(secData.lfAv), lm: \(secData.lmAv), lb: \(secData.lbAv), rf: \(secData.rfAv), rm: \(secData.rmAv), rb: \(secData.rbAv), counts are \(secData.countlf), \(secData.countlm), \(secData.countlb), \(secData.countrf), \(secData.countrm), \(secData.countrb)")
-            print("Finished iterating through data, indices are lf: \(lfInd), lm: \(lmInd), lb: \(lbInd), rf: \(rfInd), rm: \(rmInd), rb: \(rbInd)")
+//            print("Per sec data is lf: \(secData.lfAv), lm: \(secData.lmAv), lb: \(secData.lbAv), rf: \(secData.rfAv), rm: \(secData.rmAv), rb: \(secData.rbAv), counts are \(secData.countlf), \(secData.countlm), \(secData.countlb), \(secData.countrf), \(secData.countrm), \(secData.countrb)")
+//            print("Finished iterating through data, indices are lf: \(lfInd), lm: \(lmInd), lb: \(lbInd), rf: \(rfInd), rm: \(rmInd), rb: \(rbInd)")
             secsData.append(secData)
+            secData.closeSelf()
             minuteData[currMinIdx].secData.append(secData)
         }
         if (currMinIdx >= 0) {
