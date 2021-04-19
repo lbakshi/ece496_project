@@ -67,6 +67,9 @@ class Session : Codable {
      ends the session and saves it to the user's data
      */
     func end() {
+        if complete {
+            return
+        }
         if let _ = self.endTime {
         } else {
             self.endTime = Date()
