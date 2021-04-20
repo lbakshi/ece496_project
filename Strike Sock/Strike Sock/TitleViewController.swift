@@ -21,6 +21,7 @@ class TitleViewController: UIViewController {
     @IBOutlet weak var pastRunsButton: UIButton!
     @IBOutlet weak var calibrateButton: UIButton!
     @IBOutlet weak var aboutUsButton: UIButton!
+    @IBOutlet weak var setUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +63,7 @@ class TitleViewController: UIViewController {
     }
     
     func addButtons(){
-        buttons = [profileButton,startRunButton,pastRunsButton,calibrateButton,aboutUsButton]
+        buttons = [profileButton,startRunButton,pastRunsButton,calibrateButton,aboutUsButton,setUpButton]
         let buttonColor = UIColor.systemGray6
         for button in buttons {
             button.setTitleColor(buttonColor, for: .normal)

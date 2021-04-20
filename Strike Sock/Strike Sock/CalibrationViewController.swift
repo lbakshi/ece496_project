@@ -16,13 +16,9 @@ By pressing Start, you will launch into a short calibration procedure that will 
 Note: don't worry about recalibrating before every run. We'll remember your last calibration, so you only need to use this if something needs an update.
 """
 
-let startButtonPressedText = """
-Beginning calibration...
-Press Pause to stop the calibration process.
-"""
-
 let tipToeText = """
-Shift your weight completely onto the balls of your feet.
+Beginning calibration...
+Shift weight onto the balls of your feet.
 Don't worry too much about balance for now.
 If you can, try jumping on your tip toes.
 Your calves will thank you later!
@@ -30,23 +26,48 @@ Your calves will thank you later!
 
 let heelText = """
 Shift your weight back onto your heels.
-Try walking around on your heels, with your toes in the air.
+Try walking around on your heels,
+with your toes lifted off the ground.
 Just don't try this when you're running!
 """
 
 let leftText = """
 Halfway done!
-Stand on your left foot, with your right foot off the ground.
+
+
+Stand on your left foot,
+with your right foot off the ground.
 Don't worry too much about balance for now.
-Shift your weight around in any way that feels comfortable.
+Shift your weight around
+in any way that feels comfortable.
 """
 
 
 let rightText = """
-Time for the right side!
-Stand on your right foot, with your left foot off the ground.
+Stand on your right foot,
+with your left foot off the ground.
 Don't worry too much about balance for now.
-Shift your weight around in any way that feels comfortable.
+Shift your weight around
+in any way that feels comfortable.
+"""
+
+let finishedText = """
+Calibration Complete.
+Continue using your device as usual.
+"""
+
+let earlyExitText = """
+Calibration cancelled prematurely.
+If you did not mean to do this, simply press Restart.
+"""
+
+let errorText = """
+ERROR in Calibration.
+Please retry.
+"""
+
+let loadingText = """
+Loading...
 """
 
 class CalibrationViewController: RunningViewController {
@@ -105,20 +126,26 @@ class CalibrationViewController: RunningViewController {
         rightStack.isHidden = false
     }
     
-    func beginCalibration() {
-        StartPauseButton.setTitle(" ", for: .normal)
-        calibrationText.text = startButtonPressedText
-        finishButton.setTitle("Continue", for: .normal)
+    func userEndsCalibrationEarly() {
+        calibrationText.text = earlyExitText
+        finishButton.setTitle("Restart", for: .normal)
+        /* TODO */
+        /* Not bad data, just user choice */
     }
     
     override func pressedFinishRun(_ sender: Any) {
-        if finishButton.titleLabel!.text == "Continue" {
-            currentStage = tipToeText
+        let stageText = finishButton.titleLabel!.text
+        if stageText == "Restart" {
             performCalibration()
+        } else if stageText == "Cancel" {
+            userEndsCalibrationEarly()
         }
     }
     
     func performCalibration() {
+        currentStage = loadingText
+        StartPauseButton.setTitle(" ", for: .normal)
+        finishButton.setTitle("Cancel", for: .normal)
         let stageTimer = Timer.scheduledTimer(
             timeInterval: stageTime,
             target: self,
@@ -131,31 +158,35 @@ class CalibrationViewController: RunningViewController {
     @objc func runCalibrationStages(sender: Timer) {
         if (currentStage != nil) {
             switch (currentStage) {
+            case loadingText:
+                currentStage = tipToeText
             case tipToeText:
                 currentStage = heelText
-                calibrateToes()
             case heelText:
                 currentStage = leftText
-                calibrateHeels()
             case leftText:
                 currentStage = rightText
-                calibrateLeft()
             case rightText:
-                currentStage = nil
+                currentStage = finishedText
+                finishButton.setTitle("Restart", for: .normal)
+            case finishedText:
                 sender.invalidate()
-                calibrateRight()
+                currentStage = nil
             default:
                 print("ERROR: unknown text for currentStage")
             }
         } else {
+            /* This will also be reached after the end of calibration */
             print("ERROR: current stage not defined")
+            finishButton.setTitle("Restart", for: .normal)
         }
+        calibrationText.text = (currentStage != nil) ? currentStage : " "
     }
     
     @IBAction func pressedStart(_ sender: Any) {
         showStackViews()
         finishButton.isHidden = false
-        beginCalibration()
+        performCalibration()
     }
     
     /* Figure out which sensors are relevant */
@@ -165,30 +196,14 @@ class CalibrationViewController: RunningViewController {
     /* If stageTimeOut when local maxima timer is set, then the stage was done correctly */
     /* If timeout on local maxima timer, move to next stage */
     
-    func calibrateToes(){
-        
-        _ = Timer.scheduledTimer(
-            timeInterval: repeatTime,
-            target: self,
-            selector: #selector(updateData),
-            userInfo: [lfrontText, rfrontText],
-            repeats: true)
-        
-        calibrationText.text = tipToeText
-        /* TODO: set helper/reminder timer */
-    }
-
-    func calibrateHeels(){
-        calibrationText.text = heelText
-    }
-    
-    func calibrateLeft(){
-        calibrationText.text = leftText
-    }
-    
-    func calibrateRight(){
-        calibrationText.text = rightText
-    }
+    /**
+     _ = Timer.scheduledTimer(
+         timeInterval: repeatTime,
+         target: self,
+         selector: #selector(updateData),
+         userInfo: [lfrontText, rfrontText],
+         repeats: true)
+     */
     
     @objc func updateData(sender: Timer) {
         let labels = sender.userInfo as! Array<UILabel>
@@ -217,7 +232,6 @@ class CalibrationViewController: RunningViewController {
                 print("Maxima: \(labelMaxima ?? -1)")
             }
         }
-        
         updateDictionary.removeAll()
         countdown -= 1
         if (countdown == 0) {
@@ -228,6 +242,7 @@ class CalibrationViewController: RunningViewController {
     @objc func stageTimeOut() {
         /* End calibration */
         /* Don't complete the rest of perform calibration */
+        /* Inform user that calibration was not successful */
     }
 
     override func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {

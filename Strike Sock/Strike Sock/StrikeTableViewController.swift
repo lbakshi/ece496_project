@@ -44,7 +44,10 @@ class StrikeTableViewController: UITableViewController {
                 sessionColl.sessionArr.remove(at: index)
                 
                 let indexPath = IndexPath(row: index, section: 0)
+                
+                tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.endUpdates()
                 
                 let _ = SessionCollection.saveData(sessionColl)
             }
@@ -69,7 +72,11 @@ class StrikeTableViewController: UITableViewController {
         //let cell = tableView.dequeueReusableCell(withIdentifier: "SessionProtoCell", for: indexPath) as! SessionProtoCell
         let tempSession:Session = sessionColl.sessionArr[indexPath.row]
         guard let time = tempSession.startTime else {
+            
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+            
             tableView.reloadData()
             return cell
         }
@@ -81,7 +88,9 @@ class StrikeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             sessionColl.sessionArr.remove(at: indexPath.row)
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
             let _ = SessionCollection.saveData(sessionColl)
             self.tableView.reloadData()
         }
@@ -178,10 +187,5 @@ class SessionProtoCell: UITableViewCell {
         cellView.backgroundColor = UIColor.systemRed
         cellView.layer.cornerRadius = 20
         /* TODO: make leading/trailing space */
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
     }
 }

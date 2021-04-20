@@ -20,6 +20,9 @@ class BLEViewController: UIViewController,
     private var leftPeripheral: CBPeripheral!
     private var rightPeripheral: CBPeripheral!
     
+    var connectedLeft: Bool!
+    var connectedRight: Bool!
+    
     @IBOutlet weak var statusText: UILabel!
     @IBOutlet weak var lfrontText: UILabel!
     @IBOutlet weak var lmidText: UILabel!
@@ -31,6 +34,14 @@ class BLEViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         print("target uuids are \(LeftHardwarePeripheral.serviceUUID.uuidString.lowercased()) & \(RightHardwarePeripheral.serviceUUID.uuidString.lowercased())")
+        initText()
+        connectedRight = false
+        connectedLeft = false
+        
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+    }
+    
+    func initText() {
         statusText.text = "Initializing"
         lfrontText.text = "No data"
         lmidText.text = "No data"
@@ -38,13 +49,23 @@ class BLEViewController: UIViewController,
         rfrontText.text = "No data"
         rmidText.text = "No data"
         rbackText.text = "No data"
-        
-        centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
     func statusUpdate(_ text:String) {
-        statusText.text = text
+        /* If BLE connection is good, just say that*/
+        if (didConnectSuccessfully()) {
+            statusText.text = "Bluetooth Paired Successfully"
+        } else {
+            statusText.text = text
+        }
         print(text)
+    }
+    
+    /* To be overriden by subclasses. */
+    func showGoodBLEConnection() {}
+    
+    func didConnectSuccessfully() -> Bool {
+        return connectedRight && connectedLeft
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -88,9 +109,14 @@ class BLEViewController: UIViewController,
         if peripheral == self.leftPeripheral {
             statusUpdate("Connected to the left peripheral")
             peripheral.discoverServices([LeftHardwarePeripheral.serviceUUID])
+            connectedLeft = true
         } else if (peripheral == self.rightPeripheral) {
             statusUpdate("Connected to the right peripheral")
             peripheral.discoverServices([RightHardwarePeripheral.serviceUUID])
+            connectedRight = true
+        }
+        if (connectedLeft && connectedRight) {
+            showGoodBLEConnection()
         }
     }
     
@@ -100,9 +126,11 @@ class BLEViewController: UIViewController,
             return
         }
         if peripheral == leftPeripheral {
+            connectedLeft = false
             centralManager.scanForPeripherals(withServices: [LeftHardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
         if peripheral == rightPeripheral {
+            connectedRight = false
             centralManager.scanForPeripherals(withServices: [RightHardwarePeripheral.serviceUUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
         
