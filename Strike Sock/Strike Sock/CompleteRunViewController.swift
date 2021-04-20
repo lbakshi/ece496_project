@@ -154,7 +154,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
             x.majorIntervalLength   = (plotRange < 60 ? 30 : oneMin) as NSNumber
             x.orthogonalPosition    = 0.0
             x.minorTicksPerInterval = 0
-            
+            x.labelingPolicy = .none
         }
 
         if let y = axisSet.yAxis {
