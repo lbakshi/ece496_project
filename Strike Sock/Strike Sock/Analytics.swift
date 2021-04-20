@@ -195,12 +195,30 @@ class Analytics {
     var startTime : Date
     var minuteData : [perMinData]
     var secsData : [perSecData]
+    //overall data
+    var avLRBalance : [Double]
+    var lFMBVec : [Double]
+    var rFMBVec : [Double]
+    var consistency : Double
+    var strikeType : Strike
+    var countFront : Int
+    var countMid : Int
+    var countBack : Int
+    
     
     init( sess : Session ) {
         self.session = sess
         self.startTime = sess.startTime ?? Date()
         minuteData = []
         secsData = []
+        avLRBalance = []
+        lFMBVec = []
+        rFMBVec = []
+        consistency = 0.0
+        strikeType = .front
+        countMid = 0
+        countBack = 0
+        countFront = 0
         generateAnalyzedDate()
     }
     
@@ -229,8 +247,7 @@ class Analytics {
             (rfInd, secData) = iterateThroughSecond(currInd: rfInd, currSec: index, arr: session.rfrontArr, sens: .rf, node: secData)
             (rmInd, secData) = iterateThroughSecond(currInd: rmInd, currSec: index, arr: session.rmidArr, sens: .rm, node: secData)
             (rbInd, secData) = iterateThroughSecond(currInd: rbInd, currSec: index, arr: session.rbackArr, sens: .rb, node: secData)
-//            print("Per sec data is lf: \(secData.lfAv), lm: \(secData.lmAv), lb: \(secData.lbAv), rf: \(secData.rfAv), rm: \(secData.rmAv), rb: \(secData.rbAv), counts are \(secData.countlf), \(secData.countlm), \(secData.countlb), \(secData.countrf), \(secData.countrm), \(secData.countrb)")
-//            print("Finished iterating through data, indices are lf: \(lfInd), lm: \(lmInd), lb: \(lbInd), rf: \(rfInd), rm: \(rmInd), rb: \(rbInd)")
+
             secsData.append(secData)
             secData.closeSelf()
             minuteData[currMinIdx].secData.append(secData)
