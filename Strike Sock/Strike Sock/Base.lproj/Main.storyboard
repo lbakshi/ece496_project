@@ -283,14 +283,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SessionProtoCell" id="VUR-my-el4" customClass="SessionProtoCell" customModule="Strike_Sock" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VUR-my-el4" id="uq7-Ve-k4N">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DOj-jO-JfA">
-                                            <rect key="frame" x="20" y="11" width="374" height="21"/>
+                                            <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -815,7 +815,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cke-xJ-JRZ">
-                                <rect key="frame" x="65" y="504" width="284" height="314"/>
+                                <rect key="frame" x="20" y="504" width="374" height="314"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="314" id="Bd3-Mc-xM6"/>
                                 </constraints>
@@ -832,7 +832,7 @@
                             <constraint firstItem="cke-xJ-JRZ" firstAttribute="centerX" secondItem="QZZ-BW-rvj" secondAttribute="centerX" id="9TS-Rt-D6q"/>
                             <constraint firstItem="YtO-03-Nbt" firstAttribute="top" secondItem="l54-mM-g17" secondAttribute="bottom" constant="26" id="D88-vY-WrV"/>
                             <constraint firstItem="l54-mM-g17" firstAttribute="width" secondItem="0GS-sc-aBB" secondAttribute="width" id="N4n-Ma-EJD"/>
-                            <constraint firstItem="cke-xJ-JRZ" firstAttribute="leading" secondItem="B9P-uI-iQL" secondAttribute="leading" constant="65" id="Oeh-yg-fdn"/>
+                            <constraint firstItem="cke-xJ-JRZ" firstAttribute="leading" secondItem="B9P-uI-iQL" secondAttribute="leading" constant="20" id="Oeh-yg-fdn"/>
                             <constraint firstItem="YtO-03-Nbt" firstAttribute="centerX" secondItem="B9P-uI-iQL" secondAttribute="centerX" id="dUN-qS-xJs"/>
                             <constraint firstItem="QZZ-BW-rvj" firstAttribute="centerX" secondItem="B9P-uI-iQL" secondAttribute="centerX" id="dzn-r1-fXK"/>
                             <constraint firstItem="cke-xJ-JRZ" firstAttribute="top" secondItem="QZZ-BW-rvj" secondAttribute="bottom" constant="41" id="eaa-bm-yU8"/>
