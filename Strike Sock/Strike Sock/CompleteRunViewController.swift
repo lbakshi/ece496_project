@@ -27,6 +27,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
     
     private var insights : Analytics?
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var strikeType: UILabel!
     @IBOutlet weak var consistency: UILabel!
@@ -42,7 +43,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //selectedSession = Session(range: 600.0)
+        selectedSession = Session(range: 600.0)
 
         guard let startTime = selectedSession?.startTime else {
             print("failed to get correct session object")
@@ -69,6 +70,31 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
         selectedMinute = Int(sender.value)
         moveToMinute()
     }
+    @IBAction func segmentSwitched(_ sender: UISegmentedControl) {
+        UIView.animate(withDuration: 0.2, animations: {
+            switch sender.selectedSegmentIndex {
+            case 0:
+                self.slider.isHidden = true
+                self.showOverall()
+            default:
+                self.slider.isHidden = false
+                self.moveToMinute()
+            }
+        })
+    }
+    
+    func showOverall() {
+        strikeType.text = insights?.strikeType.rawValue
+        consistency.text = (insights?.consistency.format())! + "%"
+        balance.text = insights?.getBalance()
+        lfLabel.text = insights?.lFMBVec[0].format()
+        lmLabel.text = insights?.lFMBVec[1].format()
+        lbLabel.text = insights?.lFMBVec[2].format()
+        rfLabel.text = insights?.rFMBVec[0].format()
+        rmLabel.text = insights?.rFMBVec[1].format()
+        rbLabel.text = insights?.rFMBVec[2].format()
+    }
+    
     
     func moveToMinute() {
         let minData = insights?.minuteData[selectedMinute]

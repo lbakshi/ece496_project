@@ -201,9 +201,6 @@ class Analytics {
     var rFMBVec : [Double]
     var consistency : Double
     var strikeType : Strike
-    var countFront : Int
-    var countMid : Int
-    var countBack : Int
     
     
     init( sess : Session ) {
@@ -216,14 +213,13 @@ class Analytics {
         rFMBVec = []
         consistency = 0.0
         strikeType = .front
-        countMid = 0
-        countBack = 0
-        countFront = 0
         generateAnalyzedDate()
     }
     
     func generateAnalyzedDate() {
         var lfInd = 0, lmInd = 0, lbInd = 0, rfInd = 0, rmInd = 0, rbInd = 0
+        var lf = 0.0, lm = 0.0, lb = 0.0, rf = 0.0, rm = 0.0, rb = 0.0
+        var countFront = 0, countMid = 0, countBack = 0
         
         guard let endTime = session.endTime else { return }
         
@@ -251,10 +247,52 @@ class Analytics {
             secsData.append(secData)
             secData.closeSelf()
             minuteData[currMinIdx].secData.append(secData)
+            
+            lf += secData.lfAv
+            lm += secData.lmAv
+            lb += secData.lbAv
+            rf += secData.rfAv
+            rm += secData.rmAv
+            rb += secData.rbAv
+            
+            //overall data
+            switch secData.strikeType {
+            case .front:
+                countFront += 1
+            case .mid:
+                countMid += 1
+            case .back:
+                countBack += 1
+            }
+            
         }
         if (currMinIdx >= 0) {
             minuteData[currMinIdx].closeSelf()
         }
+        
+        //overall data
+        var maxCount = 0
+        maxCount = checkStrikeMax(countFront, maxCount, .front)
+        maxCount = checkStrikeMax(countMid, maxCount, .mid)
+        maxCount = checkStrikeMax(countBack, maxCount, .back)
+
+        lFMBVec = ratio([lf/Double(secsData.count), lm/Double(secsData.count), lb/Double(secsData.count)])
+        rFMBVec = ratio([rf/Double(secsData.count), rm/Double(secsData.count), rb/Double(secsData.count)])
+        avLRBalance = ratio([ (lf+lm+lb)/Double(secsData.count), (rf+rm+rb)/Double(secsData.count) ])
+    }
+    
+    func checkStrikeMax(_ count:Int, _ maxCount:Int, _ type: Strike) -> Int{
+        var max = maxCount
+        if (count > max) {
+            strikeType = type
+            consistency = Double(count)/Double(secsData.count)
+            max = count
+        }
+        return max
+    }
+    
+    func getBalance()->String {
+        return "\(avLRBalance[0].format())/\(avLRBalance[1].format())"
     }
     
     func iterateThroughSecond(currInd: Int, currSec: Int, arr: [dataPoint], sens:Sensor, node: perSecData) -> (Int, perSecData) {
