@@ -17,13 +17,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRB-Xs-HNL">
-                                <rect key="frame" x="0.0" y="98" width="414" height="20.5"/>
+                                <rect key="frame" x="20" y="98" width="374" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="sEn-JM-peE"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9o2-kr-t9N">
-                                <rect key="frame" x="0.0" y="158.5" width="414" height="140"/>
+                                <rect key="frame" x="0.0" y="168.5" width="414" height="140"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="dlJ-R1-wgV" userLabel="Left Value Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="141" height="140"/>
@@ -149,13 +152,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="9o2-kr-t9N" firstAttribute="top" secondItem="PRB-Xs-HNL" secondAttribute="bottom" constant="40" id="3Xy-bl-G6L"/>
-                            <constraint firstItem="PRB-Xs-HNL" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="42M-t5-Iem"/>
-                            <constraint firstItem="PRB-Xs-HNL" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="63K-QK-dEk"/>
                             <constraint firstItem="PR8-yb-sLU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ATX-Q9-GZT"/>
-                            <constraint firstItem="PRB-Xs-HNL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="NY2-C0-TD8"/>
+                            <constraint firstItem="PRB-Xs-HNL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="EVO-Pu-9ed"/>
+                            <constraint firstItem="PRB-Xs-HNL" firstAttribute="centerX" secondItem="9o2-kr-t9N" secondAttribute="centerX" id="Ig7-lS-lSj"/>
                             <constraint firstItem="9o2-kr-t9N" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="Tug-dG-ze5"/>
                             <constraint firstItem="PR8-yb-sLU" firstAttribute="top" secondItem="9UR-nS-V1K" secondAttribute="bottom" constant="148" id="VdK-zP-wez"/>
+                            <constraint firstItem="9o2-kr-t9N" firstAttribute="top" secondItem="PRB-Xs-HNL" secondAttribute="bottom" constant="17.5" id="Wd7-30-Y35"/>
+                            <constraint firstItem="PRB-Xs-HNL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="bxm-Ru-VIl"/>
                             <constraint firstItem="9UR-nS-V1K" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="gCj-yA-GQJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PR8-yb-sLU" secondAttribute="bottom" constant="221" id="rVV-Ak-06I"/>
                             <constraint firstItem="9o2-kr-t9N" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="zbf-bc-GxN"/>
@@ -794,14 +797,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZZ-BW-rvj">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZZ-BW-rvj" customClass="StylizedButton" customModule="Strike_Sock" customModuleProvider="target">
                                 <rect key="frame" x="164" y="433" width="86" height="30"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="pressedFinishRun:" destination="QrC-AO-qRp" eventType="touchUpInside" id="mpk-GB-UTE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YtO-03-Nbt">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YtO-03-Nbt" customClass="StylizedButton" customModule="Strike_Sock" customModuleProvider="target">
                                 <rect key="frame" x="176" y="380" width="63" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
@@ -867,6 +870,7 @@
             <point key="canvasLocation" x="2494.202898550725" y="823.66071428571422"/>
         </scene>
     </scenes>
+    <color key="tintColor" systemColor="systemRedColor"/>
     <resources>
         <image name="ShoePrototype.png" width="981" height="749"/>
         <systemColor name="secondaryLabelColor">
@@ -877,6 +881,9 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

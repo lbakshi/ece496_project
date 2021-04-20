@@ -28,6 +28,7 @@ class RunningViewController: BLEViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         stylizeLabels()
+        stylizeButtons()
     }
     
     func stylizeLabels() {
@@ -37,8 +38,16 @@ class RunningViewController: BLEViewController {
         statusText.font = UIFont.boldSystemFont(ofSize: 16)
         statusText.layer.cornerRadius = 12
         statusText.layer.masksToBounds = true
-        /* TODO: reset constraints for stack view*/
-        
+    }
+    
+    func stylizeButtons() {
+        StartPauseButton.setTitleColor(UIColor.systemRed, for: .normal)
+        finishButton.setTitleColor(UIColor.systemRed, for: .normal)
+    }
+    
+    override func showGoodBLEConnection() {
+        statusText.backgroundColor = UIColor.systemRed
+        /* TODO: permanently change status text to show good connection */
     }
     
     @IBAction func pressedStartPauseButton(_ sender: Any) {
