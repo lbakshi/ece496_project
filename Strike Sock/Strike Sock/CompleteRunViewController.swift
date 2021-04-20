@@ -43,7 +43,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selectedSession = Session(range: 600.0)
+        //selectedSession = Session(range: 600.0)
 
         guard let startTime = selectedSession?.startTime else {
             print("failed to get correct session object")
