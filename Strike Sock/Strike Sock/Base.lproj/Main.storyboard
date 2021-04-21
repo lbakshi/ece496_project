@@ -240,9 +240,8 @@
                                     <segue destination="9Tz-T3-gro" kind="show" id="xK1-eQ-NZu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSO-Z3-8Go">
-                                <rect key="frame" x="172" y="614" width="71" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSO-Z3-8Go">
+                                <rect key="frame" x="159" y="614" width="97" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Set Up">
                                     <color key="titleColor" systemColor="labelColor"/>
@@ -273,14 +272,17 @@
                             <constraint firstItem="A0I-ci-2iC" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="Dc4-1u-AWb"/>
                             <constraint firstItem="aUB-uo-2lv" firstAttribute="top" secondItem="l3E-Ib-xXM" secondAttribute="bottom" constant="8" symbolic="YES" id="Jsb-ng-gHM"/>
                             <constraint firstItem="KO7-TM-sE1" firstAttribute="top" secondItem="aUB-uo-2lv" secondAttribute="bottom" constant="53" id="M5j-pS-t08"/>
+                            <constraint firstItem="DSO-Z3-8Go" firstAttribute="top" secondItem="dDW-FV-TNV" secondAttribute="bottom" constant="8" id="Qm8-by-0lp"/>
                             <constraint firstItem="dDW-FV-TNV" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="R7O-us-8WS"/>
                             <constraint firstItem="t0f-gj-fgp" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="RO2-ld-j7k"/>
                             <constraint firstItem="l3E-Ib-xXM" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="SkL-Bv-fSl"/>
+                            <constraint firstItem="DSO-Z3-8Go" firstAttribute="centerX" secondItem="dDW-FV-TNV" secondAttribute="centerX" id="Skn-9S-XP2"/>
                             <constraint firstItem="l3E-Ib-xXM" firstAttribute="top" secondItem="t0f-gj-fgp" secondAttribute="bottom" constant="8" symbolic="YES" id="U8W-hN-2xq"/>
                             <constraint firstItem="peq-nX-7Da" firstAttribute="centerX" secondItem="Gu9-sy-j7p" secondAttribute="centerX" id="aXf-mQ-O4p"/>
                             <constraint firstItem="peq-nX-7Da" firstAttribute="top" secondItem="KO7-TM-sE1" secondAttribute="bottom" constant="8" id="vG4-WF-baK"/>
                             <constraint firstAttribute="bottom" secondItem="KO7-TM-sE1" secondAttribute="bottom" constant="388" id="vgt-FD-8dB"/>
                             <constraint firstItem="dDW-FV-TNV" firstAttribute="top" secondItem="peq-nX-7Da" secondAttribute="bottom" constant="8" symbolic="YES" id="xwT-JA-P1j"/>
+                            <constraint firstItem="DSO-Z3-8Go" firstAttribute="leading" secondItem="Gu9-sy-j7p" secondAttribute="leading" constant="159" id="zJ3-TQ-mtL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1p8-Ua-lKE"/>
@@ -310,14 +312,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SessionProtoCell" id="VUR-my-el4" customClass="SessionProtoCell" customModule="Strike_Sock" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VUR-my-el4" id="uq7-Ve-k4N">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DOj-jO-JfA">
-                                            <rect key="frame" x="20" y="11" width="374" height="21"/>
+                                            <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -913,50 +915,87 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7s1-ms-PC6">
-                                <rect key="frame" x="48" y="20" width="318" height="753"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7s1-ms-PC6">
+                                <rect key="frame" x="48" y="67" width="318" height="675"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="25" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snq-Or-XCa">
-                                        <rect key="frame" x="8" y="8" width="302" height="183"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="25" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snq-Or-XCa">
+                                        <rect key="frame" x="8" y="8" width="302" height="215"/>
                                         <string key="text">Strike Sock uses two wearable devices to track your gait as you move. In order to set up your Strike Socks, there are three things you need to do. First, make sure your tech is fit securely into your shoe of choice. Slip it into your shoe like an orthopedic insert, or a new shoe sole.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Oh-Y5-Ftk">
-                                        <rect key="frame" x="8" y="199" width="302" height="103"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">Next, make sure that your devices are plugged in. In each ankle strap, there is a battery that must be plugged in for the device to work. Battery connection should look like this:</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f0U-xa-tVi">
-                                        <rect key="frame" x="8" y="312" width="302" height="167"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BatteryPluggedIn" translatesAutoresizingMaskIntoConstraints="NO" id="f0U-xa-tVi">
+                                        <rect key="frame" x="160" y="342" width="150" height="150"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="To exit this window, slide down" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTg-6a-atx">
-                                        <rect key="frame" x="8" y="710" width="302" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finally, secure the ankle strap to your persons. We recommend a snug fit for minimal resistance during activity." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOZ-3Z-bDw">
+                                        <rect key="frame" x="8" y="523" width="302" height="98"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="98" id="L7g-GI-anT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BatteryUnplugged" translatesAutoresizingMaskIntoConstraints="NO" id="RH9-bh-SMP">
+                                        <rect key="frame" x="8" y="342" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="6Jg-jZ-ZXW"/>
+                                            <constraint firstAttribute="width" constant="150" id="HWM-9G-Z78"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To exit this window, slide down" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTg-6a-atx">
+                                        <rect key="frame" x="8" y="637" width="302" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="knl-Ij-eGa"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Finally, secure the ankle strap to your persons. We recommend a snug fit for minimal resistance during activity." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOZ-3Z-bDw">
-                                        <rect key="frame" x="8" y="487" width="302" height="98"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Oh-Y5-Ftk">
+                                        <rect key="frame" x="8" y="231" width="302" height="103"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="103" id="S2U-F6-OMN"/>
+                                        </constraints>
+                                        <string key="text">Next, make sure that your devices are plugged in. In each ankle strap, there is a battery that must be plugged in for the device to work. Battery connection should look like this:</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="snq-Or-XCa" firstAttribute="leading" secondItem="5Oh-Y5-Ftk" secondAttribute="leading" id="0pq-45-Mtp"/>
+                                    <constraint firstItem="RH9-bh-SMP" firstAttribute="top" secondItem="f0U-xa-tVi" secondAttribute="top" id="9Mm-bh-fu3"/>
+                                    <constraint firstItem="5Oh-Y5-Ftk" firstAttribute="leading" secondItem="RH9-bh-SMP" secondAttribute="leading" id="DVc-lF-28N"/>
+                                    <constraint firstItem="f0U-xa-tVi" firstAttribute="trailing" secondItem="zOZ-3Z-bDw" secondAttribute="trailing" id="E0s-oz-ElN"/>
+                                    <constraint firstItem="RH9-bh-SMP" firstAttribute="top" secondItem="5Oh-Y5-Ftk" secondAttribute="bottom" constant="8" id="S36-JE-C7t"/>
+                                    <constraint firstItem="snq-Or-XCa" firstAttribute="trailing" secondItem="7s1-ms-PC6" secondAttribute="trailingMargin" id="TJ6-LI-0mm"/>
+                                    <constraint firstItem="zOZ-3Z-bDw" firstAttribute="leading" secondItem="wTg-6a-atx" secondAttribute="leading" id="ZZf-Ii-8op"/>
+                                    <constraint firstItem="zOZ-3Z-bDw" firstAttribute="top" secondItem="RH9-bh-SMP" secondAttribute="bottom" constant="31" id="alr-Rk-ISp"/>
+                                    <constraint firstItem="5Oh-Y5-Ftk" firstAttribute="trailing" secondItem="f0U-xa-tVi" secondAttribute="trailing" id="f1t-ur-luw"/>
+                                    <constraint firstItem="snq-Or-XCa" firstAttribute="top" secondItem="7s1-ms-PC6" secondAttribute="topMargin" id="p3n-iE-gGu"/>
+                                    <constraint firstItem="zOZ-3Z-bDw" firstAttribute="trailing" secondItem="wTg-6a-atx" secondAttribute="trailing" id="qFU-an-CSL"/>
+                                    <constraint firstItem="RH9-bh-SMP" firstAttribute="leading" secondItem="zOZ-3Z-bDw" secondAttribute="leading" id="uYp-XX-doW"/>
+                                    <constraint firstAttribute="bottom" secondItem="wTg-6a-atx" secondAttribute="bottom" constant="17" id="v4v-lr-yz0"/>
+                                    <constraint firstItem="snq-Or-XCa" firstAttribute="trailing" secondItem="5Oh-Y5-Ftk" secondAttribute="trailing" id="vEP-v7-Wmf"/>
+                                    <constraint firstItem="wTg-6a-atx" firstAttribute="top" secondItem="zOZ-3Z-bDw" secondAttribute="bottom" constant="16" id="vEf-qg-YIP"/>
+                                    <constraint firstItem="f0U-xa-tVi" firstAttribute="leading" secondItem="RH9-bh-SMP" secondAttribute="trailing" constant="2" id="wwn-AZ-prv"/>
+                                    <constraint firstItem="5Oh-Y5-Ftk" firstAttribute="top" secondItem="snq-Or-XCa" secondAttribute="bottom" constant="8" id="y26-ao-fa5"/>
+                                    <constraint firstItem="snq-Or-XCa" firstAttribute="leading" secondItem="7s1-ms-PC6" secondAttribute="leadingMargin" id="y7o-6t-hzc"/>
+                                    <constraint firstItem="RH9-bh-SMP" firstAttribute="bottom" secondItem="f0U-xa-tVi" secondAttribute="bottom" id="zgd-Zo-GAl"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Q28-fK-GWc"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7s1-ms-PC6" firstAttribute="leading" secondItem="Q28-fK-GWc" secondAttribute="leading" constant="48" id="BtR-l7-8wJ"/>
+                            <constraint firstItem="Q28-fK-GWc" firstAttribute="bottom" secondItem="7s1-ms-PC6" secondAttribute="bottom" constant="66" id="Xgs-EU-KGt"/>
+                            <constraint firstItem="7s1-ms-PC6" firstAttribute="centerX" secondItem="LHS-UK-8Rz" secondAttribute="centerX" id="aao-jY-TQY"/>
+                            <constraint firstItem="7s1-ms-PC6" firstAttribute="top" secondItem="Q28-fK-GWc" secondAttribute="top" constant="67" id="dAX-2Q-sHT"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I7f-tY-OGl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -966,6 +1005,8 @@
     </scenes>
     <color key="tintColor" systemColor="systemRedColor"/>
     <resources>
+        <image name="BatteryPluggedIn" width="1470" height="1562"/>
+        <image name="BatteryUnplugged" width="1552" height="1564"/>
         <image name="ShoePrototype.png" width="981" height="749"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
