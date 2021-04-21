@@ -302,17 +302,17 @@ class Analytics {
             if (getFlooredSecond(date: arr[currInd].time) == currSec) {
                 switch sens {
                 case .lf:
-                    tempNode.addData(lf: arr[index].val)
+                    tempNode.addData(lf: arr[index].val/Double(largestLToe))
                 case .lm:
-                    tempNode.addData(lm: arr[index].val)
+                    tempNode.addData(lm: arr[index].val/Double(largestLMid))
                 case .lb:
-                    tempNode.addData(lb: arr[index].val)
+                    tempNode.addData(lb: arr[index].val/Double(largestLHeel))
                 case .rf:
-                    tempNode.addData(rf: arr[index].val)
+                    tempNode.addData(rf: arr[index].val/Double(largestRToe))
                 case .rm:
-                    tempNode.addData(rm: arr[index].val)
+                    tempNode.addData(rm: arr[index].val/Double(largestRMid))
                 case .rb:
-                    tempNode.addData(rb: arr[index].val)
+                    tempNode.addData(rb: arr[index].val/Double(largestRHeel))
                 }
             }
             index+=1

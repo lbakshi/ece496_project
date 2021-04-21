@@ -147,7 +147,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource & CPTLegen
         plotSpace.allowsUserInteraction = true
         plotSpace.allowsMomentumX = true
         plotSpace.xRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: Decimal(plotRange))
-        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 150.0)
+        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 1.2)
         
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {
@@ -240,7 +240,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource & CPTLegen
             case ("R Back" as NSString):
                 return insights?.secsData[Int(record)].rbAv
             case ("Consistency" as NSString):
-                return (insights?.minuteData[Int(record) / 60].consistency ?? 0 )*100
+                return (insights?.minuteData[Int(record) / 60].consistency ?? 0 )
             default:
                 return nil
             }

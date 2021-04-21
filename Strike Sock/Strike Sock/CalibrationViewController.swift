@@ -70,6 +70,14 @@ let loadingText = """
 Loading...
 """
 
+var largestLHeel: Int = 20
+var largestLMid: Int = 20
+var largestLToe: Int = 20
+var largestRHeel: Int = 20
+var largestRMid: Int = 20
+var largestRToe: Int = 20
+
+
 class CalibrationViewController: RunningViewController {
     
     @IBOutlet weak var calibrationText: UILabel!
@@ -88,13 +96,7 @@ class CalibrationViewController: RunningViewController {
     var countdown = 30.0/0.3
     
     /* Largest sensor value received */
-    var largestLHeel: Int!
-    var largestLMid: Int!
-    var largestLToe: Int!
-    var largestRHeel: Int!
-    var largestRMid: Int!
-    var largestRToe: Int!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
