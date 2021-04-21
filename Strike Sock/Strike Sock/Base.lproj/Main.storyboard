@@ -836,7 +836,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZZ-BW-rvj" customClass="StylizedButton" customModule="Strike_Sock" customModuleProvider="target">
-                                <rect key="frame" x="164" y="433" width="86" height="30"/>
+                                <rect key="frame" x="164" y="418" width="86" height="30"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="pressedFinishRun:" destination="QrC-AO-qRp" eventType="touchUpInside" id="mpk-GB-UTE"/>
@@ -856,10 +856,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cke-xJ-JRZ">
-                                <rect key="frame" x="20" y="504" width="374" height="314"/>
+                                <rect key="frame" x="20" y="535" width="374" height="314"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="314" id="Bd3-Mc-xM6"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3d3-X1-hzx">
+                                <rect key="frame" x="20" y="456" width="374" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -868,7 +875,7 @@
                         <viewLayoutGuide key="safeArea" id="B9P-uI-iQL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="QZZ-BW-rvj" firstAttribute="top" secondItem="YtO-03-Nbt" secondAttribute="bottom" constant="23" id="5Iz-Wk-jec"/>
+                            <constraint firstItem="QZZ-BW-rvj" firstAttribute="top" secondItem="YtO-03-Nbt" secondAttribute="bottom" constant="8" id="5Iz-Wk-jec"/>
                             <constraint firstItem="yEy-fL-lBQ" firstAttribute="centerX" secondItem="B9P-uI-iQL" secondAttribute="centerX" id="861-Xd-og0"/>
                             <constraint firstItem="cke-xJ-JRZ" firstAttribute="centerX" secondItem="QZZ-BW-rvj" secondAttribute="centerX" id="9TS-Rt-D6q"/>
                             <constraint firstItem="YtO-03-Nbt" firstAttribute="top" secondItem="l54-mM-g17" secondAttribute="bottom" constant="26" id="D88-vY-WrV"/>
@@ -876,7 +883,7 @@
                             <constraint firstItem="cke-xJ-JRZ" firstAttribute="leading" secondItem="B9P-uI-iQL" secondAttribute="leading" constant="20" id="Oeh-yg-fdn"/>
                             <constraint firstItem="YtO-03-Nbt" firstAttribute="centerX" secondItem="B9P-uI-iQL" secondAttribute="centerX" id="dUN-qS-xJs"/>
                             <constraint firstItem="QZZ-BW-rvj" firstAttribute="centerX" secondItem="B9P-uI-iQL" secondAttribute="centerX" id="dzn-r1-fXK"/>
-                            <constraint firstItem="cke-xJ-JRZ" firstAttribute="top" secondItem="QZZ-BW-rvj" secondAttribute="bottom" constant="41" id="eaa-bm-yU8"/>
+                            <constraint firstItem="cke-xJ-JRZ" firstAttribute="top" secondItem="QZZ-BW-rvj" secondAttribute="bottom" constant="87" id="eaa-bm-yU8"/>
                             <constraint firstItem="yEy-fL-lBQ" firstAttribute="leading" secondItem="B9P-uI-iQL" secondAttribute="leading" constant="20" id="eyJ-XA-ybP"/>
                             <constraint firstItem="l54-mM-g17" firstAttribute="top" secondItem="hPf-a8-Xcl" secondAttribute="bottom" constant="8" id="g0B-yf-UZd" userLabel="Stack View.top = Status Text.bottom + 8"/>
                             <constraint firstItem="hPf-a8-Xcl" firstAttribute="top" secondItem="yEy-fL-lBQ" secondAttribute="bottom" constant="8" id="lq1-cQ-rRd"/>
@@ -895,6 +902,7 @@
                         <outlet property="leftStack" destination="i7O-Lw-tJN" id="2Kx-51-Mb7"/>
                         <outlet property="lfrontText" destination="gO6-tI-Y05" id="7xA-lr-okV"/>
                         <outlet property="lmidText" destination="GbQ-yJ-mVj" id="GOb-Xx-0Dc"/>
+                        <outlet property="maximaText" destination="3d3-X1-hzx" id="CaE-fW-cy6"/>
                         <outlet property="middleStack" destination="ald-uR-Srr" id="sOD-TY-UjL"/>
                         <outlet property="rbackText" destination="HUa-eX-kXc" id="Qwc-8V-Fb3"/>
                         <outlet property="rfrontText" destination="V27-Po-1L4" id="i3I-a9-v2m"/>

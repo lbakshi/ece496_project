@@ -73,6 +73,7 @@ Loading...
 class CalibrationViewController: RunningViewController {
     
     @IBOutlet weak var calibrationText: UILabel!
+    @IBOutlet weak var maximaText: UILabel!
     @IBOutlet weak var leftStack: UIStackView!
     @IBOutlet weak var middleStack: UIStackView!
     @IBOutlet weak var rightStack: UIStackView!
@@ -113,6 +114,7 @@ class CalibrationViewController: RunningViewController {
     
     func clearMeasurements() {
         calibrationText.text = calibrationWelcomePageText
+        maximaText.text = ""
         leftStack.isHidden = true
         middleStack.isHidden = true
         rightStack.isHidden = true
@@ -156,16 +158,35 @@ class CalibrationViewController: RunningViewController {
     }
     
     @objc func runCalibrationStages(sender: Timer) {
+        var maximaInfo = ""
         if (currentStage != nil) {
             switch (currentStage) {
             case loadingText:
                 currentStage = tipToeText
+                maximaInfo = """
+                    Largest left toe value: \(largestLToe ?? 0)
+                    Largest right toe value: \(largestRToe ?? 0)
+                """
             case tipToeText:
                 currentStage = heelText
+                maximaInfo = """
+                    Largest left heel value: \(largestLHeel ?? 0)
+                    Largest right heel value: \(largestRHeel ?? 0)
+                """
             case heelText:
                 currentStage = leftText
+                maximaInfo = """
+                    Largest left toe value: \(largestLToe ?? 0)
+                    Largest left mid value: \(largestLMid ?? 0)
+                    Largest left heel value: \(largestLHeel ?? 0)
+                """
             case leftText:
                 currentStage = rightText
+                maximaInfo = """
+                    Largest right toe value: \(largestRToe ?? 0)
+                    Largest right mid value: \(largestRMid ?? 0)
+                    Largest right heel value: \(largestRHeel ?? 0)
+                """
             case rightText:
                 currentStage = finishedText
                 finishButton.setTitle("Restart", for: .normal)
@@ -175,12 +196,16 @@ class CalibrationViewController: RunningViewController {
             default:
                 print("ERROR: unknown text for currentStage")
             }
+            calibrationText.text = currentStage
+            maximaText.text = maximaInfo
+            
         } else {
             /* This will also be reached after the end of calibration */
-            print("ERROR: current stage not defined")
+            //print("ERROR: current stage not defined")
             finishButton.setTitle("Restart", for: .normal)
+            calibrationText.text = " "
+            maximaText.text = "No longer calibrating"
         }
-        calibrationText.text = (currentStage != nil) ? currentStage : " "
     }
     
     @IBAction func pressedStart(_ sender: Any) {
