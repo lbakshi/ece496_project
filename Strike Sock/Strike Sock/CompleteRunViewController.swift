@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import CorePlot
 
-class CompleteRunViewController: UIViewController & CPTPlotDataSource {
+class CompleteRunViewController: UIViewController & CPTPlotDataSource & CPTLegendDelegate {
   
 
     private let oneDay : Double = 24 * 60 * 60
@@ -147,7 +147,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
         plotSpace.allowsUserInteraction = true
         plotSpace.allowsMomentumX = true
         plotSpace.xRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: Decimal(plotRange))
-        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 100.0)
+        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 150.0)
         
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {
@@ -172,6 +172,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
         newGraph.add(generatePlotLine("R Front", CPTColor.red()),to: plotSpace)
         newGraph.add(generatePlotLine("R Mid", CPTColor.orange()),to: plotSpace)
         newGraph.add(generatePlotLine("R Back", CPTColor.yellow()),to: plotSpace)
+        newGraph.add(generatePlotLine("Consistency", CPTColor.green()),to: plotSpace)
 
         
         let legend = CPTLegend(graph: newGraph)
@@ -182,7 +183,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
         legend.fill = CPTFill(color: CPTColor.darkGray().withAlphaComponent(0.5))
         let titleStyle = CPTMutableTextStyle()
         titleStyle.color = CPTColor(genericGray: 0.75)
-        titleStyle.fontSize = 11.0
+        titleStyle.fontSize = 9.0
         legend.textStyle = titleStyle;
         let lineStyle = CPTMutableLineStyle()
         lineStyle.lineWidth = 0.75
@@ -190,13 +191,14 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
         legend.borderLineStyle = lineStyle
         legend.cornerRadius = 5.0
         legend.swatchSize = CGSize(width: 25.0, height: 25.0)
-        legend.numberOfRows = 1
-//        recognizer.numberOfTouchesRequired = 1
-//        recognizer.numberOfTapsRequired = 2
-//        self.addGestureRecognizer(recognizer)
-        
+        legend.numberOfRows = 2
+        legend.delegate = self
         
         self.graph = newGraph
+    }
+    
+    func legend(_ legend: CPTLegend, legendEntryFor plot: CPTPlot, wasSelectedAt idx: UInt) {
+        plot.isHidden = !plot.isHidden
     }
     
     func generatePlotLine(_ identifier: String, _ color: CPTColor) -> CPTScatterPlot{
@@ -207,7 +209,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
         let lineStyle = CPTMutableLineStyle()
         lineStyle.lineJoin = .round
         lineStyle.lineCap = .round
-        lineStyle.lineWidth = 3.0
+        lineStyle.lineWidth = 1.0
         lineStyle.lineColor = color
         plot.dataLineStyle = lineStyle
         return plot
@@ -237,6 +239,8 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource {
                 return insights?.secsData[Int(record)].rmAv
             case ("R Back" as NSString):
                 return insights?.secsData[Int(record)].rbAv
+            case ("Consistency" as NSString):
+                return (insights?.minuteData[Int(record) / 60].consistency ?? 0 )*100
             default:
                 return nil
             }
