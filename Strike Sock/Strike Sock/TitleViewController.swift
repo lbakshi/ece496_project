@@ -16,7 +16,6 @@ class TitleViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var welcomeUserLabel: UILabel!
-    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var startRunButton: UIButton!
     @IBOutlet weak var pastRunsButton: UIButton!
     @IBOutlet weak var calibrateButton: UIButton!
@@ -63,7 +62,7 @@ class TitleViewController: UIViewController {
     }
     
     func addButtons(){
-        buttons = [profileButton,startRunButton,pastRunsButton,calibrateButton,aboutUsButton,setUpButton]
+        buttons = [startRunButton,pastRunsButton,calibrateButton,aboutUsButton,setUpButton]
         let buttonColor = UIColor.systemGray6
         for button in buttons {
             button.setTitleColor(buttonColor, for: .normal)
@@ -71,7 +70,7 @@ class TitleViewController: UIViewController {
     }
     
     func addLabels() {
-        labels = [titleLabel, welcomeUserLabel]
+        labels = [titleLabel]
         let labelColor = UIColor.black
         for label in labels {
             label.textColor = labelColor

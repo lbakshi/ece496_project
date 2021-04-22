@@ -73,24 +73,29 @@ class StrikeTableViewController: UITableViewController {
         let tempSession:Session = sessionColl.sessionArr[indexPath.row]
         guard let time = tempSession.startTime else {
             
-            tableView.beginUpdates()
+            /*tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
             
-            tableView.reloadData()
+            tableView.reloadData()*/
             return cell
         }
         cell.cellLabel.text = stringFromDate(time)
-        cell.makeCellUI(viewController: self)
+        //cell.makeCellUI(viewController: self)
+        cell.cellLabel.textColor = UIColor.white
+        cell.cellLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        cell.cellView.backgroundColor = UIColor.systemRed
+        cell.cellView.layer.cornerRadius = 20
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             sessionColl.sessionArr.remove(at: indexPath.row)
-            tableView.beginUpdates()
+            //tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.endUpdates()
+            //tableView.endUpdates()
             let _ = SessionCollection.saveData(sessionColl)
             self.tableView.reloadData()
         }

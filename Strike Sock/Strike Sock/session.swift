@@ -77,10 +77,12 @@ class Session : Codable {
         isUpdating = false
         complete = true
         
-        let arr = SessionCollection.loadData() ?? SessionCollection()
-        arr.addSession(self)
-        print("saving session state")
-        let _ = SessionCollection.saveData(arr)
+        if let _ = self.startTime {
+            let arr = SessionCollection.loadData() ?? SessionCollection()
+            arr.addSession(self)
+            print("saving session state")
+            let _ = SessionCollection.saveData(arr)
+        }
     }
     
     func printSession() {
