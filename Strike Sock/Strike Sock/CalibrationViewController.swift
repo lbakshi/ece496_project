@@ -108,13 +108,6 @@ class CalibrationViewController: RunningViewController {
     }
     
     func refreshMaximas() {
-        largestLHeel = (updateDictionary[lbackText] ?? 0>largestLHeel) ? updateDictionary[lbackText]! : largestLHeel
-        largestLMid = (updateDictionary[lmidText] ?? 0>largestLMid) ? updateDictionary[lmidText]! : largestLMid
-        largestLToe = (updateDictionary[lfrontText] ?? 0>largestLMid) ? updateDictionary[lfrontText]! : largestLToe
-        largestRHeel = (updateDictionary[rbackText] ?? 0>largestRHeel) ? updateDictionary[rbackText]! : largestRHeel
-        largestRMid = (updateDictionary[rmidText] ?? 0>largestRMid) ? updateDictionary[rmidText]! : largestRMid
-        largestRToe = (updateDictionary[rfrontText] ?? 0>largestRMid) ? updateDictionary[rfrontText]! : largestRToe
-        
         loadedMaxima?.update(lf: largestLToe, lm: largestLMid, lb: largestLHeel, rf: largestRToe, rm: largestRMid, rb: largestRHeel)
     }
     
@@ -171,28 +164,22 @@ class CalibrationViewController: RunningViewController {
             case loadingText:
                 currentStage = tipToeText
                 maximaInfo = """
-                    Largest left toe value: \(largestLToe ?? 0)
-                    Largest right toe value: \(largestRToe ?? 0)
+                    Looking for highest pressure on toes...
                 """
             case tipToeText:
                 currentStage = heelText
                 maximaInfo = """
-                    Largest left heel value: \(largestLHeel ?? 0)
-                    Largest right heel value: \(largestRHeel ?? 0)
+                    Looking for highest pressure on heels...
                 """
             case heelText:
                 currentStage = leftText
                 maximaInfo = """
-                    Largest left toe value: \(largestLToe ?? 0)
-                    Largest left mid value: \(largestLMid ?? 0)
-                    Largest left heel value: \(largestLHeel ?? 0)
+                    Looking for highest pressure on left foot...
                 """
             case leftText:
                 currentStage = rightText
                 maximaInfo = """
-                    Largest right toe value: \(largestRToe ?? 0)
-                    Largest right mid value: \(largestRMid ?? 0)
-                    Largest right heel value: \(largestRHeel ?? 0)
+                    Looking for highest pressure on right foot...
                 """
             case rightText:
                 currentStage = finishedText
@@ -212,6 +199,39 @@ class CalibrationViewController: RunningViewController {
             finishButton.setTitle("Restart", for: .normal)
             calibrationText.text = " "
             maximaText.text = "No longer calibrating"
+        }
+    }
+    
+    func updateMaximaInfo() {
+        var maximaInfo = ""
+        if (currentStage != nil) {
+            switch (currentStage) {
+            case tipToeText:
+                maximaInfo = """
+                    Largest left toe value: \(largestLToe)
+                    Largest right toe value: \(largestRToe)
+                """
+            case heelText:
+                maximaInfo = """
+                    Largest left heel value: \(largestLHeel)
+                    Largest right heel value: \(largestRHeel)
+                """
+            case leftText:
+                maximaInfo = """
+                    Largest left toe value: \(largestLToe )
+                    Largest left mid value: \(largestLMid)
+                    Largest left heel value: \(largestLHeel)
+                """
+            case rightText:
+                maximaInfo = """
+                    Largest right toe value: \(largestRToe)
+                    Largest right mid value: \(largestRMid)
+                    Largest right heel value: \(largestRHeel)
+                """
+            default:
+                print("ERROR: unknown text for currentStage")
+            }
+            maximaText.text = maximaInfo
         }
     }
     
@@ -242,29 +262,54 @@ class CalibrationViewController: RunningViewController {
             print("couldn't convert data to a decimal, returning")
             return
         }
-        var relevantLabel = UILabel()
+
+        var didChange = false
         switch characteristic.uuid {
             case LeftHardwarePeripheral.frontCharUUID:
-                relevantLabel = lfrontText
+                lfrontText.text = String(data)
+                if (data > largestLToe) {
+                    largestLToe = data
+                    didChange = true
+                }
             case LeftHardwarePeripheral.midCharUUID:
-                relevantLabel = lmidText
+                lmidText.text = String(data)
+                if (data > largestLMid) {
+                    largestLMid = data
+                    didChange = true
+                }
             case LeftHardwarePeripheral.backCharUUID:
-                relevantLabel = lbackText
+                lbackText.text = String(data)
+                if (data > largestLHeel) {
+                    largestLHeel = data
+                    didChange = true
+                }
             case RightHardwarePeripheral.frontCharUUID:
-                relevantLabel = rfrontText
+                rfrontText.text = String(data)
+                if (data > largestRToe) {
+                    largestRToe = data
+                    didChange = true
+                }
             case RightHardwarePeripheral.midCharUUID:
-                relevantLabel = rmidText
+                rmidText.text = String(data)
+                if (data > largestRMid) {
+                    largestRMid = data
+                    didChange = true
+                }
             case RightHardwarePeripheral.backCharUUID:
-                relevantLabel = rbackText
+                rbackText.text = String(data)
+                if (data > largestRHeel) {
+                    largestRHeel = data
+                    didChange = true
+                }
         default:
             statusUpdate("ERROR in processing peripheral data")
             return
         }
-        relevantLabel.text = String(data)
-        if updateDictionary[relevantLabel] ?? 0 < data {
-            updateDictionary.updateValue(data, forKey: relevantLabel)
+        if didChange {
+            print("Writing new maxima: \(data)")
+            updateMaximaInfo()
+            refreshMaximas()
         }
-        refreshMaximas()
         return
     }
 }
