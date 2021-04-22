@@ -202,8 +202,10 @@ class Analytics {
     var consistency : Double
     var strikeType : Strike
     
+    var maxima:Maxima?
     
     init( sess : Session ) {
+        maxima = Maxima.loadData()
         self.session = sess
         self.startTime = sess.startTime ?? Date()
         minuteData = []
@@ -302,17 +304,17 @@ class Analytics {
             if (getFlooredSecond(date: arr[currInd].time) == currSec) {
                 switch sens {
                 case .lf:
-                    tempNode.addData(lf: arr[index].val/Double(largestLToe))
+                    tempNode.addData(lf: arr[index].val/Double(maxima?.largestLToe ?? 20))
                 case .lm:
-                    tempNode.addData(lm: arr[index].val/Double(largestLMid))
+                    tempNode.addData(lm: arr[index].val/Double(maxima?.largestLMid ?? 20))
                 case .lb:
-                    tempNode.addData(lb: arr[index].val/Double(largestLHeel))
+                    tempNode.addData(lb: arr[index].val/Double(maxima?.largestLHeel ?? 20))
                 case .rf:
-                    tempNode.addData(rf: arr[index].val/Double(largestRToe))
+                    tempNode.addData(rf: arr[index].val/Double(maxima?.largestRToe ?? 20))
                 case .rm:
-                    tempNode.addData(rm: arr[index].val/Double(largestRMid))
+                    tempNode.addData(rm: arr[index].val/Double(maxima?.largestRMid ?? 20))
                 case .rb:
-                    tempNode.addData(rb: arr[index].val/Double(largestRHeel))
+                    tempNode.addData(rb: arr[index].val/Double(maxima?.largestRHeel ?? 20))
                 }
             }
             index+=1

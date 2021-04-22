@@ -43,6 +43,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource & CPTLegen
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         //selectedSession = Session(range: 600.0)
 
         guard let startTime = selectedSession?.startTime else {
@@ -147,7 +148,7 @@ class CompleteRunViewController: UIViewController & CPTPlotDataSource & CPTLegen
         plotSpace.allowsUserInteraction = true
         plotSpace.allowsMomentumX = true
         plotSpace.xRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: Decimal(plotRange))
-        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 1.2)
+        plotSpace.yRange = CPTPlotRange(locationDecimal: 0.0, lengthDecimal: 1.4)
         
         let axisSet = newGraph.axisSet as! CPTXYAxisSet
         if let x = axisSet.xAxis {

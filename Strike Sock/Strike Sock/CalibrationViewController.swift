@@ -70,13 +70,6 @@ let loadingText = """
 Loading...
 """
 
-var largestLHeel: Int = 20
-var largestLMid: Int = 20
-var largestLToe: Int = 20
-var largestRHeel: Int = 20
-var largestRMid: Int = 20
-var largestRToe: Int = 20
-
 
 class CalibrationViewController: RunningViewController {
     
@@ -95,23 +88,23 @@ class CalibrationViewController: RunningViewController {
     let stageTime = 30.0
     var countdown = 30.0/0.3
     
+    var largestLHeel: Int = 20
+    var largestLMid: Int = 20
+    var largestLToe: Int = 20
+    var largestRHeel: Int = 20
+    var largestRMid: Int = 20
+    var largestRToe: Int = 20
+    
+    var loadedMaxima : Maxima?
+    
     /* Largest sensor value received */
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         updateDictionary = [:]
-        initWeights()
+        loadedMaxima = Maxima.loadData()
         clearMeasurements()
-    }
-    
-    func initWeights() {
-        largestLHeel = minimumExpectedValue
-        largestLMid = minimumExpectedValue
-        largestLToe = minimumExpectedValue
-        largestRHeel = minimumExpectedValue
-        largestRMid = minimumExpectedValue
-        largestRToe = minimumExpectedValue
     }
     
     func refreshMaximas() {
@@ -121,6 +114,8 @@ class CalibrationViewController: RunningViewController {
         largestRHeel = (updateDictionary[rbackText] ?? 0>largestRHeel) ? updateDictionary[rbackText]! : largestRHeel
         largestRMid = (updateDictionary[rmidText] ?? 0>largestRMid) ? updateDictionary[rmidText]! : largestRMid
         largestRToe = (updateDictionary[rfrontText] ?? 0>largestRMid) ? updateDictionary[rfrontText]! : largestRToe
+        
+        loadedMaxima?.update(lf: largestLToe, lm: largestLMid, lb: largestLHeel, rf: largestRToe, rm: largestRMid, rb: largestRHeel)
     }
     
     func clearMeasurements() {
@@ -271,5 +266,88 @@ class CalibrationViewController: RunningViewController {
         }
         refreshMaximas()
         return
+    }
+}
+
+class Maxima : Codable {
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("StrikeSockMaxima")
+    var largestLHeel: Int
+    var largestLMid: Int
+    var largestLToe: Int
+    var largestRHeel: Int
+    var largestRMid: Int
+    var largestRToe: Int
+    
+    init() {
+        largestRMid = 20
+        largestRHeel = 20
+        largestRToe = 20
+        largestLMid = 20
+        largestLHeel = 20
+        largestLToe = 20
+    }
+    /**
+     updates the maxima if they exceed the currently stored value. If a certain sensor doesn't need an update, just don't pass in it's parameter
+     l/r is left/right, f/m/b is front/mid/back
+     */
+    func update(lf:Int = 0, lm:Int = 0, lb:Int = 0, rf:Int = 0, rm:Int = 0, rb:Int = 0) {
+        if lf > largestLToe {
+            largestLToe = lf
+        }
+        if lm > largestLMid {
+            largestLMid = lm
+        }
+        if lb > largestLHeel {
+            largestLHeel = lb
+        }
+        if rf > largestRToe {
+            largestRToe = rf
+        }
+        if rm > largestRMid {
+            largestRMid = rm
+        }
+        if rb > largestRHeel {
+            largestRHeel = rb
+        }
+        let _ = Maxima.saveData(self)
+    }
+    
+    static func saveData(_ dataArr: Maxima) -> Bool {
+        var outputData = Data()
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(dataArr) {
+            if String(data: encoded, encoding: .utf8) != nil {
+                outputData = encoded
+            } else { return false }
+            do {
+                try outputData.write(to: ArchiveURL)
+            } catch let error as NSError {
+                print(error)
+                return false
+            }
+            return true
+        }
+        else { return false }
+    }
+    
+    /*
+     function to load data from JSON
+     */
+    static func loadData() -> Maxima? {
+        let decoder = JSONDecoder()
+        var outData = Maxima()
+        let tempData: Data
+        
+        do {
+            tempData = try Data(contentsOf: ArchiveURL)
+        } catch let error as NSError {
+            print(error)
+            return outData
+        }
+        if let decoded = try? decoder.decode(Maxima.self, from: tempData) {
+            outData = decoded
+        }
+        return outData
     }
 }
