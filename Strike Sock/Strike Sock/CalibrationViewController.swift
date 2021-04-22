@@ -114,6 +114,15 @@ class CalibrationViewController: RunningViewController {
         largestRToe = minimumExpectedValue
     }
     
+    func refreshMaximas() {
+        largestLHeel = (updateDictionary[lbackText] ?? 0>largestLHeel) ? updateDictionary[lbackText] : largestLHeel
+        largestLMid = (updateDictionary[lmidText] ?? 0>largestLMid) ? updateDictionary[lmidText] : largestLMid
+        largestLToe = (updateDictionary[lfrontText] ?? 0>largestLMid) ? updateDictionary[lfrontText] : largestLToe
+        largestRHeel = (updateDictionary[rbackText] ?? 0>largestRHeel) ? updateDictionary[rbackText] : largestRHeel
+        largestRMid = (updateDictionary[rmidText] ?? 0>largestRMid) ? updateDictionary[rmidText] : largestRMid
+        largestRToe = (updateDictionary[rfrontText] ?? 0>largestRMid) ? updateDictionary[rfrontText] : largestRToe
+    }
+    
     func clearMeasurements() {
         calibrationText.text = calibrationWelcomePageText
         maximaText.text = ""
@@ -157,6 +166,7 @@ class CalibrationViewController: RunningViewController {
             userInfo: nil,
             repeats: true)
         runCalibrationStages(sender: stageTimer)
+        
     }
     
     @objc func runCalibrationStages(sender: Timer) {
@@ -216,56 +226,6 @@ class CalibrationViewController: RunningViewController {
         performCalibration()
     }
     
-    /* Figure out which sensors are relevant */
-    /* Check relevant sensors for values */
-    /* If greater than min expected value, set local maxima timer */
-    /* Every time a new maxima is found, reset local maxima timer */
-    /* If stageTimeOut when local maxima timer is set, then the stage was done correctly */
-    /* If timeout on local maxima timer, move to next stage */
-    
-    /**
-     _ = Timer.scheduledTimer(
-         timeInterval: repeatTime,
-         target: self,
-         selector: #selector(updateData),
-         userInfo: [lfrontText, rfrontText],
-         repeats: true)
-     */
-    
-    @objc func updateData(sender: Timer) {
-        let labels = sender.userInfo as! Array<UILabel>
-        for label in labels {
-            var labelMaxima: Int!
-            switch label {
-            case lfrontText:
-                labelMaxima = largestLToe
-            case lmidText:
-                labelMaxima = largestLMid
-            case lbackText:
-                labelMaxima = largestLHeel
-            case rfrontText:
-                labelMaxima = largestRToe
-            case rmidText:
-                labelMaxima = largestRMid
-            case rbackText:
-                labelMaxima = largestRHeel
-            default:
-                labelMaxima = 0
-                print("ERROR: Unknown label in calibration timer user info")
-            }
-            let updatedLabelValue = updateDictionary[label]
-            if (updatedLabelValue ?? 0 > labelMaxima) {
-                labelMaxima = updatedLabelValue
-                print("Maxima: \(labelMaxima ?? -1)")
-            }
-        }
-        updateDictionary.removeAll()
-        countdown -= 1
-        if (countdown == 0) {
-            sender.invalidate()
-        }
-    }
-    
     @objc func stageTimeOut() {
         /* End calibration */
         /* Don't complete the rest of perform calibration */
@@ -287,62 +247,29 @@ class CalibrationViewController: RunningViewController {
             print("couldn't convert data to a decimal, returning")
             return
         }
-        let newDataPoint = dataPoint(time: Date(), val: Double(data))
+        var relevantLabel = UILabel()
         switch characteristic.uuid {
             case LeftHardwarePeripheral.frontCharUUID:
-                lfrontText.text = String(data)
-                if (runningSession.isUpdating) {
-                    runningSession.lfrontArr.append(newDataPoint)
-                    if (updateDictionary[lfrontText] ?? 0<data){
-                        updateDictionary.updateValue(data, forKey: lfrontText)
-                    }
-                }
+                relevantLabel = lfrontText
             case LeftHardwarePeripheral.midCharUUID:
-                lmidText.text = String(data)
-                if (runningSession.isUpdating) {
-                    runningSession.lmidArr.append(newDataPoint)
-                    if (updateDictionary[lmidText] ?? 0<data){
-                        updateDictionary.updateValue(data, forKey: lmidText)
-                    }
-                }
+                relevantLabel = lmidText
             case LeftHardwarePeripheral.backCharUUID:
-                lbackText.text = String(data)
-                if (runningSession.isUpdating) {
-                    runningSession.lbackArr.append(newDataPoint)
-                    if (updateDictionary[lbackText] ?? 0<data){
-                        updateDictionary.updateValue(data, forKey: lbackText)
-                    }
-                }
+                relevantLabel = lbackText
             case RightHardwarePeripheral.frontCharUUID:
-                rfrontText.text = String(data)
-                if (runningSession.isUpdating) {
-                    runningSession.rfrontArr.append(newDataPoint)
-                    if (updateDictionary[rfrontText] ?? 0<data){
-                        updateDictionary.updateValue(data, forKey: rfrontText)
-                    }
-                }
+                relevantLabel = rfrontText
             case RightHardwarePeripheral.midCharUUID:
-                rmidText.text = String(data)
-                if (runningSession.isUpdating) {
-                    runningSession.rmidArr.append(newDataPoint)
-                    if (updateDictionary[rmidText] ?? 0<data){
-                        updateDictionary.updateValue(data, forKey: rmidText)
-                    }
-                }
+                relevantLabel = rmidText
             case RightHardwarePeripheral.backCharUUID:
-                rbackText.text = String(data)
-                if (runningSession.isUpdating) {
-                    runningSession.rbackArr.append(newDataPoint)
-                    if (updateDictionary[rbackText] ?? 0<data){
-                        updateDictionary.updateValue(data, forKey: rbackText)
-                    }
-                }
-            case LeftHardwarePeripheral.readUUID:
-                statusUpdate("read characteristic changed")
+                relevantLabel = rbackText
         default:
             statusUpdate("ERROR in processing peripheral data")
+            return
         }
-        
+        relevantLabel.text = String(data)
+        if updateDictionary[relevantLabel] ?? 0 < data {
+            updateDictionary.updateValue(data, forKey: relevantLabel)
+        }
+        refreshMaximas()
         return
     }
 }
