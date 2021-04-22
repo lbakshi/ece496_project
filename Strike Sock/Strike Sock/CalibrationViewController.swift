@@ -115,12 +115,12 @@ class CalibrationViewController: RunningViewController {
     }
     
     func refreshMaximas() {
-        largestLHeel = (updateDictionary[lbackText] ?? 0>largestLHeel) ? updateDictionary[lbackText] : largestLHeel
-        largestLMid = (updateDictionary[lmidText] ?? 0>largestLMid) ? updateDictionary[lmidText] : largestLMid
-        largestLToe = (updateDictionary[lfrontText] ?? 0>largestLMid) ? updateDictionary[lfrontText] : largestLToe
-        largestRHeel = (updateDictionary[rbackText] ?? 0>largestRHeel) ? updateDictionary[rbackText] : largestRHeel
-        largestRMid = (updateDictionary[rmidText] ?? 0>largestRMid) ? updateDictionary[rmidText] : largestRMid
-        largestRToe = (updateDictionary[rfrontText] ?? 0>largestRMid) ? updateDictionary[rfrontText] : largestRToe
+        largestLHeel = (updateDictionary[lbackText] ?? 0>largestLHeel) ? updateDictionary[lbackText]! : largestLHeel
+        largestLMid = (updateDictionary[lmidText] ?? 0>largestLMid) ? updateDictionary[lmidText]! : largestLMid
+        largestLToe = (updateDictionary[lfrontText] ?? 0>largestLMid) ? updateDictionary[lfrontText]! : largestLToe
+        largestRHeel = (updateDictionary[rbackText] ?? 0>largestRHeel) ? updateDictionary[rbackText]! : largestRHeel
+        largestRMid = (updateDictionary[rmidText] ?? 0>largestRMid) ? updateDictionary[rmidText]! : largestRMid
+        largestRToe = (updateDictionary[rfrontText] ?? 0>largestRMid) ? updateDictionary[rfrontText]! : largestRToe
     }
     
     func clearMeasurements() {
